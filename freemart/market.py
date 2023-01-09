@@ -7,6 +7,12 @@ from github import Github
 
 import os
 
+import io
+
+import numpy as np
+
+import cv2
+
 from . import db
 
 from cloudinary.uploader import upload
@@ -32,9 +38,14 @@ def post_page():
 
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
+        in_memory_file = io.BytesIO()
+        productImage.save(in_memory_file)
+        data = np.fromstring(in_memory_file.getvalue(), dtype=np.uint8)
+        color_image_flag = 1
+        img = cv2.imdecode(data, color_image_flag)
         for repo in g.get_user().get_repos():
             if repo.name == "freemart_img":
-                repo.create_file(imageFilename, "Img added", bytes(bytearray(productImage)), "main")
+                repo.create_file(imageFilename, "Img added", bytes(img), "main")
 
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
         db.session.add(item)
