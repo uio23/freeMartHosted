@@ -31,7 +31,7 @@ def create_app():
   cloud_name = "dnebnzfjd",
   api_key = "137887891343174",
   api_secret = os.environ.get("GITT"),
-  secure = true
+  secure = True
 )
 
     from .auth import auth
