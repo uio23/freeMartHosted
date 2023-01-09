@@ -32,9 +32,7 @@ def post_page():
 
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        productImage.save(os.path.join(current_app.config['UPLOAD_FOLDER'], imageFilename))
-        imagePath = os.path.join("productImages/", imageFilename)
-        with open(imagePath, "rb") as image:
+        with open(imageFilename, "rb") as image:
             f = image.read()
             image_data = bytearray(f)
         for repo in g.get_user().get_repos():
