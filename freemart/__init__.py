@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, send
 from flask_login import LoginManager, current_user, current_user
 
 import os
@@ -54,7 +54,7 @@ def create_app():
 
     from .models import Message
 
-    socketio = SocketIO(app, manage_session=False)
+    socketio = SocketIO(app)
     @socketio.on('message')
     def message(data):
         if db.session.query(Message).count() >50:
@@ -66,7 +66,7 @@ def create_app():
         elif data["msg"] == '':
             pass
         else:
-            socketio.send(data)
+            send(data)
             message = Message(msg=data['msg'], username=data["username"])
             db.session.add(message)
         db.session.commit()

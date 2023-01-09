@@ -1,11 +1,11 @@
 $(document).ready(function(){
 
-    
+
     $('#messages').scrollTop($('#messages')[0].scrollHeight);
 
 
-    var socket = io.connect("https://" + document.domain + ':' + location.port);
-    console.log(socket)
+    var socket = io.connect("http://" + document.domain + ':' + location.port);
+
     socket.on('connect', function(){
         socket.send({'msg':"I am connected!", 'username':setUsername, 'auth': true});
     });
@@ -21,5 +21,5 @@ $(document).ready(function(){
         $('#messageContent').val('');
     })
 
-    
+
 });
