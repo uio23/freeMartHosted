@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send
 from flask_login import LoginManager, current_user, current_user
 
+import cloudinary
 from cloudinary.uploader import upload
 from cloudinary.utils import cloudinary_url
 
