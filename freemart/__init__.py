@@ -40,6 +40,7 @@ def create_app():
 
     from .models import User, Product, Message
 
+    create_database(app)
 
     @login_manager.user_loader
     def load_user(id):
@@ -72,3 +73,9 @@ def create_app():
         db.session.commit()
 
     return app, socketio
+
+
+def create_database(app):
+    if not path.exists('website/' + DB_NAME):
+        db.create_all(app=app)
+        print('Created Database!')
