@@ -32,12 +32,9 @@ def post_page():
 
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        with open(imageFilename, "rb") as image:
-            f = image.read()
-            image_data = bytearray(f)
         for repo in g.get_user().get_repos():
             if repo.name == "freemart_img":
-                repo.create_file(imageFilename, "Img added", bytes(image_data), "main")
+                repo.create_file(imageFilename, "Img added", bytes(bytearray(productImage)), "main")
 
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
         db.session.add(item)
