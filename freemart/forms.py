@@ -2,8 +2,6 @@ from flask_wtf import FlaskForm
 
 from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, validators, ValidationError
 
-from argon2.exceptions import VerifyMismatchError
-
 from passlib.hash import pbkdf2_sha256
 
 from .models import Product, User
