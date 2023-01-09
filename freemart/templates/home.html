@@ -1,0 +1,13 @@
+{% extends "temp.html" %}
+
+{% set exempt = True %}
+
+{% block body %}
+<div style="text-align: center;">
+    <h1>Welcome to Free Mart!</h1>
+    <p>Buy & Sell stuff to your heart's content</p>
+    <h3 style="margin-top: 10vh; padding: 20px; border: 3px solid red; border-radius: 10px; display: inline-block;">New? Register <a href="{{ url_for('auth.sign_up_page') }}">here</a></h3>
+    <br>
+    <h3 style="margin-top: 6vh; padding: 20px; border: 3px solid blue; border-radius: 10px; display: inline-block;">Or <a href="{{ url_for('auth.login_page') }}">login</a></h3>
+</div>
+{% endblock %}

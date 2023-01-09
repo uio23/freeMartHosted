@@ -1,0 +1,18 @@
+{% from 'form_helper.html' import displayField %}
+{% extends "temp.html" %}
+
+{% block header %}
+<h3>Login to your account</h3>
+{% endblock %}
+
+{% block body %}
+<form action="{{ url_for('auth.login_page') }}" method="POST" novalidate>
+  {{ displayField(form.username, "Username", autocomplete="off", autofocus=true) }}
+  {{ displayField(form.password, "Password") }}
+  {{ form.submit_button(style="width: 100%;", class="btn btn-primary btn-block mb-4") }}
+  {{ form.csrf_token }}
+  <div class="text-center">
+    <p>Not a member? <a href="{{ url_for('auth.sign_up_page') }}">Sign up</a></p>
+  </div>
+</form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% macro displayField(feildName, placeholderValue) %}
+<div class="form-outline mb-4">
+  <div class="has-validation">
+    {{ feildName(class="form-control", placeholder=placeholderValue, **kwargs) }}
+      {% for error in feildName.errors %}
+        <div class="invalid-feedback d-block">
+          {{ error }}
+        </div>
+      {% endfor %}
+  </div>
+</div>
+{% endmacro %}

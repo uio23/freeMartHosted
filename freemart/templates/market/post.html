@@ -1,0 +1,31 @@
+{% from 'form_helper.html' import displayField %}
+{% extends "temp.html" %}
+
+{% block header %}
+<h2>List an Item</h2>
+{% endblock %}
+
+{% block body %}
+<form enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
+    {{ displayField(form.productName, "Product name", autocomplete="off") }}
+    {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
+    {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
+    {{ displayField(form.productImage, accept="image/png, image/jpeg") }}
+    {{ form.submit_button( class="btn btn-primary mb-4") }}
+    {{ form.csrf_token }}
+</form>
+
+<style>
+
+    /* Removing arrow icons from number input */
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }    
+    /* For our special dear Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+</style>
+{% endblock %}
