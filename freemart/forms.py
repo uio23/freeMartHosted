@@ -13,7 +13,7 @@ def invalid_credentials(form, feild):
 
     if not user:
         raise ValidationError("Incorrect username of password")
-    elif not pbkdf2_sha256.verify(user.password, form.password.data):
+    elif not pbkdf2_sha256.verify(form.password.data, user.password):
         raise ValidationError("Incorrect username of password")
 
 
