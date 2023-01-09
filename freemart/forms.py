@@ -4,7 +4,7 @@ from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAre
 
 from argon2.exceptions import VerifyMismatchError
 
-from . import ph
+from passlib.hash import pbkdf2_sha256
 
 from .models import Product, User
 
@@ -15,11 +15,8 @@ def invalid_credentials(form, feild):
 
     if not user:
         raise ValidationError("Incorrect username of password")
-    else:
-        try:
-            ph.verify(user.password, form.password.data)
-        except VerifyMismatchError:
-            raise ValidationError("Incorrect username of password")
+    elif not pbkdf2_sha256.verify(user.password, form.password.data):
+        raise ValidationError("Incorrect username of password")
 
 
 class RegisterForm(FlaskForm):
