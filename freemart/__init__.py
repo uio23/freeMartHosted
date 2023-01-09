@@ -72,7 +72,7 @@ def create_app():
             db.session.add(message)
         db.session.commit()
 
-    return app, socketio
+    return app
 
 
 def create_database(app):
