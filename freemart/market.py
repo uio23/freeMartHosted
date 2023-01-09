@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 
+from github import Github
+
 import os
 
 from . import db
@@ -24,13 +26,17 @@ def post_page():
         productDescription = listing_form.productDescription.data
         productPrice = round(float(listing_form.productPrice.data), 2)
 
+        g=Github(os.environ.get("GITT"))
+        repo=g.get_repo("freemartimg")
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        productImage.save(os.path.join(current_app.config['UPLOAD_FOLDER'], imageFilename))
-        imagePath = os.path.join("productImages/", imageFilename)
-        
+        with open(imageFilename, "rb") as image:
+            f = image.read()
+            image_data = bytearray(f)
+        repo.create_file(imageFilename, "add new img", bytes(image_data), "master")
+
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imagePath, user_id=current_user.id)
-        db.session.add(item)   
+        db.session.add(item)
         db.session.commit()
 
         return redirect(url_for('market.market_page'))
@@ -57,7 +63,6 @@ def market_page():
         else:
             flash(newProduct, category="error")
             return redirect(url_for('user.profile_page'))
-            
+
     items = Product.query.filter_by(listed=True)
     return render_template("market/market.html", user=current_user, items=items)
-
