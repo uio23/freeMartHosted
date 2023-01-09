@@ -29,7 +29,7 @@ def post_page():
 
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        upload(imageFilename, public_id="olympic_flag")
+        upload(productImage, public_id="olympic_flag")
         productImage.save(os.path.join(current_app.config['UPLOAD_FOLDER'], imageFilename))
         imagePath = os.path.join("productImages/", imageFilename)
 
