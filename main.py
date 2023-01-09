@@ -1,4 +1,4 @@
-from freeMart import create_app
+from freemart import create_app
 
 
 app, socket = create_app()
