@@ -21,7 +21,7 @@ def create_app():
             ), 'static/productImages'
         )
     app.secret_key = os.environ.get('MONKEY')
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
 
 
     from .auth import auth
