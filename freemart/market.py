@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 
-from github import Github
+import github
 
 import os
 
@@ -26,7 +26,7 @@ def post_page():
         productDescription = listing_form.productDescription.data
         productPrice = round(float(listing_form.productPrice.data), 2)
 
-        g=Github(os.environ.get("GITT"))
+        g=github.Github(os.environ.get("GITT"))
         repo=g.get_repo("freemartimg")
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
