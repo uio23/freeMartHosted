@@ -5,7 +5,7 @@ from . import db
 
 class Product(db.Model):
 
-    __tablename__ = "products"
+    __tablename__ = "product"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True, nullable=False)
     description = db.Column(db.String)
@@ -20,7 +20,7 @@ class Product(db.Model):
 
 class User(db.Model, UserMixin):
 
-    __tablename__ = "users"
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
@@ -34,7 +34,7 @@ class User(db.Model, UserMixin):
 
 class Message(db.Model):
 
-    __tablename__ = "messages"
+    __tablename__ = "message"
     id = db.Column(db.Integer, primary_key=True)
     msg = db.Column(db.String, nullable=False)
     username =  db.Column(db.String, nullable=False)
