@@ -3,11 +3,12 @@ from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 
-import github
-
 import os
 
 from . import db
+
+from cloudinary.uploader import upload
+from cloudinary.utils import cloudinary_url
 
 from .models import Product
 from .forms import ListingForm, validate_resell
@@ -26,14 +27,11 @@ def post_page():
         productDescription = listing_form.productDescription.data
         productPrice = round(float(listing_form.productPrice.data), 2)
 
-        g=github.Github(os.environ.get("GITT"))
-        repo=g.get_repo("freemartimg")
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        with open(imageFilename, "rb") as image:
-            f = image.read()
-            image_data = bytearray(f)
-        repo.create_file(imageFilename, "add new img", bytes(image_data), "master")
+        upload(imageFilename, public_id="olympic_flag")
+        productImage.save(os.path.join(current_app.config['UPLOAD_FOLDER'], imageFilename))
+        imagePath = os.path.join("productImages/", imageFilename)
 
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imagePath, user_id=current_user.id)
         db.session.add(item)
