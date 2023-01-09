@@ -20,8 +20,8 @@ def create_app():
             os.path.abspath(__file__)
             ), 'static/productImages'
         )
-    app.secret_key = 'replace'
-    app.config['SQLALCHEMY_DATABASE_URI'] = "postgres uri"
+    app.secret_key = os.environ.get('MONKEY')
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 
 
     from .auth import auth
