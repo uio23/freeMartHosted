@@ -19,7 +19,7 @@
 
     <div class="input-group chatInput">
         <span class="input-group-text" id="inputGroup-sizing-sm">~ {{ user.username }}</span>
-        <input id="messageContent" type="text" class="form-control shadow-none" placeholder="Message" aria-describedby="sendBtn">
+        <input id="messageContent" type="text" class="form-control shadow-none" maxlength="10000" placeholder="Message" aria-describedby="sendBtn">
         <button type="button" id="sendBtn" class="btn btn-outline-secondary">Send</button>
     </div>
 
@@ -47,7 +47,7 @@
         left: 0;
         right: 0;
         background-color: #3C6255;
-    }   
+    }
 
 
     p {
@@ -89,7 +89,7 @@
     }
 
 
-    .specialInput { 
+    .specialInput {
         border-color: #86b7fe;
     }
 
@@ -129,7 +129,7 @@
         }
     })
 
-</script> 
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='style&script/chatroom.js') }}"></script>

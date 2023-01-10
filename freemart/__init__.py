@@ -68,7 +68,7 @@ def create_app():
     socketio = SocketIO(app)
     @socketio.on('message')
     def message(data):
-        if db.session.query(Message).count() >50:
+        if db.session.query(Message).count() > 50:
             oldestMessage = db.session.query(Message).first()
             db.session.delete(oldestMessage)
 
