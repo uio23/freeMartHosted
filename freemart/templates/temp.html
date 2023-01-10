@@ -91,6 +91,7 @@
               var _href = $(this).attr('href');
               $(this).attr('href', _href.split('?')[0]);
             });
+            $('.card').css('--bs-card-border-color', '')
           }
         })
         const urlParams = new URLSearchParams(window.location.search);
