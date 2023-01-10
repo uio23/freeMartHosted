@@ -22,6 +22,8 @@ def saveImg(productImage, imageFilename):
 
 def loadImg(imageFilename):
     url = f'https://raw.githubusercontent.com/uio23/freemart_img/main/{imageFilename}'
+    print(url)
+    resp = requests.get(url)
     image_io = BytesIO(resp.content)
     img.save(image_io, 'PNG')
     dataurl = 'data:image/png;base64,' + b64encode(image_io.getvalue()).decode('ascii')
