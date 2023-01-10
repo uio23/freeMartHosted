@@ -7,6 +7,7 @@ from github import Github
 
 import os
 
+import io
 from PIL import Image
 
 from . import db
@@ -35,9 +36,12 @@ def post_page():
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
         img = Image.open(productImage)
+        img_byte_arr = io.BytesIO()
+        img.save(img_byte_arr, format='PNG')
+        img_byte_arr = img_byte_arr.getvalue()
         for repo in g.get_user().get_repos():
             if repo.name == "freemart_img":
-                repo.create_file(imageFilename, "Img added", bytes(img), "main")
+                repo.create_file(imageFilename, "Img added", bytes(img_byte_arr), "main")
 
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
         db.session.add(item)
