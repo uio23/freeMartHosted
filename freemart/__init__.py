@@ -77,7 +77,7 @@ def create_app():
         elif data["msg"] == '':
             pass
         else:
-            send(data)
+            socketio.send(data)
             message = Message(msg=data['msg'], username=data["username"])
             db.session.add(message)
         db.session.commit()
