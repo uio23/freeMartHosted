@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, flash, url_for, current_app, request
-from flask_login import login_required, current_user, current_app
+from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 

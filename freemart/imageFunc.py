@@ -1,5 +1,6 @@
 import requests
 import io
+from flask import current_app
 from io import BytesIO
 import os
 from PIL import Image
