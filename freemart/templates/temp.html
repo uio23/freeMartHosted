@@ -81,6 +81,8 @@
               var _href = $(this).attr('href');
               $(this).attr('href', _href + "?dark=true");
             });
+            $('.card-body').css('color', '#212529');
+            $('.card').css('--bs-card-border-color', '#212529')
           } else if ($(event.target).hasClass('fa-moon')) {
             $(event.target).removeClass('fa-solid fa-moon');
             $(event.target).addClass('fa-regular fa-sun');
@@ -101,6 +103,8 @@
             var _href = $(this).attr('href');
             $(this).attr('href', _href + "?dark=true");
           });
+          $('.card-body').css('color', '#212529');
+          $('.card').css('--bs-card-border-color', '#212529')
         }
       </script>
   </body>
