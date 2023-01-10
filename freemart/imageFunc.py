@@ -25,3 +25,4 @@ def loadImg(imageFilename):
     resp = requests.get(url)
     i = Image.open(BytesIO(resp.content))
     i.save(imageFilename)
+    print(os.path.abspath(imageFilename))
