@@ -1,7 +1,7 @@
 import requests
 import io
 from io import BytesIO
-
+import os
 from PIL import Image
 
 from base64 import b64encode
