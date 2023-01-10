@@ -9,7 +9,7 @@ import os
 
 from . import db
 
-from .imageFunc import saveImg, loadImg
+from .imageFunc import saveImg
 
 from .models import Product
 from .forms import ListingForm, validate_resell
@@ -65,7 +65,4 @@ def market_page():
             flash(newProduct, category="error")
             return redirect(url_for('user.profile_page'))
     items = Product.query.filter_by(listed=True).all()
-    images = {}
-    for item in items:
-        images[item.name] = loadImg(item.imagePath)
-    return render_template("market/market.html", user=current_user, items=items, images=images)
+    return render_template("market/market.html", user=current_user, items=items)
