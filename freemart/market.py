@@ -7,13 +7,9 @@ from github import Github
 
 import os
 
-import io
-from PIL import Image
-
 from . import db
 
-from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_url
+from .imageFunc import saveImg, getImg
 
 from .models import Product
 from .forms import ListingForm, validate_resell
@@ -32,17 +28,14 @@ def post_page():
         productName = listing_form.productName.data
         productDescription = listing_form.productDescription.data
         productPrice = round(float(listing_form.productPrice.data), 2)
-
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
-        img = Image.open(productImage)
-        img_byte_arr = io.BytesIO()
-        img.save(img_byte_arr, format='PNG')
-        img_byte_arr = img_byte_arr.getvalue()
-        for repo in g.get_user().get_repos():
-            if repo.name == "freemart_img":
-                repo.create_file(imageFilename, "Img added", bytes(img_byte_arr), "main")
 
+        if saveImg(productImage, imageFilename):
+            pass
+        else:
+            flash("Failed to upload image")
+            return render_template("market/post.html", user=current_user, form=listing_form)
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
         db.session.add(item)
         db.session.commit()
@@ -71,6 +64,8 @@ def market_page():
         else:
             flash(newProduct, category="error")
             return redirect(url_for('user.profile_page'))
-
-    items = Product.query.filter_by(listed=True)
-    return render_template("market/market.html", user=current_user, items=items)
+    items = Product.query.filter_by(listed=True).all()
+    images = {}
+    for item in items:
+        images[item.name] = loadImg(item.imagePath)
+    return render_template("market/market.html", user=current_user, items=items, images=images)
