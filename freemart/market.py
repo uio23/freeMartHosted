@@ -67,4 +67,4 @@ def market_page():
     items = Product.query.filter_by(listed=True).all()
     for item in items:
         loadImg(item.imagePath)
-    return render_template("market/market.html", user=current_user, items=items, images=images)
+    return render_template("market/market.html", user=current_user, items=items)
