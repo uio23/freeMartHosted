@@ -85,6 +85,10 @@
             $(event.target).removeClass('fa-solid fa-moon');
             $(event.target).addClass('fa-regular fa-sun');
             $('html').removeAttr('data-bs-theme');
+            $('.navbar-nav').children('a').each(function () {
+              var _href = $(this).attr('href');
+              $(this).attr('href', _href.split('?')[0]);
+            });
           }
         })
         const urlParams = new URLSearchParams(window.location.search);
