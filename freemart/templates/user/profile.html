@@ -44,7 +44,7 @@
 <div class="modal fade" id="resellConfirmation">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            
+
             <div class="modal-header">
               <h4 class="modal-title">Confirm Re-sell</h4>
             </div>
@@ -53,7 +53,7 @@
                 <div class="previousPrice" style="margin-bottom: 3%;"></div>
                 <div>How much do you want to re-sell it for?</div>
             </div>
-        
+
             <div class="modal-footer justify-content-between">
                 <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
                     <div class="input-group">
@@ -85,7 +85,7 @@
         productDetails = invoker.parent().children().toArray()
         productName = productDetails[0].textContent
         productPrice = productDetails[2].value
-        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice}`)
+        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice.toFixed(2)}`)
         $('#resell').attr("value", productName)
     })
 </script>

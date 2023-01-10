@@ -64,7 +64,7 @@ def validate_resell(productName, newPrice, user):
 
     if product.user_id == user.id:
         try:
-            newPrice = float(int(newPrice))
+            newPrice = round(float(listing_form.productPrice.data), 2)
 
             if newPrice > 0.0:
                 newProduct = Product(name=productName, description=product.description, price=newPrice, listed=True, imagePath=product.imagePath, user_id=user.id)
