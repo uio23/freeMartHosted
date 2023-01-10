@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 
-from github import Github
+
 
 import os
 
@@ -17,7 +17,6 @@ from .forms import ListingForm, validate_resell
 
 market = Blueprint('market', __name__, url_prefix="/market")
 
-g = Github("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")
 
 @market.route("/post", methods=["GET", "POST"])
 @login_required
@@ -67,5 +66,4 @@ def market_page():
     items = Product.query.filter_by(listed=True).all()
     for item in items:
         loadImg(item.imagePath)
-        print(os.path.abspath(item.imagePath))
     return render_template("market/market.html", user=current_user, items=items)

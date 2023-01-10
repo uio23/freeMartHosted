@@ -4,11 +4,13 @@ from flask import current_app
 from io import BytesIO
 import os
 from PIL import Image
+from github import Github
 
 from base64 import b64encode
 
 
 def saveImg(productImage, imageFilename):
+    g = Github(os.environ.get("GITT"))
     img = Image.open(productImage)
     img = img.resize((500, 500))
     img_byte_arr = io.BytesIO()
