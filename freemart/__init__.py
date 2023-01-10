@@ -3,10 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send
 from flask_login import LoginManager, current_user, current_user
 
-import cloudinary
-from cloudinary.uploader import upload
-from cloudinary.utils import cloudinary_url
-
 import os
 
 
@@ -26,13 +22,6 @@ def create_app():
         )
     app.secret_key = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
-
-    cloudinary.config(
-  cloud_name = "dnebnzfjd",
-  api_key = "137887891343174",
-  api_secret = os.environ.get("GITT"),
-  secure = True
-)
 
     from .auth import auth
     from .market import market
