@@ -9,7 +9,7 @@ import os
 
 from . import db
 
-from .imageFunc import saveImg, getImg
+from .imageFunc import saveImg, loadImg
 
 from .models import Product
 from .forms import ListingForm, validate_resell
