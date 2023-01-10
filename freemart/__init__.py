@@ -22,7 +22,7 @@ def create_app():
     app.config['UPLOAD_FOLDER'] = os.path.join(
         os.path.dirname(
             os.path.abspath(__file__)
-            ), 'static/productImages'
+            ), 'static'
         )
     app.secret_key = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)

@@ -25,5 +25,9 @@ def loadImg(imageFilename):
     url = f'https://raw.githubusercontent.com/uio23/freemart_img/main/{imageFilename}'
     resp = requests.get(url)
     i = Image.open(BytesIO(resp.content))
-    i.save(os.path.join(current_app.config['UPLOAD_FOLDER'], imageFilename))
+    i.save(os.path.join(os.path.join(
+        os.path.dirname(
+            os.path.abspath(__file__)
+            ), 'static'
+        ), imageFilename))
     print(os.path.abspath(imageFilename))
