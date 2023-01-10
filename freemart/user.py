@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 
 from . import db
 
+from .imageFunc import loadImg
+
 from .models import Product, User, Message
 
 
@@ -28,9 +30,13 @@ def profile_page():
             product.user_id = current_user.id
 
             db.session.commit()
-    
+
     userSelling = [product for product in current_user.posts if product.listed == True]
+    for product in userSelling:
+        loadImg(product.imagePath)
     userOwned = [product for product in current_user.posts if product.listed == False]
+    for product in userOwned:
+        loadImg(product.imagePath)
     return render_template("user/profile.html", user=current_user, userSelling=userSelling, userOwned=userOwned)
 
 
@@ -38,5 +44,5 @@ def profile_page():
 @login_required
 def chatroom_page():
     messages = Message.query.all()
-    
-    return render_template('user/chatroom.html', user=current_user, messages=messages) 
+
+    return render_template('user/chatroom.html', user=current_user, messages=messages)

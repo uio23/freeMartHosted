@@ -85,7 +85,8 @@
         productDetails = invoker.parent().children().toArray()
         productName = productDetails[0].textContent
         productPrice = productDetails[2].value
-        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice.toFixed(2)}`)
+        productPrice = Number(productPrice).toFixed(2)
+        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice}`)
         $('#resell').attr("value", productName)
     })
 </script>
