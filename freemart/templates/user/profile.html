@@ -12,7 +12,7 @@
         <h4 >Selling: {{ userSelling|length }} item(s)</h4>
         <div class="d-flex justify-content-between row">
             {% for item in userSelling %}
-                <div class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
+                <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
                     <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{ item.name }}</h5>
@@ -26,7 +26,7 @@
         <h4 style="margin-top: 10vh;">Owned: {{ userOwned|length }} item(s)</h4>
         <div class="d-flex justify-content-between row" style="margin-bottom: 10vh;">
             {% for item in userOwned %}
-                <div class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
+                <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
                     <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">{{ item.name }}</h5>
