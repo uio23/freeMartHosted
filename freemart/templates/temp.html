@@ -97,11 +97,6 @@
           $('html').attr('data-bs-theme', 'dark');
           $("#modeToggler").removeClass('fa-regular fa-sun');
           $("#modeToggler").addClass('fa-solid fa-moon');
-          $('.navbar-nav').children('a').each(function () {
-            var $this = $(this);
-            var _href = $this.attr('href');
-            $this.attr('href', _href = "?dark=true");
-          });
           $('.card').each(function(){
             $(this).attr('data-bs-theme', 'light');
           })
