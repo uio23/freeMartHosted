@@ -4,7 +4,7 @@ from io import BytesIO
 
 from PIL import Image
 
-import base64
+from base64 import b64encode
 
 
 def saveImg(productImage, imageFilename):
