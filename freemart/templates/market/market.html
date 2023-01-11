@@ -47,7 +47,7 @@
 </div>
 
 <script>
-    $('#purchaseConfirmation').on('show.bs.modal', function (event) {
+    $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
         let invoker = $(event.relatedTarget);
         productDetails = invoker.parent().children().toArray();
         productName = productDetails[0].textContent;
