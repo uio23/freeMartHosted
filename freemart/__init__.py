@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send
-from flask_login import LoginManager, current_user, current_user
+from flask_login import LoginManager, current_user
 
 import os
 
