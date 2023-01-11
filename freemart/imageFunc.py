@@ -20,7 +20,7 @@ def saveImg(productImage, imageFilename):
     img_byte_arr = img_byte_arr.getvalue()
     for repo in g.get_user().get_repos():
         if repo.name == "freemart_img":
-            repo.create_file(imageFilename, f'{current_user.username}'s' uplaod', bytes(img_byte_arr), "main")
+            repo.create_file(imageFilename, f"{current_user.username}'s uplaod", bytes(img_byte_arr), "main")
             return True
     return False
 
