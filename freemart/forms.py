@@ -21,11 +21,6 @@ class RegisterForm(FlaskForm):
             raise ValidationError("Username already exists")
 
 
-class LoginForm(FlaskForm):
-    username = StringField("username_label", validators=[validators.InputRequired(message="Username required")])
-    password = PasswordField("password_label", validators=[validators.InputRequired(message="Password required"), invalid_credentials])
-    submit_button = SubmitField('Login')
-
 def invalid_credentials(form, feild):
     username = form.username.data
     user = User.query.filter_by(username=username).first()
@@ -34,6 +29,11 @@ def invalid_credentials(form, feild):
         raise ValidationError("Incorrect username of password")
     elif not pbkdf2_sha256.verify(form.password.data, user.password):
         raise ValidationError("Incorrect username of password")
+
+class LoginForm(FlaskForm):
+    username = StringField("username_label", validators=[validators.InputRequired(message="Username required")])
+    password = PasswordField("password_label", validators=[validators.InputRequired(message="Password required"), invalid_credentials])
+    submit_button = SubmitField('Login')
 
 
 class ListingForm(FlaskForm):
