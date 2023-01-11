@@ -7,7 +7,7 @@ $(document).ready(function(){
     var socket = io.connect("https://" + document.domain + ':' + location.port);
 
     socket.on('connect', function(){
-        socket.send({'msg':"I am connected!", 'username':setUsername, 'auth': true});
+        socket.send({'msg':"I am connected!", 'username': userUsername, 'auth': true});
     });
 
     socket.on('message', function(data){
@@ -17,7 +17,7 @@ $(document).ready(function(){
 
 
     $("#sendBtn").on("click", function(){
-        socket.send({'msg':$(messageContent).val(), 'username': setUsername, 'auth': false});
+        socket.send({'msg':$(messageContent).val(), 'username': userUsername, 'auth': false});
         $('#messageContent').val('');
     })
 

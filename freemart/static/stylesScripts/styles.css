@@ -1,0 +1,29 @@
+form {
+  margin: 0 auto;
+  width: 40%;
+}
+
+
+.alert-box {
+  width: 30%;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 22vh;
+  text-align: center;
+}
+
+
+#header {
+  margin-top: 22vh;
+  margin-bottom: 12vh;
+  text-align: center;
+}
+
+
+#exempt {
+  margin-top: 8vh;
+  text-align: center;
+}

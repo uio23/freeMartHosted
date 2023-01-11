@@ -15,7 +15,7 @@ class Product(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return f'{self.name} is an item with the index of {self.id}, selling/sold a price of {self.price}. Listed: {self.listed}.'
+        return f'{self.name} is an item with the id of {self.id}, selling/sold at a price of {self.price}. Listed: {self.listed}.'
 
 
 class User(db.Model, UserMixin):

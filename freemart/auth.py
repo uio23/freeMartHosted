@@ -6,6 +6,7 @@ from passlib.hash import pbkdf2_sha256
 from . import db
 
 from .models import User
+
 from .forms import LoginForm, RegisterForm
 
 
@@ -32,8 +33,8 @@ def login_page():
 @login_required
 def logout_page():
     logout_user()
-
     return redirect(url_for('auth.login_page'))
+
 
 @auth.route('/sign-up', methods=["GET", "POST"])
 def sign_up_page():

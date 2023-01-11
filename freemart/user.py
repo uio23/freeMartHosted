@@ -21,7 +21,7 @@ def profile_page():
         seller = User.query.filter_by(id=product.user_id).first()
 
         if current_user.balance < product.price:
-            flash("Purchase error: Insufficient funds", category="error")
+            flash("Purchase failed: Insufficient funds", category="error")
         else:
             current_user.balance -= product.price
             seller.balance += product.price
@@ -31,12 +31,15 @@ def profile_page():
 
             db.session.commit()
 
+
     userSelling = [product for product in current_user.posts if product.listed == True]
     for product in userSelling:
         loadImg(product.imagePath)
+
     userOwned = [product for product in current_user.posts if product.listed == False]
     for product in userOwned:
         loadImg(product.imagePath)
+
     return render_template("user/profile.html", user=current_user, userSelling=userSelling, userOwned=userOwned)
 
 

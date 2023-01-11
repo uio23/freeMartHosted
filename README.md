@@ -1,1 +1,1 @@
-#Code for freeMart hosted on Heroku
+# Code for Free Mart hosted with Heroku

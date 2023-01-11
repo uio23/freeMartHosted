@@ -7,65 +7,66 @@
 
 {% block body %}
 <div style="text-align: center;">
-    <div class="container-fluid">
+  <div class="container-fluid">
 
-        <h4 >Selling: {{ userSelling|length }} item(s)</h4>
-        <div class="d-flex justify-content-between row">
-            {% for item in userSelling %}
-                <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
-                    <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.description }}</p>
-                        <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }}</button>
-                    </div>
-                </div>
-            {% endfor %}
+    <h4 >Selling: {{ userSelling|length }} item(s)</h4>
+    <div class="d-flex justify-content-between row">
+      {% for item in userSelling %}
+        <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
+          <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }}</button>
+          </div>
         </div>
-
-        <h4 style="margin-top: 10vh;">Owned: {{ userOwned|length }} item(s)</h4>
-        <div class="d-flex justify-content-between row" style="margin-bottom: 10vh;">
-            {% for item in userOwned %}
-                <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
-                    <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ item.name }}</h5>
-                        <p class="card-text">{{ item.description }}</p>
-                        <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
-
+      {% endfor %}
     </div>
+
+    <h4 style="margin-top: 10vh;">Owned: {{ userOwned|length }} item(s)</h4>
+    <div class="d-flex justify-content-between row" style="margin-bottom: 10vh;">
+      {% for item in userOwned %}
+        <div data-bs-theme="light" class="card w-25" style="margin: 20px; padding: 0; text-align: left;">
+          <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
+          <div class="card-body">
+            <h5 class="card-title">{{ item.name }}</h5>
+            <p class="card-text">{{ item.description }}</p>
+            <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
 </div>
 
 
 <div class="modal fade" id="resellConfirmation">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
 
-            <div class="modal-header">
-              <h4 class="modal-title">Confirm Re-sell</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="previousPrice" style="margin-bottom: 3%;"></div>
-                <div>How much do you want to re-sell it for?</div>
-            </div>
-
-            <div class="modal-footer justify-content-between">
-                <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
-                    <div class="input-group">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                        <input name="newPrice", type="text", class="form-control shadow-none", placeholder="New price", autocomplete="off">
-                        <button type="submit" name="productName" id="resell" class="btn btn-success">Confirm</button>
-                    </div>
-                </form>
-            </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Re-sell</h4>
       </div>
+
+      <div class="modal-body">
+        <div class="previousPrice" style="margin-bottom: 3%;"></div>
+        <div>How much do you want to re-sell it for?</div>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
+          <div class="input-group">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            <input name="newPrice" id="newPrice" type="text" class="form-control shadow-none" placeholder="New price" autocomplete="off">
+            <button type="submit" name="productName" id="resell" class="btn btn-success">Confirm</button>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
+</div>
 
 <style>
     #newPrice:focus {
@@ -75,19 +76,19 @@
 
 <script>
     $(document).ready(function () {
-        var back = ["#205295","#E94560","#3C6255", "#D89216"];
-        var rand = back[Math.floor(Math.random() * back.length)];
-        $('span').css('color',rand);
+        var colors = ["#205295","#E94560","#3C6255", "#D89216"];
+        var rand = colors[Math.floor(Math.random() * colors.length)];
+        $('span').css('color', rand);
     })
 
-    $('#resellConfirmation').on('show.bs.modal', function (event) {
-        let invoker = $(event.relatedTarget);
-        productDetails = invoker.parent().children().toArray()
-        productName = productDetails[0].textContent
-        productPrice = productDetails[2].value
+    $('#resellConfirmation').on('show.bs.modal', function (event){
+        var invoker = $(event.relatedTarget);
+        productDetails = invoker.parent().children().toArray();
+        productName = productDetails[0].textContent;
+        productPrice = productDetails[2].value;
         productPrice = Number(productPrice).toFixed(2)
-        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice}`)
-        $('#resell').attr("value", productName)
+        $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice}`);
+        $('#resell').attr("value", productName);
     })
 </script>
 {% endblock %}

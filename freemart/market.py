@@ -1,18 +1,17 @@
-from flask import Blueprint, redirect, render_template, flash, url_for, current_app, request
+from flask import Blueprint, redirect, render_template, flash, url_for, request
 from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
-
-
 
 import os
 
 from . import db
 
-from .imageFunc import saveImg, loadImg
-
 from .models import Product
+
 from .forms import ListingForm, validate_resell
+
+from .imageFunc import saveImg, loadImg
 
 
 market = Blueprint('market', __name__, url_prefix="/market")
@@ -35,6 +34,7 @@ def post_page():
         else:
             flash("Failed to upload image")
             return render_template("market/post.html", user=current_user, form=listing_form)
+
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
         db.session.add(item)
         db.session.commit()
@@ -51,19 +51,22 @@ def market_page():
     if request.method == "POST":
         productName = request.form.get("productName")
         newPrice = request.form.get("newPrice")
-        valid, newProduct = validate_resell(productName, newPrice, current_user)
+        valid, outcome = validate_resell(productName, newPrice, current_user)
 
         if valid:
             product = Product.query.filter_by(name=productName).first()
             db.session.delete(product)
             db.session.commit()
 
-            db.session.add(newProduct)
+            db.session.add(outcome)
             db.session.commit()
         else:
-            flash(newProduct, category="error")
+            flash(outcome, category="error")
             return redirect(url_for('user.profile_page'))
+
+
     items = Product.query.filter_by(listed=True).all()
     for item in items:
         loadImg(item.imagePath)
+
     return render_template("market/market.html", user=current_user, items=items)

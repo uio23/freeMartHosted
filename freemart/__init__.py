@@ -7,8 +7,6 @@ import os
 
 
 db = SQLAlchemy()
-DB_NAME = 'database.db'
-
 
 login_manager = LoginManager()
 
@@ -23,6 +21,7 @@ def create_app():
     app.secret_key = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
 
+
     from .auth import auth
     from .market import market
     from .user import user
@@ -32,14 +31,14 @@ def create_app():
     app.register_blueprint(auth)
 
 
-    db.init_app(app)
-    login_manager.login_view = 'auth.login_page'
-    login_manager.init_app(app)
-
-
     from .models import User, Product, Message
 
+    db.init_app(app)
     create_database(app)
+
+
+    login_manager.init_app(app)
+    login_manager.login_view = 'auth.login_page'
 
     @login_manager.user_loader
     def load_user(id):
@@ -70,6 +69,7 @@ def create_app():
             message = Message(msg=data['msg'], username=data["username"])
             db.session.add(message)
         db.session.commit()
+
 
     return app
 

@@ -2,6 +2,10 @@
 
 {% set exempt = true %}
 
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/chatroomStyles.css') }}">
+{% endblock %}
+
 {% block header %}
 <h2>Chatroom</h2>
 {% endblock %}
@@ -9,128 +13,52 @@
 {% block body %}
 <div class="container">
 
-    <div id="messagesContainer">
-        <div id="messages">
-            {% for message in messages %}
-                <p><span>@{{ message.username }} </span>{{ message.msg }}</p>
-            {% endfor %}
-        </div>
+  <div id="messagesContainer">
+    <div id="messages">
+      {% for message in messages %}
+        <p><span>@{{ message.username }} </span>{{ message.msg }}</p>
+      {% endfor %}
     </div>
+  </div>
 
-    <div class="input-group chatInput">
-        <span class="input-group-text" id="inputGroup-sizing-sm">~ {{ user.username }}</span>
-        <input id="messageContent" type="text" class="form-control shadow-none" maxlength="10000" placeholder="Message" aria-describedby="sendBtn">
-        <button type="button" id="sendBtn" class="btn btn-outline-secondary">Send</button>
-    </div>
+  <div class="input-group chatInput">
+    <span class="input-group-text" id="inputGroup-sizing-sm">~ {{ user.username }}</span>
+    <input id="messageContent" type="text" class="form-control shadow-none" maxlength="10000" placeholder="Message" aria-describedby="sendBtn" autofocus>
+    <button type="button" id="sendBtn" class="btn btn-outline-secondary">Send</button>
+  </div>
 
 </div>
 
-<style>
-    #messages {
-        max-height: 80%;
-        width: 90%;
-        position: absolute;
-        bottom: 30px;
-        left: 40px;
-        overflow: auto;
-    }
-
-
-    #messagesContainer {
-        text-align: left;
-        width: 80%;
-        position: absolute;
-        margin-left: auto;
-        border-radius: 15px;
-        margin-right: auto;
-        height: 75%;
-        left: 0;
-        right: 0;
-        background-color: #3C6255;
-    }
-
-
-    p {
-        color: black;
-        border: 1px solid #c0d8d0;
-        border-radius: 20px;
-        background-color: #c0d8d0;
-        width: fit-content;
-        padding: 5px;
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-
-
-    .container {
-        position: relative;
-        margin: auto;
-        width: 80%;
-        margin-top: 5vh;
-        height: 60vh;
-        text-align: center;
-    }
-
-
-    .chatInput {
-        width: 60%;
-        top: 80%;
-        margin-left: auto;
-        margin-right: auto;
-        left: 0;
-        right: 0;
-        position: absolute;
-    }
-
-
-    .specialInput:hover {
-        background-color: #0d6efd;
-        border-color: #0d6efd;
-    }
-
-
-    .specialInput {
-        border-color: #86b7fe;
-    }
-
-
-    .specialButton {
-        border-right: none;
-    }
-
-
-    span {
-        color: blue;
-    }
-
-</style>
-
+<!-- UI and UX JS */ -->
 <script>
-    const setUsername = `{{user.username|e}}`;
+  const userUsername = `{{user.username|e}}`;
 
-    $('input').on('click', function(){
-        $('button').addClass('specialInput')
-        $('button').on("mouseover", function(){
-            $('input').addClass('specialButton');
-        })
-        $('button').on("mouseleave", function(){
-            $('input').removeClass('specialButton');
-        })
+
+  $('input').on('click', function(){
+    $('button').addClass('specialInput');
+
+    $('button').on("mouseover", function(){
+      $('input').addClass('specialButton');
     })
 
-    $('input').on( "focusout", function(){
-        $('button').removeClass('specialInput')
+    $('button').on("mouseleave", function(){
+      $('input').removeClass('specialButton');
     })
+  })
 
-    // Submit message with "Enter" key
-    $('input').keypress(function(event){
-        if (event.keyCode === 13) {
-            $("#sendBtn").click();
-        }
-    })
+  $('input').on( "focusout", function(){
+    $('button').removeClass('specialInput')
+  })
 
+  // Submit message with "Enter" key
+  $('input').keypress(function(event){
+    if (event.keyCode === 13) {
+      $("#sendBtn").click();
+    }
+  })
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-<script src="{{ url_for('static', filename='style&script/chatroom.js') }}"></script>
+<!-- Functional JS -->
+<script src="{{ url_for('static', filename='stylesScripts/chatroom.js') }}"></script>
 {% endblock %}
