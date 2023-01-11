@@ -1,4 +1,4 @@
-from flask import current_user, current_app
+from flask_login import current_user, current_app
 
 import os
 
