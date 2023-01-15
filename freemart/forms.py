@@ -62,11 +62,11 @@ class ListingForm(FlaskForm):
 def validate_resell(productName, newPrice, user):
     product = Product.query.filter_by(name=productName).first()
 
-    if product.user_id == user.id:
+    if product.username == user.username:
         try:
             newPrice = round(float(newPrice), 2)
             if newPrice > 0.0:
-                newProduct = Product(name=productName, description=product.description, price=newPrice, listed=True, imagePath=product.imagePath, user_id=user.id)
+                newProduct = Product(name=productName, description=product.description, price=newPrice, listed=True, imagePath=product.imagePath, username=user.username)
                 return True, newProduct
 
             else:

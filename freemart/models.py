@@ -12,7 +12,7 @@ class Product(db.Model):
     price = db.Column(db.Float(asdecimal=True), nullable=False)
     listed = db.Column(db.Boolean, default=True)
     imagePath = db.Column(db.String, unique=True, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    username = db.Column(db.String, db.ForeignKey('user.username'))
 
     def __repr__(self):
         return f'{self.name} is an item with the id of {self.id}, selling/sold at a price of {self.price}. Listed: {self.listed}.'

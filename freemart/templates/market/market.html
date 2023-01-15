@@ -17,6 +17,9 @@
           <p class="card-text">{{ item.description }}</p>
           <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
         </div>
+        <div class="card-footer border-0 pt-0 text-black-50" style="padding-top: 8px;">
+          <p>- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
+        </div>
       </div>
     {% endfor %}
   </div>

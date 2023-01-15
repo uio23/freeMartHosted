@@ -11,14 +11,14 @@ from .models import Product, User, Message
 user = Blueprint('user', __name__, url_prefix="/user")
 
 
-@user.route("/profile", methods=["GET", "POST"])
-@user.route("/", methods=["GET", "POST"])
+@user.route("/profile/<username>", methods=["GET", "POST"])
+@user.route("/<username>", methods=["GET", "POST"])
 @login_required
-def profile_page():
+def profile_page(username):
     if request.method == "POST":
         productName = request.form.get('productName')
         product = Product.query.filter_by(name=productName).first()
-        seller = User.query.filter_by(id=product.user_id).first()
+        seller = User.query.filter_by(username=product.username).first()
 
         if current_user.balance < product.price:
             flash("Purchase failed: Insufficient funds", category="error")
@@ -27,20 +27,21 @@ def profile_page():
             seller.balance += product.price
 
             product.listed = False
-            product.user_id = current_user.id
+            product.username = current_user.username
 
             db.session.commit()
 
+    user = User.query.filter_by(username=username).first()
 
-    userSelling = [product for product in current_user.posts if product.listed == True]
+    userSelling = [product for product in user.posts if product.listed == True]
     for product in userSelling:
         loadImg(product.imagePath)
 
-    userOwned = [product for product in current_user.posts if product.listed == False]
+    userOwned = [product for product in user.posts if product.listed == False]
     for product in userOwned:
         loadImg(product.imagePath)
 
-    return render_template("user/profile.html", user=current_user, userSelling=userSelling, userOwned=userOwned)
+    return render_template("user/profile.html", user=user, userSelling=userSelling, userOwned=userOwned)
 
 
 @user.route('/chatroom')

@@ -24,7 +24,7 @@ def login_page():
         flash(f"Welcome back, {user.username}!", category="success")
         login_user(user, remember=True)
 
-        return redirect(url_for("user.profile_page"))
+        return redirect(url_for("user.profile_page", username=current_user.username))
 
     return render_template("auth/login.html", user=current_user, form=login_form)
 
@@ -51,6 +51,6 @@ def sign_up_page():
         flash(f"Welcome, {username}!", category="success")
         login_user(user, remember=True)
 
-        return redirect(url_for("user.profile_page"))
+        return redirect(url_for("user.profile_page", username=current_user.username))
 
     return render_template("auth/sign-up.html", user=current_user, form=register_form)

@@ -27,7 +27,7 @@
             <a class="nav-link" style="font-size:1.5rem;" aria-current="page" href="{{ url_for('user.chatroom_page') }}">Chatroom</a>
             <a class="nav-link" style="font-size:1.5rem;" aria-current="page" href="{{ url_for('market.market_page') }}">Market</a>
             <a class="nav-link" style="font-size:1.5rem;" aria-current="page" href="{{ url_for('market.post_page') }}">Post</a>
-            <a class="nav-link" style="font-size:1.5rem;" aria-current="page" href="{{ url_for('user.profile_page') }}">Profile</a>
+            <a class="nav-link" style="font-size:1.5rem;" aria-current="page" href="{{ url_for('user.profile_page', username=user) }}">Profile</a>
 
             <a class="nav-link btn btn-danger" style="font-size:1.5rem;" aria-current="page"
               {% if user.is_authenticated %}

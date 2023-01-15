@@ -35,7 +35,7 @@ def post_page():
             flash("Failed to upload image")
             return render_template("market/post.html", user=current_user, form=listing_form)
 
-        item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, user_id=current_user.id)
+        item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, username=current_user.username)
         db.session.add(item)
         db.session.commit()
 
@@ -62,11 +62,12 @@ def market_page():
             db.session.commit()
         else:
             flash(outcome, category="error")
-            return redirect(url_for('user.profile_page'))
+            return redirect(url_for('user.profile_page', username=current_user.username))
 
 
     items = Product.query.filter_by(listed=True).all()
     for item in items:
         loadImg(item.imagePath)
+
 
     return render_template("market/market.html", user=current_user, items=items)
