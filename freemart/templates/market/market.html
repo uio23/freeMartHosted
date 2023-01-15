@@ -15,10 +15,14 @@
         <div class="card-body">
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text">{{ item.description }}</p>
-          <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
+          {% if item.username == user.username %}
+            <button name="deletion" value="Delete" class="btn btn-danger overflow-auto">Delete</button>
+          {% else %}
+            <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
+          {% endif %}
         </div>
-        <div class="card-footer border-0 pt-0 text-black-50" style="padding-top: 8px;">
-          <p>- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
+        <div class="card-footer border-0 text-black-50" style="padding: 8px 0 0 0;">
+          <p style="padding: 0;">- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
         </div>
       </div>
     {% endfor %}
@@ -48,6 +52,16 @@
     </div>
   </div>
 </div>
+
+<style>
+  a {
+    color: inherit;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
 
 <script>
     $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
