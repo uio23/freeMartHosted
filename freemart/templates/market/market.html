@@ -21,7 +21,7 @@
             <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
           {% endif %}
         </div>
-        <div class="card-footer border-0 text-black-50" style="padding: 8px 0 0 0;">
+        <div class="card-footer border-0 pt-0 text-black-50" style="padding-top: 8px;">
           <p style="padding: 0;">- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
         </div>
       </div>
@@ -55,6 +55,7 @@
 
 <style>
   a {
+    text-decoration: none;
     color: inherit;
   }
 
