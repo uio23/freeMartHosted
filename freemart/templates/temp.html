@@ -36,14 +36,14 @@
                 href="{{ url_for('auth.login_page') }}">Login
               {% endif %}
             </a>
-            <i class="nav-link fa-solid fa-moon fa-md" id="displayModeIcon"></i>
+
 
           </div>
         </div>
       </div>
     </nav>
 
-
+<i class="nav-link fa-solid fa-moon fa-md" id="displayModeIcon"></i>
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
