@@ -16,7 +16,7 @@ auth = Blueprint('auth', __name__, url_prefix="/auth")
 @auth.route("/login", methods=["GET", "POST"])
 def login_page():
     if current_user.is_authenticated:
-        return redirect("user.profile_page", username=current_user.username)
+        return redirect(url_for("user.profile_page", username=current_user.username))
 
 
     login_form = LoginForm()
@@ -43,9 +43,9 @@ def logout_page():
 @auth.route('/sign-up', methods=["GET", "POST"])
 def sign_up_page():
     if current_user.is_authenticated:
-        return redirect("user.profile_page", username=current_user.username)
+        return redirect(url_for("user.profile_page", username=current_user.username))
 
-        
+
     register_form = RegisterForm()
 
     if register_form.validate_on_submit():
