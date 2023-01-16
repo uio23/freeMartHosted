@@ -36,7 +36,7 @@
                 href="{{ url_for('auth.login_page') }}">Login
               {% endif %}
             </a>
-            <a id="displayModeToggler" class="nav-link" style="font-size:1.5rem;" aria-current="page"><p style="display: inline;" id="displayModeText">Dark Mode</p><i class="fa-solid fa-moon fa-2xs d-inline-block align-center" id="displayModeIcon"></i></a>
+            <i class="nav-link fa-solid fa-moon fa-2xs d-inline-block align-center" id="displayModeIcon"></i>
 
           </div>
         </div>
@@ -90,7 +90,6 @@
           /* Change controls */
           $("#displayModeIcon").removeClass('fa-solid fa-moon');
           $("#displayModeIcon").addClass('fa-regular fa-sun');
-          $("#displayModeText").text("Light Mode")
 
           /* Pass on the darkMode setting */
           $('.navbar-nav').children('a').each(function () {
@@ -107,9 +106,8 @@
           $('html').removeAttr('data-bs-theme');
 
           /* Change controls */
-          $("#modeIcon").removeClass('fa-regular fa-sun');
-          $("#modeIcon").addClass('fa-solid fa-moon');
-          $("#displayMode").text("Dark Mode")
+          $("#displayModeIcon").removeClass('fa-regular fa-sun');
+          $("#displayModeIcon").addClass('fa-solid fa-moon');
 
           /* Remove darkMode requirement for next page */
           $('.navbar-nav').children('a').each(function () {
@@ -121,10 +119,10 @@
         }
 
 
-        $("#displayModeToggler").on('click', function(event){
-          if ($(event.target).children('i').hasClass('fa-sun')) {
+        $("#displayModeIcon").on('click', function(event){
+          if ($(event.target).hasClass('fa-sun')) {
             switchToDarkMode();
-          } else if ($(event.target).children('i').hasClass('fa-moon')) {
+          } else if ($(event.target).hasClass('fa-moon')) {
             switchToLightMode();
           }
         })
