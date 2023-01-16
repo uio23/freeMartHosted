@@ -43,7 +43,7 @@
       </div>
 
       <div class="modal-footer justify-content-between">
-        <form method="post" action="{{ url_for('user.profile_page', username=user.username) }}" style="all:revert;">
+        <form method="post" action="{{ url_for('user.profile_page', username=current_user.username) }}" style="all:revert;">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
           <button id="buy" type="submit" class="btn btn-success" name="productName">Confirm</button>
         </form>
