@@ -43,6 +43,8 @@ def create_app():
     @app.route("/")
     @app.route("/home")
     def home_page():
+        if current_user.is_authenticated:
+            return redirect("user.profile_page", username=current_user.username)
         return render_template("home.html", user=current_user)
 
 
