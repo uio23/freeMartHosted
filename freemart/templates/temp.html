@@ -36,6 +36,7 @@
                 href="{{ url_for('auth.login_page') }}">Login
               {% endif %}
             </a>
+            <a class="nav-link" style="font-size:1.5rem;" aria-current="page"><p id="displayMode">Dark Mode</p><i class="fa-solid fa-moon fa-2xs d-inline-block align-center" id="modeToggler"></i></a>
 
           </div>
         </div>
@@ -86,9 +87,10 @@
         function switchToDarkMode() {
           $('html').attr('data-bs-theme', 'dark');
 
-          /* If in Profile page */
-          $("#modeToggler").removeClass('fa-regular fa-sun');
-          $("#modeToggler").addClass('fa-solid fa-moon');
+          /* Change controls */
+          $("#modeToggler").removeClass('fa-solid fa-moon');
+          $("#modeToggler").addClass('fa-regular fa-sun');
+          $("#displayMode").text("Light Mode")
 
           /* Pass on the darkMode setting */
           $('.navbar-nav').children('a').each(function () {
@@ -105,9 +107,10 @@
         function switchToLightMode() {
           $('html').removeAttr('data-bs-theme');
 
-          /* If in Profile page */
-          $(event.target).removeClass('fa-solid fa-moon');
-          $(event.target).addClass('fa-regular fa-sun');
+          /* Change controls */
+          $(event.target).removeClass('fa-regular fa-sun');
+          $(event.target).addClass('fa-solid fa-moon');
+          $("#displayMode").text("Dark Mode")
 
           /* Remove darkMode requirement for next page */
           $('.navbar-nav').children('a').each(function () {
