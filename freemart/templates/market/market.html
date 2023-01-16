@@ -16,7 +16,7 @@
           <h5 class="card-title">{{ item.name }}</h5>
           <p class="card-text">{{ item.description }}</p>
           {% if item.username == user.username %}
-            <button name="deletion" value="Delete" class="btn btn-danger overflow-auto">Delete</button>
+            <button name="itemName" disabled value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
           {% else %}
             <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
           {% endif %}
@@ -54,6 +54,7 @@
 </div>
 
 <style>
+
   a {
     color: inherit;
     text-decoration: none;
