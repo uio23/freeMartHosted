@@ -17,7 +17,11 @@
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text">{{ item.description }}</p>
-            <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }}</button>
+            {% if user.username == current_user.username %}
+              <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }}</button>
+            {% else %}
+              <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
@@ -31,7 +35,9 @@
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text">{{ item.description }}</p>
-            <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
+            {% if user.username == current_user.username %}
+              <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
@@ -68,6 +74,31 @@
   </div>
 </div>
 
+<div class="modal fade" id="purchaseConfirmation">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Confirm Purchase</h4>
+      </div>
+
+      <div class="modal-body">
+        <div style="margin-bottom: 3%;">You have ${{ user.balance|round(2) }}</div>
+        <div class="itemInfo"></div>
+      </div>
+
+      <div class="modal-footer justify-content-between">
+        <form method="post" action="{{ url_for('user.profile_page', username=user.username) }}" style="all:revert;">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button id="buy" type="submit" class="btn btn-success" name="productName">Confirm</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 <style>
     #newPrice:focus {
         border: 1px solid #ced4da;
@@ -89,6 +120,15 @@
         productPrice = Number(productPrice).toFixed(2)
         $(".previousPrice").html(`<i>${productName}</i> costed you $${productPrice}`);
         $('#resell').attr("value", productName);
+    })
+
+    $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
+        let invoker = $(event.relatedTarget);
+        productDetails = invoker.parent().children().toArray();
+        productName = productDetails[0].textContent;
+        productPrice = productDetails[2].textContent;
+        $('.itemInfo').html(`Buy <i>${productName}</i> for ${productPrice}?`);
+        $('#buy').attr("value", productName);
     })
 </script>
 {% endblock %}

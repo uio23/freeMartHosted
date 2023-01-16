@@ -41,7 +41,7 @@ def profile_page(username):
     for product in userOwned:
         loadImg(product.imagePath)
 
-    return render_template("user/profile.html", user=user, userSelling=userSelling, userOwned=userOwned)
+    return render_template("user/profile.html", user=user, userSelling=userSelling, userOwned=userOwned, current_user=current_user)
 
 
 @user.route('/chatroom')
