@@ -22,7 +22,7 @@
           {% endif %}
         </div>
         <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
-          <p style="margin: 0;">- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
+          <p style="margin: 0;">- From <a class="from" href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
         </div>
       </div>
     {% endfor %}
@@ -55,12 +55,12 @@
 
 <style>
 
-  a {
+  .from {
     color: inherit;
     text-decoration: none;
   }
 
-  a:hover {
+  .from:hover {
     color: rgba(0,0,0,.55);
     text-decoration: underline;
   }
