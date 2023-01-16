@@ -36,14 +36,14 @@
                 href="{{ url_for('auth.login_page') }}">Login
               {% endif %}
             </a>
-
+            <i class="nav-link fa-solid fa-moon fa-2xl" id="displayModeIcon"></i>
 
           </div>
         </div>
       </div>
     </nav>
 
-<i class="fa-solid fa-moon fa-2xl" id="displayModeIcon"></i>
+
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
@@ -92,7 +92,7 @@
           $("#displayModeIcon").addClass('fa-regular fa-sun');
 
           /* Pass on the darkMode setting */
-          $('.navbar-nav').children('a').each(function () {
+          $('a').each(function () {
             $(this).attr('href', this.href + "?dark=true");
           })
 
@@ -110,7 +110,7 @@
           $("#displayModeIcon").addClass('fa-solid fa-moon');
 
           /* Remove darkMode requirement for next page */
-          $('.navbar-nav').children('a').each(function () {
+          $('a').each(function () {
             $(this).attr('href', this.href.split('?')[0]);
           })
 
@@ -120,9 +120,9 @@
 
 
         $("#displayModeIcon").on('click', function(event){
-          if ($(event.target).hasClass('fa-sun')) {
+          if ($(event.target).hasClass('fa-moon')) {
             switchToDarkMode();
-          } else if ($(event.target).hasClass('fa-moon')) {
+          } else if ($(event.target).hasClass('fa-sun')) {
             switchToLightMode();
           }
         })
