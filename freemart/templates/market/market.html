@@ -22,7 +22,7 @@
           {% endif %}
         </div>
         <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
-          <p style="padding: 0;">- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
+          <p style="margin: 0;">- From <a href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
         </div>
       </div>
     {% endfor %}
