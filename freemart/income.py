@@ -13,9 +13,9 @@ income = Blueprint('income', __name__, url_prefix="/income")
 @income.route("/quiz")
 def quiz_page():
     user = User.query.filter_by(username=current_user.username).first()
-    difference = datetime.utcnow() - datetime(user.lastquiz)
+    difference = datetime.utcnow() - datetime.strptime(user.lastquiz, '%y-%m-%d %H-%M-%S')
     print(datetime.utcnow())
-    print(user.lastquiz)
+    print(datetime.strptime(user.lastquiz, '%y-%m-%d %H-%M-%S'))
     if difference.days >= 1:
         return render_template("Yes sir")
     else:
