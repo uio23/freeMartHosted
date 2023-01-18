@@ -13,10 +13,15 @@ income = Blueprint('income', __name__, url_prefix="/income")
 @income.route("/quiz")
 def quiz_page():
     user = User.query.filter_by(username=current_user.username).first()
-    difference = datetime.utcnow() - datetime.strptime(user.lastquiz, '%y-%m-%d %H:%M:%S')
-    print(datetime.utcnow())
-    print(datetime.strptime(user.lastquiz, '%y-%m-%d %H-%M-%S'))
+
+    currentTime = datetime.utcnow()
+    lastTime = datetime.strptime(user.lastquiz, '%y-%m-%d %H:%M:%S')
+    difference = currentTime - lastTime
+    print(currentTime)
+    print(lastTime)
+    print(difference.days)
     if difference.days >= 1:
-        return render_template("Yes sir")
+        user.lastquiz = currentTime
+        db.session.commit()
     else:
-        return render_template("Huh")
+        return render_template("Please wait a day lmao!")
