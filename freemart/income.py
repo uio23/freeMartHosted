@@ -12,7 +12,7 @@ income = Blueprint('income', __name__, url_prefix="/income")
 @login_required
 @income.route("/quiz")
 def quiz_page():
-    user = User.query.filter_by(current_user.username).first()
+    user = User.query.filter_by(username=current_user.username).first()
     difference = datetime.utcnow() - user.lastquiz
     print(datetime.utcnow())
     print(user.lastquiz)
