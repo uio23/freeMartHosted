@@ -20,10 +20,12 @@ def create_app():
     from .auth import auth
     from .market import market
     from .user import user
+    from .income import income
 
     app.register_blueprint(user)
     app.register_blueprint(market)
     app.register_blueprint(auth)
+    app.register_blueprint(income)
 
 
     from .models import User, Product, Message
