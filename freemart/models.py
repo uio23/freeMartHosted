@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     balance = db.Column(db.Float(asdecimal=True), default=500.00)
     posts = db.relationship('Product')
     messages = db.relationship('Message')
-    lastQuiz = db.Column(db.String, nullable=False, default=func.now())
+    lastquiz = db.Column(db.String, nullable=False, default=func.now())
 
     def __repr__(self):
         return f'{self.username} is a user with the id of {self.id}. Their balance is {self.balance}. Posts: {self.posts}. Messages: {self.messages}.'
