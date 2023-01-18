@@ -17,12 +17,11 @@ def quiz_page():
     currentTime = datetime.utcnow()
     lastTime = datetime.strptime(user.lastquiz, '%Y-%m-%d %H:%M:%S.%f')
     difference = currentTime - lastTime
-    print(currentTime)
-    print(lastTime)
-    print(difference.days)
+
+
     if difference.days >= 1:
         user.lastquiz = currentTime
         db.session.commit()
-        return render_template("income/quiz.html")
+        return render_template("income/quiz.html", user=current_user, allow=True)
     else:
-        return "Please wait a day lmao!"
+        return render_template("income/quiz.html", user=current_user, allow=False)

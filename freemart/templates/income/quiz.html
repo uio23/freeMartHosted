@@ -1,1 +1,17 @@
-Hi
+{% from 'form_helper.html' import displayField %}
+{% extends "temp.html" %}
+
+{% block header %}
+<h2>Take the daily quiz, earn some munz</h2>
+{% endblock %}
+
+{% block body %}
+<form enctype="multipart/form-data" action="{{ url_for('user.profile_page', username=user.username) }}" method="POST" novalidate>
+    <!-- {{ displayField(form.productName, "Product name", autocomplete="off") }} -->
+    {% if allow %}
+      <h2>Comming soon</h2>
+    {% else %}
+      <h3>You have already been here today you cheaky</h3>
+    {% endif %}
+</form>
+{% endblock %}
