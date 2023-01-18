@@ -15,7 +15,7 @@ def quiz_page():
     user = User.query.filter_by(username=current_user.username).first()
 
     currentTime = datetime.utcnow()
-    lastTime = datetime.strptime(user.lastquiz, '%y-%m-%d %H:%M:%S')
+    lastTime = datetime.strptime(user.lastquiz, '%Y-%m-%d %H:%M:%S')
     difference = currentTime - lastTime
     print(currentTime)
     print(lastTime)
