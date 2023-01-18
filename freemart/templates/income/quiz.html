@@ -6,12 +6,20 @@
 {% endblock %}
 
 {% block body %}
+<div style="text-align: center;">
+  {% if allow %}
+    <h2>Comming soon</h2>
+  {% else %}
+    <h3>You have already been here today you cheaky</h3>
+  {% endif %}
+</div>
+
+
+<!--
+
 <form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST" novalidate>
-    <!-- displayField(form.productName, "Product name", autocomplete="off") -->
-    {% if allow %}
-      <h2>Comming soon</h2>
-    {% else %}
-      <h3>You have already been here today you cheaky</h3>
-    {% endif %}
+ displayField(form.productName, "Product name", autocomplete="off")
 </form>
+
+-->
 {% endblock %}
