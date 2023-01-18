@@ -23,5 +23,6 @@ def quiz_page():
     if difference.days >= 1:
         user.lastquiz = currentTime
         db.session.commit()
+        return render_template("income/quiz.html")
     else:
-        return render_template("Please wait a day lmao!")
+        return "Please wait a day lmao!"
