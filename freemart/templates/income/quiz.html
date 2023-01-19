@@ -15,14 +15,22 @@
 </div>
 <form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST">
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
-    <label class="form-check-label" for="qOneTrue">
-      True
-    </label><br>
-    <input class="form-check-input" type="radio" id="qOneFalse">
-    <label class="form-check-label" for="qOneFalse">
-   False
-   </label> <br>
+
+      <div class="has-validation">
+        {{ qOne(class="form-check-input", type="radio", id="qOneTrue") }}
+        <label class="form-check-label" for="qOneTrue">
+          True
+        </label><br>
+        <input class="form-check-input" type="radio" id="qOneFalse">
+        <label class="form-check-label" for="qOneFalse">
+       False
+       </label> <br>
+          {% for error in qOne.errors %}
+            <div class="invalid-feedback d-block">
+              {{ error }}
+            </div>
+          {% endfor %}
+      </div>
   </div>
 
   <div class="form-check">
