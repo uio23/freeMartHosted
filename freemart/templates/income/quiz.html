@@ -15,26 +15,36 @@
 </div>
 <form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST">
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOne") }}
-    <label class="form-check-label" for="qOne">
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
+    <label class="form-check-label" for="qOneTrue">
       True
-    </label> <br>
-    <input class="form-check-input" type="radio" id="qOneTwo">
-    <label class="form-check-label" for="qOneTwo">
+    </label><br>
+    <input class="form-check-input" type="radio" id="qOneFalse">
+    <label class="form-check-label" for="qOneFalse">
    False
    </label> <br>
   </div>
+
   <div class="form-check">
-    {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio", id="qOne") }}
-    <label class="form-check-label" for="qOne">
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
+    <label class="form-check-label" for="qTwoTrue">
       True
-    </label>
+    </label><br>
+    <input class="form-check-input" type="radio" id="qTwoFalse">
+    <label class="form-check-label" for="qTwoFalse">
+   False
+   </label> <br>
   </div>
+
   <div class="form-check">
-    {{ displayField(form.qThree, "pass", class="form-check-input", type="radio", id="qOne") }}
-    <label class="form-check-label" for="qOne">
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
+    <label class="form-check-label" for="qThreeTrue">
       True
-    </label>
+    </label><br>
+    <input class="form-check-input" type="radio" id="qThreeFalse">
+    <label class="form-check-label" for="qThreeFalse">
+   False
+   </label> <br>
   </div>
   {{ form.submit_button( class="btn btn-primary mb-4") }}
   {{ form.csrf_token }}
