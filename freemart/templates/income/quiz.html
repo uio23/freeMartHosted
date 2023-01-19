@@ -8,48 +8,52 @@
 {% endblock %}
 
 {% block body %}
-{% if allow %}
-<form method="POST">
-  <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
-    <label class="form-check-label" for="qOneTrue">
-      True
-    </label><br>
-    <input class="form-check-input" type="radio" id="qOneFalse" name="qOne">
-    <label class="form-check-label" for="qOneFalse">
-   False
-   </label> <br>
-  </div>
 
-  <div class="form-check">
-    {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
-    <label class="form-check-label" for="qTwoTrue">
-      True
-    </label><br>
-    <input class="form-check-input" type="radio" id="qTwoFalse", name="qTwo">
-    <label class="form-check-label" for="qTwoFalse">
-   False
-   </label> <br>
-  </div>
+<div style="text-align: center;">
+  {% if allow %}
+  <form method="POST" novalidate>
+    <div class="form-check">
+      {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
+      <label class="form-check-label" for="qOneTrue">
+        True
+      </label><br>
+      <input class="form-check-input" type="radio" id="qOneFalse" name="qOne">
+      <label class="form-check-label" for="qOneFalse">
+     False
+     </label> <br>
+    </div>
 
-  <div class="form-check">
-    {{ displayField(form.qThree, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
-    <label class="form-check-label" for="qThreeTrue">
-      True
-    </label><br>
-    <input class="form-check-input" type="radio" id="qThreeFalse", name="qThree">
-    <label class="form-check-label" for="qThreeFalse">
-   False
-   </label> <br>
-  </div>
-  {{ form.submit_button( class="btn btn-primary mb-4") }}
-  {{ form.csrf_token }}
-</form>
+    <div class="form-check">
+      {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
+      <label class="form-check-label" for="qTwoTrue">
+        True
+      </label><br>
+      <input class="form-check-input" type="radio" id="qTwoFalse", name="qTwo">
+      <label class="form-check-label" for="qTwoFalse">
+     False
+     </label> <br>
+    </div>
 
-{% else %}
+    <div class="form-check">
+      {{ displayField(form.qThree, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
+      <label class="form-check-label" for="qThreeTrue">
+        True
+      </label><br>
+      <input class="form-check-input" type="radio" id="qThreeFalse", name="qThree">
+      <label class="form-check-label" for="qThreeFalse">
+     False
+     </label> <br>
+    </div>
+    {{ form.submit_button( class="btn btn-primary mb-4") }}
+    {{ form.csrf_token }}
+  </form>
+  {% else %}
 
-<h1 style="text-align: center;">Come back tomorrow, smh</h1>
+  <h1>Come back tomorrow, smh</h1>
 
-{% endif %}
+  {% endif %}
+</div>
+
+
 
 {% endblock %}
