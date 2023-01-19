@@ -85,8 +85,8 @@ def validate_resell(productName, newPrice, user):
 
 class QuizForm(FlaskForm):
     response = requests.get("https://opentdb.com/api.php?amount=3&category=9&difficulty=medium&type=boolean")
-    raw = self.response.json()
-    content = self.raw['results']
+    raw = response.json()
+    content = raw['results']
     print(content)
 
     qOne = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
