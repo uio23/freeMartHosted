@@ -13,43 +13,35 @@
     <h3>You have already been here today you cheaky</h3>
   {% endif %}
 </div>
-<form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST">
+<form method="POST">
   <div class="form-check">
-
-      <div class="has-validation">
-        {{ form.qOne(class="form-check-input", type="radio", id="qOneTrue") }}
-        <label class="form-check-label" for="qOneTrue">
-          True
-        </label><br>
-        <input class="form-check-input" type="radio" id="qOneFalse">
-        <label class="form-check-label" for="qOneFalse">
-       False
-       </label> <br>
-          {% for error in form.qOne.errors %}
-            <div class="invalid-feedback d-block">
-              {{ error }}
-            </div>
-          {% endfor %}
-      </div>
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue", name="qOne") }}
+    <label class="form-check-label" for="qOneTrue">
+      True
+    </label><br>
+    <input class="form-check-input" type="radio" id="qOneFalse" name="qOne">
+    <label class="form-check-label" for="qOneFalse">
+   False
+   </label> <br>
   </div>
 
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qTwoTrue", name="qTwo") }}
     <label class="form-check-label" for="qTwoTrue">
       True
     </label><br>
-    <input class="form-check-input" type="radio" id="qTwoFalse">
+    <input class="form-check-input" type="radio" id="qTwoFalse", name="qTwo">
     <label class="form-check-label" for="qTwoFalse">
    False
    </label> <br>
   </div>
 
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qThreeTrue", name="qThree") }}
     <label class="form-check-label" for="qThreeTrue">
       True
     </label><br>
-    <input class="form-check-input" type="radio" id="qThreeFalse">
+    <input class="form-check-input" type="radio" id="qThreeFalse", name="qThree">
     <label class="form-check-label" for="qThreeFalse">
    False
    </label> <br>
