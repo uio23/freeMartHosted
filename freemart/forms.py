@@ -91,7 +91,7 @@ class QuizForm(FlaskForm):
         self.content = self.raw['results']
         print(self.content)
 
-    q1 = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
-    q2 = BooleanField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
-    q3 = BooleanField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = BooleanField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = BooleanField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')

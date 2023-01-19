@@ -14,9 +14,9 @@
   {% endif %}
 </div>
 <form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST" novalidate>
-  {{ displayField(form.q1, "pass", autocomplete="off") }}
-  {{ displayField(form.q2, "pass", autocomplete="off") }}
-  {{ displayField(form.q3, "pass", autocomplete="off") }}
+  {{ displayField(form.qOne, "pass") }}
+  {{ displayField(form.qTwo, "pass") }}
+  {{ displayField(form.qThree, "pass") }}
   {{ form.submit_button( class="btn btn-primary mb-4") }}
   {{ form.csrf_token }}
 </form>
