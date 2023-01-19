@@ -13,10 +13,29 @@
     <h3>You have already been here today you cheaky</h3>
   {% endif %}
 </div>
-<form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST" novalidate>
-  {{ displayField(form.qOne, "pass", class="form-check-input", type="radio") }}
-  {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio") }}
-  {{ displayField(form.qThree, "pass", class="form-check-input", type="radio") }}
+<form action="{{ url_for('user.profile_page', username=user.username) }}" method="POST">
+  <div class="form-check">
+    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOne") }}
+    <label class="form-check-label" for="qOne">
+      {{ }}
+    </label>
+    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+    <label class="form-check-label" for="flexRadioDefault1">
+   False
+   </label>
+  </div>
+  <div class="form-check">
+    {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio", id="qOne") }}
+    <label class="form-check-label" for="qOne">
+      {{ }}
+    </label>
+  </div>
+  <div class="form-check">
+    {{ displayField(form.qThree, "pass", class="form-check-input", type="radio", id="qOne") }}
+    <label class="form-check-label" for="qOne">
+      {{ }}
+    </label>
+  </div>
   {{ form.submit_button( class="btn btn-primary mb-4") }}
   {{ form.csrf_token }}
 </form>
