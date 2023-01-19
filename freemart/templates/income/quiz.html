@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block body %}
+{% if allow %}
 <form method="POST">
   <div class="form-check">
     {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
@@ -41,14 +42,14 @@
    False
    </label> <br>
   </div>
-  {% if allow %}
-    {{ form.submit_button( class="btn btn-primary mb-4") }}
-  {% else %}
-    {{ form.submit_button( class="btn btn-primary mb-4" disabled, value="Sumbited") }}
-  {% endif %}
-
+  {{ form.submit_button( class="btn btn-primary mb-4") }}
   {{ form.csrf_token }}
 </form>
 
+{% else %}
+
+<h1>Come back tomorrow, smh</h1>
+
+{% endif %}
 
 {% endblock %}
