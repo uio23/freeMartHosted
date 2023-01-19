@@ -6,13 +6,6 @@
 {% endblock %}
 
 {% block body %}
-<div style="text-align: center;">
-  {% if allow %}
-    <h2>Comming soon</h2>
-  {% else %}
-    <h3>You have already been here today you cheaky</h3>
-  {% endif %}
-</div>
 <form method="POST">
   <div class="form-check">
     {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qOneTrue") }}
@@ -26,7 +19,7 @@
   </div>
 
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
+    {{ displayField(form.qTwo, "pass", class="form-check-input", type="radio", id="qTwoTrue") }}
     <label class="form-check-label" for="qTwoTrue">
       True
     </label><br>
@@ -37,7 +30,7 @@
   </div>
 
   <div class="form-check">
-    {{ displayField(form.qOne, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
+    {{ displayField(form.qThree, "pass", class="form-check-input", type="radio", id="qThreeTrue") }}
     <label class="form-check-label" for="qThreeTrue">
       True
     </label><br>
@@ -46,7 +39,9 @@
    False
    </label> <br>
   </div>
+  {% if allow %}
   {{ form.submit_button( class="btn btn-primary mb-4") }}
+  {% endif %}
   {{ form.csrf_token }}
 </form>
 
