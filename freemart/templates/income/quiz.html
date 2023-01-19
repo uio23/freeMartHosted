@@ -1,8 +1,10 @@
 {% from 'form_helper.html' import displayField %}
 {% extends "temp.html" %}
 
+{% set exempt = True %}
+
 {% block header %}
-<h2>Take the daily quiz, earn some munz</h2>
+<h2>Daily quiz</h2>
 {% endblock %}
 
 {% block body %}
@@ -40,8 +42,11 @@
    </label> <br>
   </div>
   {% if allow %}
-  {{ form.submit_button( class="btn btn-primary mb-4") }}
+    {{ form.submit_button( class="btn btn-primary mb-4") }}
+  {% else %}
+    {{ form.submit_button( class="btn btn-primary mb-4" disabled, value="Sumbited") }}
   {% endif %}
+
   {{ form.csrf_token }}
 </form>
 
