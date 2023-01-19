@@ -7,6 +7,8 @@ from . import db
 
 from .models import User
 
+from .forms import QuizForm
+
 income = Blueprint('income', __name__, url_prefix="/income")
 
 @login_required
@@ -18,10 +20,10 @@ def quiz_page():
     lastTime = datetime.strptime(user.lastquiz, '%Y-%m-%d %H:%M:%S.%f')
     difference = currentTime - lastTime
 
-
+    questionForm = QuizForm()
     if difference.days >= 1:
         user.lastquiz = currentTime
         db.session.commit()
-        return render_template("income/quiz.html", user=current_user, allow=True)
+        return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
-        return render_template("income/quiz.html", user=current_user, allow=False)
+        return render_template("income/quiz.html", user=current_user, allow=False, form=questionForm)

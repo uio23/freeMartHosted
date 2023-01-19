@@ -1,8 +1,12 @@
 from flask_wtf import FlaskForm
 
-from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, validators, ValidationError
+from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, BooleanField, validators, ValidationError
 
 from passlib.hash import pbkdf2_sha256
+
+import requests
+
+import json
 
 from .models import Product, User
 
@@ -77,3 +81,17 @@ def validate_resell(productName, newPrice, user):
 
     else:
         return False, "Re-sell failed: You are not the owner of this item"
+
+
+class QuizForm(FlaskForm):
+    def __init__(self):
+        self.response = requests.get("https://opentdb.com/api.php?amount=3&category=9&difficulty=medium&type=boolean")
+        self.raw = response.json()
+        print(self.raw)
+        self.content = self.raw[1]
+        print(self.content)
+
+    q1 = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
+    q2 = BooleanField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
+    q3 = BooleanField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
+    submit_button = SubmitField('Submit')
