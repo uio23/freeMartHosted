@@ -15,7 +15,7 @@ income = Blueprint('income', __name__, url_prefix="/income")
 @income.route("/quiz")
 def quiz_page():
     questionForm = QuizForm()
-    if form.validate_on_submit():
+    if questionForm.validate_on_submit():
         return render_template(url_for("user.profile_page", username=current_user.username))
     user = User.query.filter_by(username=current_user.username).first()
 
