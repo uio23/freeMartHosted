@@ -91,6 +91,6 @@ class QuizForm(FlaskForm):
 
 
     qOne = RadioField("q1_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qTwo = RadioField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
-    qThree = RadioField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = RadioField("q2_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = RadioField("q3_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
