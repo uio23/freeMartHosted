@@ -31,7 +31,7 @@ def quiz_page():
                 print(answer)
                 print(questionForm.questions)
                 if answer == questionForm.questions[index][1]:
-                    flash("Correct answer " + index)
+                    flash("Correct answer " + str(index))
             return redirect(url_for("user.profile_page", username=current_user.username))
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
