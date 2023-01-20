@@ -90,7 +90,7 @@ class QuizForm(FlaskForm):
     questions = [[content[0]["question"], content[0]["correct_answer"]], [content[1]["question"], content[1]["correct_answer"]], [content[2]["question"], content[2]["correct_answer"]]]
 
 
-    qOne = RadioField("q1_label", choice=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = RadioField("q1_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     qTwo = RadioField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
     qThree = RadioField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
