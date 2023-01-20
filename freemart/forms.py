@@ -2,6 +2,8 @@ from flask_wtf import FlaskForm
 
 from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, SelectField, validators, ValidationError
 
+from wtforms.widgets import ListWidget, RadioInput
+
 from passlib.hash import pbkdf2_sha256
 
 import requests
