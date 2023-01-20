@@ -12,27 +12,14 @@
 <div style="text-align: center;">
   {% if allow %}
   <form method="POST" novalidate>
+      {{ form.qOne.label }}
+      {{ displayField(form.qOne, "pass", class="form-check-input") }}
+      {{ form.qTwo.label }}
+      {{ displayField(form.qTwo, "pass", class="form-check-input") }}
+      {{ form.qThree.label }}
+      {{ displayField(form.qThree, "pass", class="form-check-input") }}
 
-      {{ form.qOne(class="form-check-input") }}
-        {% for error in form.qOne.errors %}
-          <div class="invalid-feedback d-block">
-            {{ error }}
-          </div>
-        {% endfor %}
 
-        {{ form.qTwo(class="form-check-input") }}
-          {% for error in form.qTwo.errors %}
-            <div class="invalid-feedback d-block">
-              {{ error }}
-            </div>
-          {% endfor %}
-
-          {{ form.qThree(class="form-check-input") }}
-            {% for error in form.qThree.errors %}
-              <div class="invalid-feedback d-block">
-                {{ error }}
-              </div>
-            {% endfor %}
 
     {{ form.submit_button( class="btn btn-primary mb-4") }}
     {{ form.csrf_token }}

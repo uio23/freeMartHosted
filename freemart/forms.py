@@ -1,8 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, SelectField, validators, ValidationError
-
-from wtforms.widgets import ListWidget, RadioInput
+from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, RadioField, validators, ValidationError
 
 from passlib.hash import pbkdf2_sha256
 
@@ -12,9 +10,6 @@ import json
 
 from .models import Product, User
 
-class CustomRadioField(SelectField):
-    widget = ListWidget(prefix_label=False)
-    option_widget = RadioInput()
 
 class RegisterForm(FlaskForm):
     username = StringField('username_label', validators=[validators.InputRequired(message="Username required"), validators.Length(min=4, max=12, message="Username must be between 4 and 12 charecters")])
@@ -95,7 +90,7 @@ class QuizForm(FlaskForm):
     questions = [[content[0]["question"], content[0]["correct_answer"]], [content[1]["question"], content[1]["correct_answer"]], [content[2]["question"], content[2]["correct_answer"]]]
 
 
-    qOne = CustomRadioField("q1_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qTwo = CustomRadioField("q2_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qThree = CustomRadioField("q3_label", choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = RadioField(content[0]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = RadioField(content[1]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = RadioField(content[2]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
