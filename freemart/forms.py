@@ -89,28 +89,28 @@ class QuizForm(FlaskForm):
     response = requests.get("https://opentdb.com/api.php?amount=3&category=9&difficulty=medium&type=boolean&encode=url3986")
     raw = response.json()
     content = raw['results']
-    self.questions = [[urllib.parse.unquote(content[0]["question"]), content[0]["correct_answer"]], [urllib.parse.unquote(content[1]["question"]), content[1]["correct_answer"]], [urllib.parse.unquote(content[2]["question"]), content[2]["correct_answer"]]]
+    questions = [[urllib.parse.unquote(content[0]["question"]), content[0]["correct_answer"]], [urllib.parse.unquote(content[1]["question"]), content[1]["correct_answer"]], [urllib.parse.unquote(content[2]["question"]), content[2]["correct_answer"]]]
 
 
-    qOne = RadioField(self.questions[0][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qTwo = RadioField(self.questions[1][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qThree = RadioField(self.questions[2][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = RadioField(questions[0][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = RadioField(questions[1][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = RadioField(questions[2][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
 
     def validate_qOne(self, qOne):
         q1 = qOne.data
 
-        if self.questions[0][-1] != str(q1):
+        if questions[0][-1] != str(q1):
             raise ValidationError("Wrong")
 
     def validate_qTwo(self, qTwo):
         q2 = qTwo.data
 
-        if self.questions[1][-1] != str(q2):
+        if questions[1][-1] != str(q2):
             raise ValidationError("Wrong")
 
     def validate_qThree(self, qThree):
         q3 = qThree.data
 
-        if self.questions[2][-1] != str(q3):
+        if questions[2][-1] != str(q3):
             raise ValidationError("Wrong")
