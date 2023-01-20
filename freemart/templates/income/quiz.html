@@ -11,6 +11,7 @@
 
 <div style="text-align: left;">
   {% if allow %}
+  <div class="quizForm">
   <form method="POST" novalidate>
     <div class="form-check">
       {{ form.qOne.label}}
@@ -49,6 +50,7 @@
     {{ form.submit_button( class="btn btn-primary mb-4") }}
     {{ form.csrf_token }}
   </form>
+  </div>
   {% else %}
 
   <h1 style="text-align:center;" >Come back tomorrow, smh</h1>
@@ -59,6 +61,11 @@
 <style >
   .form-check .form-check-input {
     float: none;
+  }
+  .quizForm {
+    padding: 100px;
+    background-color: #86A3B8;
+    border-radius: 20px;
   }
 </style>
 

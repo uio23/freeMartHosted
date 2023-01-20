@@ -9,37 +9,31 @@
 
 {% block body %}
 
-<div style="text-align: left;">
+<div style="text-align: left;" class="quizForm">
   <form>
     <div class="form-check">
       {{ form.qOne.label}}
       {{ form.qOne }}
-      {% for error in form.qOne.errors %}
-        <div class="invalid-feedback d-block">
-          {{ outcome[0] }}
-        </div>
-      {% endfor %}
+      <div class="invalid-feedback d-block">
+        {{ outcome[0] }}
+      </div>
     </div>
 
 
       <div class="form-check">
         {{ form.qTwo.label }}
         {{ form.qTwo }}
-        {% for error in form.qTwo.errors %}
-          <div class="invalid-feedback d-block">
-            {{ outcome[1] }}
-          </div>
-        {% endfor %}
+        <div class="invalid-feedback d-block">
+          {{ outcome[1] }}
+        </div>
       </div>
 
       <div class="form-check">
         {{ form.qThree.label }}
         {{ form.qThree }}
-        {% for error in form.qThree.errors %}
-          <div class="invalid-feedback d-block">
-            {{ outcome[2] }}
-          </div>
-        {% endfor %}
+        <div class="invalid-feedback d-block">
+          {{ outcome[2] }}
+        </div>
       </div>
 
   </form>
@@ -56,6 +50,11 @@
   }
   .results {
     text-align: center;
+  }
+  .quizForm {
+    padding: 100px;
+    background-color: #86A3B8;
+    border-radius: 20px;
   }
 </style>
 
