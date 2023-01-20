@@ -96,21 +96,3 @@ class QuizForm(FlaskForm):
     qTwo = RadioField(questions[1][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     qThree = RadioField(questions[2][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
-
-    def validate_qOne(self, qOne):
-        q1 = qOne.data
-
-        if questions[0][-1] != str(q1):
-            raise ValidationError("Wrong")
-
-    def validate_qTwo(self, qTwo):
-        q2 = qTwo.data
-
-        if questions[1][-1] != str(q2):
-            raise ValidationError("Wrong")
-
-    def validate_qThree(self, qThree):
-        q3 = qThree.data
-
-        if questions[2][-1] != str(q3):
-            raise ValidationError("Wrong")
