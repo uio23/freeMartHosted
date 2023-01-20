@@ -92,7 +92,7 @@ class QuizForm(FlaskForm):
     questions = [[urllib.parse.unquote(content[0]["question"]), content[0]["correct_answer"]], [urllib.parse.unquote(content[1]["question"]), content[1]["correct_answer"]], [urllib.parse.unquote(content[2]["question"]), content[2]["correct_answer"]]]
 
 
-    qOne = RadioField(content[0]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qTwo = RadioField(content[1]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
-    qThree = RadioField(content[2]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = RadioField(questions[0][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = RadioField(questions[1][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = RadioField(questions[2][0], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
