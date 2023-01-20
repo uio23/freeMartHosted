@@ -14,21 +14,21 @@
   <form method="POST" novalidate>
 
       {{ form.qOne(class="form-check-input") }}
-        {% for error in feildName.errors %}
+        {% for error in form.qOne.errors %}
           <div class="invalid-feedback d-block">
             {{ error }}
           </div>
         {% endfor %}
 
         {{ form.qTwo(class="form-check-input") }}
-          {% for error in feildName.errors %}
+          {% for error in form.qTwo.errors %}
             <div class="invalid-feedback d-block">
               {{ error }}
             </div>
           {% endfor %}
 
           {{ form.qThree(class="form-check-input") }}
-            {% for error in feildName.errors %}
+            {% for error in form.qThree.errors %}
               <div class="invalid-feedback d-block">
                 {{ error }}
               </div>
