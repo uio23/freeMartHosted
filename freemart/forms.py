@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, BooleanField, validators, ValidationError
+from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, RadioField, validators, ValidationError
 
 from passlib.hash import pbkdf2_sha256
 
@@ -90,7 +90,7 @@ class QuizForm(FlaskForm):
     questions = [[content[0]["question"], content[0]["correct_answer"]], [content[1]["question"], content[1]["correct_answer"]], [content[2]["question"], content[2]["correct_answer"]]]
 
 
-    qOne = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
-    qTwo = BooleanField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
-    qThree = BooleanField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qOne = RadioField("q1_label", choice=[("True", "True"), ("False", "False")] validators=[validators.InputRequired(message="Please answer this question")])
+    qTwo = RadioField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])
+    qThree = RadioField("q3_label", validators=[validators.InputRequired(message="Please answer this question")])
     submit_button = SubmitField('Submit')
