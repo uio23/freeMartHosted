@@ -89,7 +89,7 @@ class QuizForm(FlaskForm):
     response = requests.get("https://opentdb.com/api.php?amount=3&category=9&difficulty=medium&type=boolean&encode=url3986")
     raw = response.json()
     content = raw['results']
-    questions = [[urllib.parse.unquote(content[0]["question"]), content[0]["correct_answer"]], urllib.parse.unquote([content[1]["question"]), content[1]["correct_answer"]], urllib.parse.unquote([content[2]["question"]), content[2]["correct_answer"]]]
+    questions = [[urllib.parse.unquote(content[0]["question"]), content[0]["correct_answer"]], urllib.parse.unquote(content[1]["question"]), content[1]["correct_answer"]], urllib.parse.unquote(content[2]["question"]), content[2]["correct_answer"]]]
 
 
     qOne = RadioField(content[0]["question"], choices=[("True", "True"), ("False", "False")], validators=[validators.InputRequired(message="Please answer this question")])
