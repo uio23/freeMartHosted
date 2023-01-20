@@ -13,7 +13,7 @@
   {% if allow %}
   <form method="POST" novalidate>
     <div class="form-check">
-      {{ form.qOne.label(class="form-check-label") }}
+      {{ form.qOne.label}}
       {{ form.qOne }}
       {% for error in form.qOne.errors %}
         <div class="invalid-feedback d-block">
@@ -24,7 +24,7 @@
 
 
       <div class="form-check">
-        {{ form.qTwo.label(class="form-check-label") }}
+        {{ form.qTwo.label }}
         {{ form.qTwo }}
         {% for error in form.qTwo.errors %}
           <div class="invalid-feedback d-block">
@@ -34,7 +34,7 @@
       </div>
 
       <div class="form-check">
-        {{ form.qThree.label(class="form-check-label") }}
+        {{ form.qThree.label }}
         {{ form.qThree }}
         {% for error in form.qThree.errors %}
           <div class="invalid-feedback d-block">
@@ -55,6 +55,12 @@
 
   {% endif %}
 </div>
+
+<style >
+  .form-check .form-check-input {
+    float: none;
+  }
+</style>
 
 <script type="text/javascript">
   $("input[type='radio']").each(function(){
