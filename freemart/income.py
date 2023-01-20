@@ -27,12 +27,16 @@ def quiz_page():
             #user.lastquiz = currentTime
             #db.session.commit()
             answers = [questionForm.qOne.data, questionForm.qTwo.data, questionForm.qThree.data]
+            numOfCorrect = 0
+            outcome = []
             for index, answer in enumerate(answers):
-                print(answer)
-                print(questionForm.questions)
                 if str(answer) == questionForm.questions[index][1]:
-                    flash("Correct answer " + str(index))
-            return redirect(url_for("user.profile_page", username=current_user.username))
+                    numOfCorrect += 1
+                    outcome.append("Correct")
+                else:
+                    outcome.append("Wrong")
+
+            return render_template("income/quizResult.html", user=current_user, outcome=outcome, numOfCorrect=numOfCorrect)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)

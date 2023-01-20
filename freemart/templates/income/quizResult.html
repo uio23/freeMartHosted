@@ -1,0 +1,68 @@
+{% from 'form_helper.html' import displayField %}
+{% extends "temp.html" %}
+
+{% set exempt = True %}
+
+{% block header %}
+<h2>Daily quiz</h2>
+{% endblock %}
+
+{% block body %}
+
+<div style="text-align: left;">
+  <form>
+    <div class="form-check">
+      {{ form.qOne.label}}
+      {{ form.qOne }}
+      {% for error in form.qOne.errors %}
+        <div class="invalid-feedback d-block">
+          {{ outcome[0] }}
+        </div>
+      {% endfor %}
+    </div>
+
+
+      <div class="form-check">
+        {{ form.qTwo.label }}
+        {{ form.qTwo }}
+        {% for error in form.qTwo.errors %}
+          <div class="invalid-feedback d-block">
+            {{ outcome[1] }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="form-check">
+        {{ form.qThree.label }}
+        {{ form.qThree }}
+        {% for error in form.qThree.errors %}
+          <div class="invalid-feedback d-block">
+            {{ outcome[2] }}
+          </div>
+        {% endfor %}
+      </div>
+
+  </form>
+  <div class="results">
+    <h3>You got {{ numOfCorrect }}/3 questions right</h3>
+    <h3>You have been rewarded {{ numOfCorrect * 10}} coins!</h3>
+  </div>
+
+</div>
+
+<style >
+  .form-check .form-check-input {
+    float: none;
+  }
+  .results {
+    text-align: center;
+  }
+</style>
+
+<script type="text/javascript">
+  $("input[type='radio']").each(function(){
+    $(this).addClass("form-check-input")
+  })
+</script>
+
+{% endblock %}
