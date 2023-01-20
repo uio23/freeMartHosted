@@ -23,16 +23,19 @@ def quiz_page():
 
     if difference.days >= 1:
         questionForm = QuizForm()
-        if questionForm.validate_on_submit():
-            user.lastquiz = currentTime
-            db.session.commit()
+        try:
+
             answers = [questionForm.qOne.data, questionForm.qTwo.data, questionForm.qThree.data]
             for index, answer in enumerate(answers):
                 print(answer)
                 print(questionForm.questions)
                 if str(answer) == questionForm.questions[index][1]:
                     flash("Correct answer " + str(index))
+            #user.lastquiz = currentTime
+            #db.session.commit()
             return redirect(url_for("user.profile_page", username=current_user.username))
+        except:
+            pass
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)
