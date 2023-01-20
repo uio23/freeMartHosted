@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 
-from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, SelectFeild, validators, ValidationError
+from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, SelectField, validators, ValidationError
 
 from passlib.hash import pbkdf2_sha256
 
