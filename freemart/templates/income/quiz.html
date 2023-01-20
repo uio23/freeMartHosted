@@ -12,22 +12,22 @@
 <div style="text-align: center;">
   {% if allow %}
   <form method="POST" novalidate>
-      {{ form.qOne.label }}
-      {{ form.qOne }}
+      {{ form.qOne.label(class="form-check-label") }}
+      {{ form.qOne(class="form-check-input") }}
       {% for error in form.qOne.errors %}
         <div class="invalid-feedback d-block">
           {{ error }}
         </div>
       {% endfor %}
-      {{ form.qTwo.label }}
-      {{ form.qTwo }}
+      {{ form.qTwo.label(class="form-check-label") }}
+      {{ form.qTwo(class="form-check-input") }}
       {% for error in form.qTwo.errors %}
         <div class="invalid-feedback d-block">
           {{ error }}
         </div>
       {% endfor %}
-      {{ form.qThree.label }}
-      {{ form.qThree }}
+      {{ form.qThree.label(class="form-check-label") }}
+      {{ form.qThree(class="form-check-input") }}
       {% for error in form.qThree.errors %}
         <div class="invalid-feedback d-block">
           {{ error }}
@@ -46,6 +46,10 @@
   {% endif %}
 </div>
 
-
+<script type="text/javascript">
+  $("ul").each(function(object){
+    object.addClass("form-check")
+  })
+</script>
 
 {% endblock %}
