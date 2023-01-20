@@ -87,7 +87,8 @@ class QuizForm(FlaskForm):
     response = requests.get("https://opentdb.com/api.php?amount=3&category=9&difficulty=medium&type=boolean")
     raw = response.json()
     content = raw['results']
-    print(content)
+    questions = [[content[0]["question"], content[0]["correct_answer"]], [content[1]["question"], content[1]["correct_answer"]], [content[2]["question"], content[2]["correct_answer"]]]
+
 
     qOne = BooleanField("q1_label", validators=[validators.InputRequired(message="Please answer this question")])
     qTwo = BooleanField("q2_label", validators=[validators.InputRequired(message="Please answer this question")])

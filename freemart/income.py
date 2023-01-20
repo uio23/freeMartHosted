@@ -12,7 +12,7 @@ from .forms import QuizForm
 income = Blueprint('income', __name__, url_prefix="/income")
 
 @login_required
-@income.route("/quiz")
+@income.route("/quiz", methods=["GET", "POST"])
 def quiz_page():
     user = User.query.filter_by(username=current_user.username).first()
 
@@ -22,10 +22,16 @@ def quiz_page():
 
 
     if difference.days >= 1:
-        user.lastquiz = currentTime
-        db.session.commit()
         questionForm = QuizForm()
         if questionForm.validate_on_submit():
+            #user.lastquiz = currentTime
+            #db.session.commit()
+            answers = [questionForm.qOne.data, questionForm.qTwo.data, questionForm.qThree.data]
+            for index, answer in enumerate(answers):
+                print(answer)
+                print(questionForm.questions)
+                if answer == questionForm.questions[index][1]:
+                    flash("Correct answer " + index)
             return render_template(url_for("user.profile_page", username=current_user.username))
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
