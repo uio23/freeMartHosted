@@ -8,13 +8,11 @@
 {% endblock %}
 
 {% block body %}
-
-<div class="quizForm">
   <form >
     <div class="form-check">
       {{ form.qOne.label}}
       {{ form.qOne }}
-      <div class="invalid-feedback d-block">
+      <div class="{{ outcome[0] }}-feedback d-block">
         {{ outcome[0] }}
       </div>
     </div>
@@ -23,7 +21,7 @@
       <div class="form-check">
         {{ form.qTwo.label }}
         {{ form.qTwo }}
-        <div class="invalid-feedback d-block">
+        <div class="{{ outcome[1] }}-feedback d-block">
           {{ outcome[1] }}
         </div>
       </div>
@@ -31,7 +29,7 @@
       <div class="form-check">
         {{ form.qThree.label }}
         {{ form.qThree }}
-        <div class="invalid-feedback d-block">
+        <div class="{{ outcome[2] }}-feedback d-block">
           {{ outcome[2] }}
         </div>
       </div>
@@ -50,12 +48,6 @@
   }
   .results {
     text-align: center;
-  }
-  .quizForm {
-    padding: 100px;
-    background-color: #86A3B8;
-    border-radius: 20px;
-    text-align: left;
   }
 </style>
 

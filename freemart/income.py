@@ -32,9 +32,9 @@ def quiz_page():
             for index, answer in enumerate(answers):
                 if str(answer) == questionForm.questions[index][1]:
                     numOfCorrect += 1
-                    outcome.append("Correct")
+                    outcome.append("valid")
                 else:
-                    outcome.append("Wrong")
+                    outcome.append("invalid")
 
             return render_template("income/quizResult.html", user=current_user, outcome=outcome, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
