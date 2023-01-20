@@ -13,11 +13,26 @@
   {% if allow %}
   <form method="POST" novalidate>
       {{ form.qOne.label }}
-      {{ displayField(form.qOne, "pass", class="form-check-input") }}
+      {{ form.qOne }}
+      {% for error in form.qOne.errors %}
+        <div class="invalid-feedback d-block">
+          {{ error }}
+        </div>
+      {% endfor %}
       {{ form.qTwo.label }}
-      {{ displayField(form.qTwo, "pass", class="form-check-input") }}
+      {{ form.qTwo }}
+      {% for error in form.qTwo.errors %}
+        <div class="invalid-feedback d-block">
+          {{ error }}
+        </div>
+      {% endfor %}
       {{ form.qThree.label }}
-      {{ displayField(form.qThree, "pass", class="form-check-input") }}
+      {{ form.qThree }}
+      {% for error in form.qThree.errors %}
+        <div class="invalid-feedback d-block">
+          {{ error }}
+        </div>
+      {% endfor %}
 
 
 
