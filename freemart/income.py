@@ -36,7 +36,7 @@ def quiz_page():
                 else:
                     outcome.append("Wrong")
 
-            return render_template("income/quizResult.html", user=current_user, outcome=outcome, numOfCorrect=numOfCorrect)
+            return render_template("income/quizResult.html", user=current_user, outcome=outcome, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)
