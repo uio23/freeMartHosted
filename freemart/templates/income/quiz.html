@@ -12,27 +12,37 @@
 <div style="text-align: center;">
   {% if allow %}
   <form method="POST" novalidate>
+    <div class="form-check">
       {{ form.qOne.label(class="form-check-label") }}
-      {{ form.qOne(class="form-check-input") }}
+      {{ form.qOne }}
       {% for error in form.qOne.errors %}
         <div class="invalid-feedback d-block">
           {{ error }}
         </div>
       {% endfor %}
-      {{ form.qTwo.label(class="form-check-label") }}
-      {{ form.qTwo(class="form-check-input") }}
-      {% for error in form.qTwo.errors %}
-        <div class="invalid-feedback d-block">
-          {{ error }}
-        </div>
-      {% endfor %}
-      {{ form.qThree.label(class="form-check-label") }}
-      {{ form.qThree(class="form-check-input") }}
-      {% for error in form.qThree.errors %}
-        <div class="invalid-feedback d-block">
-          {{ error }}
-        </div>
-      {% endfor %}
+    </div>
+
+
+      <div class="form-check">
+        {{ form.qTwo.label(class="form-check-label") }}
+        {{ form.qTwo }}
+        {% for error in form.qTwo.errors %}
+          <div class="invalid-feedback d-block">
+            {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="form-check">
+        {{ form.qThree.label(class="form-check-label") }}
+        {{ form.qThree }}
+        {% for error in form.qThree.errors %}
+          <div class="invalid-feedback d-block">
+            {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+
 
 
 
@@ -47,8 +57,8 @@
 </div>
 
 <script type="text/javascript">
-  $("ul").each(function(object){
-    object.addClass("form-check")
+  $("input[type='radio']").each(function(){
+    $(this).addClass("form-check")
   })
 </script>
 
