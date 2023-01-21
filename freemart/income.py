@@ -24,8 +24,7 @@ def quiz_page():
     if difference.days >= 1:
         questionForm = QuizForm()
         if questionForm.validate_on_submit():
-            #user.lastquiz = currentTime
-            #db.session.commit()
+            user.lastquiz = currentTime
             answers = [questionForm.qOne.data, questionForm.qTwo.data, questionForm.qThree.data]
             numOfCorrect = 0
             checked = []
@@ -44,6 +43,9 @@ def quiz_page():
                 else:
                     outcome.append("invalid")
 
+            user.balance += (numOfCorrect*10)
+            db.session.commit()
+            
             return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
