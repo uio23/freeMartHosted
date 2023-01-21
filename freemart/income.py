@@ -31,14 +31,14 @@ def quiz_page():
             checked = []
             outcome = []
             for index, answer in enumerate(answers):
-                if answer:
+                if answer == "True":
                     checked.append("checked")
                     checked.append("")
                 else:
                     checked.append("")
                     checked.append("checked")
 
-                if str(answer) == questionForm.questions[index][1]:
+                if answer == questionForm.questions[index][1]:
                     numOfCorrect += 1
                     outcome.append("valid")
                 else:
