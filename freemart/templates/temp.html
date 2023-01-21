@@ -92,7 +92,7 @@
 
           /* Pass on the darkMode setting */
           $('a').each(function () {
-            $(this).attr('href', (this.href + "?dark=true").replace("#", ""));
+            $(this).attr('href', this.href + "?dark=true");
           })
           $('form').attr('action', function(i, value) {
             return value + "?dark=true";

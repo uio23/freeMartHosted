@@ -11,7 +11,7 @@
 
 
   {% if allow %}
-  <form method="POST" novalidate>
+  <form action="{{ url_for('income.quiz_page') }}" method="POST" novalidate>
     <div class="quiz-form-content">
       <div class="form-check">
         {{ form.qOne.label}}
@@ -51,7 +51,7 @@
 
   {% else %}
 
-  <h1 style="text-align:center; margin-top: 3vh;" >You've done a quiz in the past 24h</h1>
+  <h1 style="text-align:center; margin-top: 3vh;" >You've already done a quiz in the past 24h</h1>
 
   {% endif %}
 </div>
