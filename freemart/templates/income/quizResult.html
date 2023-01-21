@@ -81,7 +81,7 @@
   })
 
   $(".d-block").each(function(){
-    if ($(this).text() == " valid ") {
+    if ($(this).hasClass("valid-feedback")) {
       $(this).html("Correct, +10 coins!")
     } else {
       $(this).html("Wrong")
