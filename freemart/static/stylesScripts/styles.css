@@ -19,8 +19,9 @@ form {
   text-align: left;
   border: 1px solid red;
   padding: 10px;
+  padding-top: 25px;
   border-radius: 15px;
-  background-color: #EFF5F5;
+  background-color: #DDDDDD;
 }
 
 #header {

@@ -10,21 +10,22 @@
 {% block body %}
   <form >
     <div class="quiz-form-content">
-      {{ form.qOne.label}}
-      <ul id="qOne">
-        <li>
-          <input {{ checked[0] }} id="qOne" name="qOne" type="radio" class="form-check-input">
-          <label for="qOne">True</label>
-        </li>
-        <li>
-          <input {% if not checked[0] %} checked {% endif %} id="qOne-f" name="qOne" type="radio" class="form-check-input">
-          <label for="qOne-f">False</label>
-        </li>
+      <div class="form-check">
+        {{ form.qOne.label}}
+        <ul id="qOne">
+          <li>
+            <input {{ checked[0] }} id="qOne" name="qOne" type="radio" class="form-check-input">
+            <label for="qOne">True</label>
+          </li>
+          <li>
+            <input {{ checked[0] }} id="qOne-f" name="qOne" type="radio" class="form-check-input">
+            <label for="qOne-f">False</label>
+          </li>
         </ul>
-      <div class="{{ outcome[0] }}-feedback d-block">
-        {{ outcome[0] }}
+        <div class="{{ outcome[0] }}-feedback d-block">
+          {{ outcome[0] }}
+        </div>
       </div>
-
 
 
       <div class="form-check">
@@ -35,39 +36,42 @@
             <label for="qTwo">True</label>
           </li>
           <li>
-            <input {% if not checked[1] %} checked {% endif %} id="qTwo-f" name="qTwo" type="radio" class="form-check-input">
+            <input {{ checked[1] }} id="qTwo-f" name="qTwo" type="radio" class="form-check-input">
             <label for="qTwo-f">False</label>
           </li>
-          </ul>
+        </ul>
         <div class="{{ outcome[1] }}-feedback d-block">
           {{ outcome[1] }}
         </div>
       </div>
 
-      <div class="form-check">
-        {{ form.qThree.label }}
-        <ul id="qThree">
-          <li>
-            <input {{ checked[2] }} id="qThree" name="qThree" type="radio" class="form-check-input">
-            <label for="qThree">True</label>
-          </li>
-          <li>
-            <input {% if not checked[2] %} checked {% endif %} id="qThree-f" name="qThree" type="radio" class="form-check-input">
-            <label for="qThree-f">False</label>
-          </li>
-          </ul>
-        <div class="{{ outcome[2] }}-feedback d-block">
+
+    <div class="form-check">
+      {{ form.qThree.label }}
+      <ul id="qThree">
+        <li>
+          <input {{ checked[2] }} id="qThree" name="qThree" type="radio" class="form-check-input">
+          <label for="qThree">True</label>
+        </li>
+        <li>
+          <input {{ checked[2] }} id="qThree-f" name="qThree" type="radio" class="form-check-input">
+          <label for="qThree-f">False</label>
+        </li>
+      </ul>
+      <div class="{{ outcome[2] }}-feedback d-block">
           {{ outcome[2] }}
-        </div>
       </div>
-</div>
-  </form>
+    </div>
+
+
+  </div>
+</form>
+
   <div class="results">
     <h3>You got {{ numOfCorrect }}/3 questions right</h3>
     <h3>You have been rewarded {{ numOfCorrect * 10}} coins!</h3>
   </div>
 
-</div>
 
 <style >
   .form-check .form-check-input {
