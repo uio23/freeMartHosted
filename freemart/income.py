@@ -28,15 +28,18 @@ def quiz_page():
             #db.session.commit()
             answers = [questionForm.qOne.data, questionForm.qTwo.data, questionForm.qThree.data]
             numOfCorrect = 0
+            checked = []
             outcome = []
             for index, answer in enumerate(answers):
                 if str(answer) == questionForm.questions[index][1]:
                     numOfCorrect += 1
                     outcome.append("valid")
+                    checked.append("checked")
                 else:
                     outcome.append("invalid")
+                    checked.append("")
 
-            return render_template("income/quizResult.html", user=current_user, outcome=outcome, numOfCorrect=numOfCorrect, form=questionForm)
+            return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)

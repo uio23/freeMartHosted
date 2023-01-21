@@ -9,42 +9,40 @@
 
 {% block body %}
 
-<div style="text-align: left;">
+
   {% if allow %}
   <form method="POST" novalidate>
-    <div class="form-check">
-      {{ form.qOne.label}}
-      {{ form.qOne }}
-      {% for error in form.qOne.errors %}
-        <div class="invalid-feedback d-block">
-          {{ error }}
+    <div class="quiz-form-content">
+      <div class="form-check">
+        {{ form.qOne.label}}
+        {{ form.qOne }}
+        {% for error in form.qOne.errors %}
+          <div class="invalid-feedback d-block">
+            {{ error }}
+          </div>
+        {% endfor %}
+      </div>
+
+
+        <div class="form-check">
+          {{ form.qTwo.label }}
+          {{ form.qTwo }}
+          {% for error in form.qTwo.errors %}
+            <div class="invalid-feedback d-block">
+              {{ error }}
+            </div>
+          {% endfor %}
         </div>
-      {% endfor %}
+
+        <div class="form-check">
+          {{ form.qThree.label }}
+          {{ form.qThree }}
+          {% for error in form.qThree.errors %}
+            <div class="invalid-feedback d-block">
+              {{ error }}
+            </div>
+          {% endfor %}
     </div>
-
-
-      <div class="form-check">
-        {{ form.qTwo.label }}
-        {{ form.qTwo }}
-        {% for error in form.qTwo.errors %}
-          <div class="invalid-feedback d-block">
-            {{ error }}
-          </div>
-        {% endfor %}
-      </div>
-
-      <div class="form-check">
-        {{ form.qThree.label }}
-        {{ form.qThree }}
-        {% for error in form.qThree.errors %}
-          <div class="invalid-feedback d-block">
-            {{ error }}
-          </div>
-        {% endfor %}
-      </div>
-
-
-
 
     {{ form.submit_button( class="btn btn-primary mb-4") }}
     {{ form.csrf_token }}

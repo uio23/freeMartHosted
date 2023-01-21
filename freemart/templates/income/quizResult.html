@@ -9,9 +9,18 @@
 
 {% block body %}
   <form >
-    <div class="form-check">
+    <div class="quiz-form-content">
       {{ form.qOne.label}}
-      {{ form.qOne }}
+      <ul id="qOne">
+        <li>
+          <input {{ checked[0] }} id="qOne" name="qOne" type="radio" class="form-check-input">
+          <label for="qOne">True</label>
+        </li>
+        <li>
+          <input checked id="qOne-f" name="qOne" type="radio" class="form-check-input">
+          <label for="qOne-f">False</label>
+        </li>
+        </ul>
       <div class="{{ outcome[0] }}-feedback d-block">
         {{ outcome[0] }}
       </div>
@@ -20,7 +29,16 @@
 
       <div class="form-check">
         {{ form.qTwo.label }}
-        {{ form.qTwo }}
+        <ul id="qTwo">
+          <li>
+            <input {{ checked[1] }} id="qTwo" name="qTwo" type="radio" class="form-check-input">
+            <label for="qTwo">True</label>
+          </li>
+          <li>
+            <input checked id="qTwo-f" name="qTwo" type="radio" class="form-check-input">
+            <label for="qTwo-f">False</label>
+          </li>
+          </ul>
         <div class="{{ outcome[1] }}-feedback d-block">
           {{ outcome[1] }}
         </div>
@@ -28,7 +46,16 @@
 
       <div class="form-check">
         {{ form.qThree.label }}
-        {{ form.qThree }}
+        <ul id="qThree">
+          <li>
+            <input {{ checked[2] }} id="qThree" name="qThree" type="radio" class="form-check-input">
+            <label for="qThree">True</label>
+          </li>
+          <li>
+            <input checked id="qThree-f" name="qThree" type="radio" class="form-check-input">
+            <label for="qThree-f">False</label>
+          </li>
+          </ul>
         <div class="{{ outcome[2] }}-feedback d-block">
           {{ outcome[2] }}
         </div>
