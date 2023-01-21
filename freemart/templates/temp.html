@@ -98,8 +98,9 @@
             return value + "?dark=true";
           });
 
-          /* Fix light-mode css applied by Bootstrap */
+          /* Fix dark-mode css applied by Bootstrap */
           $('.card-body').css('color', '#212529');
+          $('.quiz-form-content').css('color', '#212529');
           $('.card').css('--bs-card-border-color', '#212529')
         }
 
