@@ -67,31 +67,24 @@
   </div>
 </form>
 
-  <div class="results">
-    <h3>You have been rewarded {{ numOfCorrect * 10}} coins!</h3>
-  </div>
-
 
 <style >
   .form-check .form-check-input {
     float: none;
   }
-  .results {
-    text-align: center;
-    margin-top: 3vh;
-  }
+
 </style>
 
 <script type="text/javascript">
   $("input[type='radio']").each(function(){
     $(this).addClass("form-check-input")
   })
-  
+
   $(".d-block").each(function(){
-    if ($(this).text() == "valid") {
-      $(this).append("Correct, +10 coins!")
+    if ($(this).text() == " valid ") {
+      $(this).html("Correct, +10 coins!")
     } else {
-      $(this).append("Wrong")
+      $(this).html("Wrong")
     }
 
   })
