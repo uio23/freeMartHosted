@@ -24,7 +24,7 @@ class Product(db.Model):
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
-    yesterdayUTC = datetime.now(timezone.utc).date() - timedelta(1)
+    yesterdayUTC = datetime.now(timezone.utc) - timedelta(1)
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
