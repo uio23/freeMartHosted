@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from . import db
 
@@ -24,7 +24,7 @@ class Product(db.Model):
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
-    yesterdayUTC = datetime.utcnow() - datetime.timedelta(days=1)
+    yesterdayUTC = datetime.utcnow() - timedelta(days=1)
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
