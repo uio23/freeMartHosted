@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 
 from . import db
 
@@ -24,13 +24,14 @@ class Product(db.Model):
 class User(db.Model, UserMixin):
 
     __tablename__ = "user"
+    yesterdayUTC = datetime.now(timezone.utc).date() - timedelta(1)
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     balance = db.Column(db.Float(asdecimal=True), default=500.00)
     posts = db.relationship('Product')
     messages = db.relationship('Message')
-    lastquiz = db.Column(db.String, nullable=False, default=datetime.utcnow())
+    lastquiz = db.Column(db.String, nullable=False, default=yesterdayUTC)
 
     def __repr__(self):
         return f'{self.username} is a user with the id of {self.id}. Their balance is {self.balance}. Posts: {self.posts}. Messages: {self.messages}.'
