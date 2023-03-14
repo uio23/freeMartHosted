@@ -68,7 +68,7 @@ def market_page():
     items = Product.query.filter_by(listed=True).all()
     groupedItems = []
     i=-1
-    b=0
+    b=-1
     for item in items:
         i+=1
         if i==0:
