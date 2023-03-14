@@ -74,7 +74,7 @@ def market_page():
         if i==0:
             groupedItems.append([])
             b+=1
-        elif i==3:
+        elif i==2:
             i=-1
         loadImg(item.imagePath)
         groupedItems[b].append(item)
