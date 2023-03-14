@@ -1,0 +1,24 @@
+{
+  "name": "freemart",
+  "version": "2.1.0",
+  "description": "A trading website",
+  "main": "index.js",
+  "scripts": {
+    "pcss": " purgecss --css freemart/static/stylesScripts/styles.css --output freemart/static/stylesScripts/styles.css --content freemart/templates/**/*.html",
+    "bcss": "node-sass freemart/static/stylesScripts/main.scss freemart/static/stylesScripts/styles.css",
+    "deploy": "git add . | git commit -m 'Bad pracitise, piped, generic commit message.' | git push heroku main"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uio23/freemartHosted.git"
+  },
+  "author": "Alexander Kashpir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uio23/freemartHosted/issues"
+  },
+  "homepage": "https://github.com/uio23/freemartHosted#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1"
+  }
+}

@@ -1,0 +1,41 @@
+// Include any default variable overrides here (though functions won't be available)
+
+@import "../../../node_modules/bootstrap/scss/bootstrap";
+
+// Then add additional custom code here
+form {
+  margin: 0 auto;
+  width: 40%;
+}
+
+.alert-box {
+  width: 30%;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 22vh;
+  text-align: center;
+}
+
+.quiz-form-content {
+  text-align: left;
+  margin-top: 3vh;
+  padding: 10px;
+  padding-top: 25px;
+  border-radius: 15px;
+  background-color: #DDDDDD;
+}
+
+#header {
+  margin-top: 22vh;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+
+#exempt {
+  margin-top: 8vh;
+  text-align: center;
+}

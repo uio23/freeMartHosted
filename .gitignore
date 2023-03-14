@@ -2,3 +2,4 @@ freeMartEnv/
 __pycache__/
 flask_session/
 .DS_Store
+node_modules/
