@@ -11,7 +11,7 @@
     {% for itemGroup in items %}
       <div class="row">
       {% for item in itemGroup %}
-        <div data-bs-theme="light" class="custom-card card w-25 col-sm-4" style="margin: 10px; padding: 0;">
+        <div data-bs-theme="light" class="custom-card card w-25 col-sm-12 col-md-4" style="margin: 10px; padding: 0;">
           <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
