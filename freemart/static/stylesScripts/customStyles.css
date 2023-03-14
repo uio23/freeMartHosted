@@ -34,3 +34,12 @@ form {
   margin-top: 8vh;
   text-align: center;
 }
+
+
+
+
+@media only screen and (min-width: 992px) {
+  #displayModeIcon {
+    align-items: center;
+  }
+}

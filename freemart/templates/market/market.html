@@ -3,7 +3,7 @@
 {% set exempt = True %}
 
 {% block header %}
-<h2>Market</h2>
+<h2 style="margin-bottom: 30px;">Market</h2>
 {% endblock %}
 
 {% block body %}
@@ -18,9 +18,9 @@
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text">{{ item.description }}</p>
             {% if item.username == user.username %}
-              <button name="itemName" disabled value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
+              <button name="itemName" disabled value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
             {% else %}
-              <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">${{ item.price|round(2) }}</button>
+              <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
             {% endif %}
           </div>
           <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
@@ -42,7 +42,7 @@
       </div>
 
       <div class="modal-body">
-        <div style="margin-bottom: 3%;">You have ${{ current_user.balance|round(2) }}</div>
+        <div style="margin-bottom: 3%;">You have {{ current_user.balance|round(2) }} FMC</div>
         <div class="itemInfo"></div>
       </div>
 
