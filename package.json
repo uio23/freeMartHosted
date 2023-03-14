@@ -4,9 +4,8 @@
   "description": "A trading website",
   "main": "index.js",
   "scripts": {
-    "pcss": " purgecss --css freemart/static/stylesScripts/styles.css --output freemart/static/stylesScripts/styles.css --content freemart/templates/**/*.html",
-    "bcss": "node-sass freemart/static/stylesScripts/main.scss freemart/static/stylesScripts/styles.css",
-    "deploy": "git add . | git commit -m 'Bad pracitise, piped, generic commit message.' | git push heroku main"
+    "pcss": " purgecss --css freemart/static/stylesScripts/bootstrapStyles.css --output freemart/static/stylesScripts/bootstrapStyles.css --content freemart/templates/**/*.html",
+    "bcss": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css"
   },
   "repository": {
     "type": "git",
