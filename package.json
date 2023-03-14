@@ -4,7 +4,7 @@
   "description": "A trading website",
   "main": "index.js",
   "scripts": {
-    "pcss": " purgecss --css freemart/static/stylesScripts/bootstrapStyles.css --output freemart/static/stylesScripts/bootstrapStyles.css --content freemart/templates/**/*.html",
+    "pcss": " purgecss --css freemart/static/stylesScripts/bootstrapStylesUP.css --output freemart/static/stylesScripts/bootstrapStyles.css --content freemart/templates/**/*.html",
     "bcss": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css"
   },
   "repository": {
