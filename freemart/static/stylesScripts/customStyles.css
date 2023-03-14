@@ -3,6 +3,7 @@ form {
   width: 40%;
 }
 
+
 .alert-box {
   width: 30%;
   position: absolute;
@@ -23,12 +24,16 @@ form {
   background-color: #DDDDDD;
 }
 
+.fa-2xl {
+  line-height: 1;
+}
+
+
 #header {
   margin-top: 22vh;
   margin-bottom: 30px;
   text-align: center;
 }
-
 
 #exempt {
   margin-top: 8vh;
