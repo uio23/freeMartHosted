@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-  <html lang="en">
+<html lang="en">
   <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Free Mart</title>
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <script src="https://kit.fontawesome.com/7dfc14ad36.js" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/bootstrapStyles.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/customStyles.css') }}">
       {% block styles %}
@@ -62,76 +62,85 @@
     {% endwith %}
 
 
-      <div {% if not exempt %} id="header" {% else %} id="exempt" {% endif %}>
-        {% block header %}
-        {% endblock %}
-      </div>
+    {#
+    <div {% if not exempt %} id="header" {% else %} id="exempt" {% endif %}>
+      {% block header %}
+      {% endblock %}
+    </div>
+    #}
 
-      <div id="content">
-        {% block body %}
-        {% endblock %}
-      </div>
+    {% block header %}
+    {% endblock %}
 
-
-      <script src="{{ url_for('static', filename='stylesScripts/bootstrap.bundle.min.js') }}" ></script>
-
-      <script type="text/javascript">
-        const urlParams = new URLSearchParams(window.location.search);
-        const darkMode = urlParams.has('dark');
-        if (darkMode) {
-          switchToDarkMode();
-        }
+    <div id="content">
+      {% block body %}
+      {% endblock %}
+    </div>
 
 
-        function switchToDarkMode() {
-          $('html').attr('data-bs-theme', 'dark');
+    <script src="{{ url_for('static', filename='stylesScripts/bootstrap.bundle.min.js') }}" ></script>
 
-          /* Change controls */
-          $("#displayModeIcon").removeClass('fa-solid fa-moon');
-          $("#displayModeIcon").addClass('fa-regular fa-sun');
-
-          /* Pass on the darkMode setting */
-          $('a').each(function () {
-            $(this).attr('href', this.href + "?dark=true");
-          })
-          $('form').attr('action', function(i, value) {
-            return value + "?dark=true";
-          });
-
-          /* Fix dark-mode css applied by Bootstrap */
-          $('.card-body').css('color', '#212529');
-          $('.quiz-form-content').css('color', '#212529');
-          $('.card').css('--bs-card-border-color', '#212529')
-        }
+    <script type="text/javascript">
+      const urlParams = new URLSearchParams(window.location.search);
+      const darkMode = urlParams.has('dark');
+      if (darkMode) {
+        switchToDarkMode();
+      }
 
 
-        function switchToLightMode() {
-          $('html').removeAttr('data-bs-theme');
+      function switchToDarkMode() {
+        $('html').attr('data-bs-theme', 'dark');
 
-          /* Change controls */
-          $("#displayModeIcon").removeClass('fa-regular fa-sun');
-          $("#displayModeIcon").addClass('fa-solid fa-moon');
+        /* Change controls */
+        $("#displayModeIcon").removeClass('fa-solid fa-moon');
+        $("#displayModeIcon").addClass('fa-regular fa-sun');
 
-          /* Remove darkMode requirement for next page */
-          $('a').each(function () {
-            $(this).attr('href', this.href.split('?')[0]);
-          })
-          $('form').attr('action', function(i, value) {
-            return value.split('?')[0];
-          });
-
-          /* Reset fixed styling */
-          $('.card').css('--bs-card-border-color', '');
-        }
-
-
-        $("#displayModeIcon").on('click', function(event){
-          if ($(event.target).hasClass('fa-moon')) {
-            switchToDarkMode();
-          } else if ($(event.target).hasClass('fa-sun')) {
-            switchToLightMode();
-          }
+        /* Pass on the darkMode setting */
+        $('a').each(function () {
+          $(this).attr('href', this.href + "?dark=true");
         })
-      </script>
+        $('form').attr('action', function(i, value) {
+          return value + "?dark=true";
+        });
+
+        /*
+        Fix dark-mode css applied by Bootstrap
+        $('.card-body').css('color', '#212529');
+        $('.quiz-form-content').css('color', '#212529');
+        $('.card').css('--bs-card-border-color', '#212529')
+        }
+        */
+
+
+      function switchToLightMode() {
+        $('html').removeAttr('data-bs-theme');
+
+        /* Change controls */
+        $("#displayModeIcon").removeClass('fa-regular fa-sun');
+        $("#displayModeIcon").addClass('fa-solid fa-moon');
+
+        /* Remove darkMode requirement for next page */
+        $('a').each(function () {
+          $(this).attr('href', this.href.split('?')[0]);
+        })
+        $('form').attr('action', function(i, value) {
+          return value.split('?')[0];
+        });
+
+        /*
+        Reset fixed styling
+        $('.card').css('--bs-card-border-color', '');
+        */
+      }
+
+
+      $("#displayModeIcon").on('click', function(event){
+        if ($(event.target).hasClass('fa-moon')) {
+          switchToDarkMode();
+        } else if ($(event.target).hasClass('fa-sun')) {
+          switchToLightMode();
+        }
+      })
+    </script>
   </body>
 </html>

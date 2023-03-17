@@ -1,6 +1,31 @@
 //Overriding area
 
+$enable-shadows: true;
+
+//#A020F0
 $primary: #A020F0;
+$danger: #A64253;
+$body-bg: #ddecef;
+$body-color: #0d1816;
+$card-bg: #FDEEED;
+$border-color: rgba(13, 24, 22, 0.3);
+
+$input-focus-border-color: #606D5D;
+$input-focus-box-shadow: none;
+
+
 
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.card {
+  &:hover {
+    transition-timing-function: ease-in;
+    transition: 0.5s;
+    transform: translateY(-5px);
+    box-shadow: $box-shadow;
+  }
+  transition-timing-function: ease-out;
+  transition: 1s;
+  box-shadow: $box-shadow-sm;
+}

@@ -1,30 +1,39 @@
 {% extends "temp.html" %}
 
-{% set exempt = True %}
 
+{#
+{% set exempt = True %}
 {% block header %}
 <h2 style="margin-bottom: 30px;">Market</h2>
 {% endblock %}
+#}
+
+{% block header %}
+<div id="marketHeader">
+  <h2>Market</h2>
+</div>
+{% endblock %}
 
 {% block body %}
-<div class="container-fluid">
+<div class="container-fluid overflow-hidden">
     {% for itemGroup in items %}
-      <div class="row">
+      <div class="row gy-5 m-auto">
       {% for item in itemGroup %}
       <div class="col-md-4">
-        <div data-bs-theme="light" class="custom-card card" style="margin: 10px; padding: 0;">
+        <div data-bs-theme="light" class="card border-0">
           <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
           <div class="card-body">
             <h5 class="card-title">{{ item.name }}</h5>
             <p class="card-text">{{ item.description }}</p>
             {% if item.username == user.username %}
               <button name="itemName" disabled value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
+              <button name="removeItem" value="{{ item.name }}" class="btn btn-outline-danger overflow-auto">Remove</button>
             {% else %}
               <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
             {% endif %}
           </div>
           <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
-            <p style="margin: 0;">- From <a class="from" href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
+            <p>- From <a class="from" href="{{ url_for('user.profile_page', username=item.username) }}">{{item.username}}</a></p>
           </div>
         </div>
       </div>

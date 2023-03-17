@@ -2,7 +2,7 @@
 {% extends "temp.html" %}
 
 {% block header %}
-<h3>Login to your account</h3>
+<h3>Login to span your account</h3>
 {% endblock %}
 
 {% block body %}
@@ -11,7 +11,7 @@
   {{ displayField(form.password, "Password") }}
   {{ form.submit_button(style="width: 100%;", class="btn btn-primary btn-block mb-4") }}
   {{ form.csrf_token }}
-  
+
   <div class="text-center">
     <p>Not a member? <a href="{{ url_for('auth.sign_up_page') }}">Sign up</a></p>
   </div>

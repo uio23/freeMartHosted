@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send
-from flask_login import LoginManager, current_user
+from flask_login import LoginManager, AnonymousUserMixin, current_user
 
 import os
 
@@ -15,7 +15,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
-
+    
 
     from .auth import auth
     from .market import market

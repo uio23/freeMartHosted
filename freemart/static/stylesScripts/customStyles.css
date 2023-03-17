@@ -40,8 +40,17 @@ form {
   text-align: center;
 }
 
-
-
+#marketHeader h2 {
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 6rem;
+  font-weight: bold;
+  background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin-bottom: 5rem;
+}
 
 @media only screen and (min-width: 992px) {
   #displayModeIcon {

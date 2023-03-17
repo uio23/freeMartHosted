@@ -4,8 +4,9 @@
   "description": "A trading website",
   "main": "index.js",
   "scripts": {
+    "bcss": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css",
     "pcss": "purgecss --config ./purgecss.config.js --output freemart/static/stylesScripts",
-    "bcss": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css"
+    "server": "gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 main:app"
   },
   "repository": {
     "type": "git",
