@@ -1,50 +1,62 @@
 {% extends "temp.html" %}
 
 {% block header %}
-<h1><span>{{ user.username }}'s</span> Profile</h1>
-<p style="margin-bottom: 10vh;">({{ user.balance|round(2) }} FMC)</p>
+<div id="profile-header">
+  <h1><span>{{ user.username }}'s</span> Profile</h1>
+  <p>({{ user.balance|round(2) }} FMC)</p>
+</div>
 {% endblock %}
 
 {% block body %}
-<div style="text-align: center;">
   <div class="container-fluid">
 
-    <h4 >Selling: {{ userSelling|length }} item(s)</h4>
-    <div class="d-flex justify-content-between row">
-      {% for item in userSelling %}
-        <div data-bs-theme="light" class="card w-25 border-0" style="margin: 20px; padding: 0; text-align: left;">
-          <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
-          <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
-            <p class="card-text">{{ item.description }}</p>
-            {% if user.username == current_user.username %}
-              <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }} FMC</button>
-            {% else %}
-              <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
-            {% endif %}
+    <p class="profile-sub-headers">Selling: {{ userSellingLen }} item{% if not singleSelling %}s{%endif %}</p>
+
+    {% for itemGroup in userSelling %}
+      <div class="row gy-5 m-auto">
+      {% for item in itemGroup %}
+        <div class="col-lg-4 col-md-6">
+          <div data-bs-theme="light" class="card border-0 h-100">
+            <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.name }}</h5>
+              <p class="card-text">{{ item.description }}</p>
+              {% if user.username == current_user.username %}
+                <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }} FMC</button>
+              {% else %}
+                <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endfor %}
-    </div>
+      </div>
+    {% endfor %}
 
-    <h4 style="margin-top: 10vh;">Owned: {{ userOwned|length }} item(s)</h4>
-    <div class="d-flex justify-content-between row" style="margin-bottom: 10vh;">
-      {% for item in userOwned %}
-        <div data-bs-theme="light" class="card w-25 border-0" style="margin: 20px; padding: 0; text-align: left;">
-          <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
-          <div class="card-body">
-            <h5 class="card-title">{{ item.name }}</h5>
-            <p class="card-text">{{ item.description }}</p>
-            {% if user.username == current_user.username %}
-              <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
-            {% endif %}
+
+    <p class="profile-sub-headers">Owned: {{ userOwnedLen }} item{% if not singleOwned %}s{%endif %}</p>
+
+    {% for itemGroup in userOwned %}
+      <div class="row gy-5 m-auto">
+        {% for item in itemGroup %}
+          <div class="col-lg-4 col-md-6">
+            <div data-bs-theme="light" class="card border-0 h-100">
+              <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text">{{ item.description }}</p>
+                {% if user.username == current_user.username %}
+                  <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
+                {% endif %}
+              </div>
+            </div>
           </div>
-        </div>
-      {% endfor %}
-    </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
 
-  </div>
 </div>
+
 
 
 <div class="modal fade" id="resellConfirmation">

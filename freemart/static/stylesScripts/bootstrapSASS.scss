@@ -13,10 +13,12 @@ $border-color: rgba(13, 24, 22, 0.3);
 $input-focus-border-color: #606D5D;
 $input-focus-box-shadow: none;
 
-
-
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+
+.container-fluid {
+  margin-bottom: 5rem;
+}
 
 .card {
   &:hover {
@@ -28,4 +30,11 @@ $input-focus-box-shadow: none;
   transition-timing-function: ease-out;
   transition: 1s;
   box-shadow: $box-shadow-sm;
+}
+
+
+@include media-breakpoint-down(md) {
+  .row {
+    --bs-gutter-x: 2rem;
+  }
 }
