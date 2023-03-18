@@ -70,5 +70,6 @@ def market_page():
 
     for i in range(0, len(items), 6):
         groupedItems.append(items[i:i+6])
+        loadImg(item.imagePath)
 
     return render_template("market/market.html", user=current_user, items=groupedItems)

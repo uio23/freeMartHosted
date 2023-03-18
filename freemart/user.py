@@ -33,10 +33,12 @@ def profile_page(username):
 
     user = User.query.filter_by(username=username).first()
 
+    for product in user.posts:
+        loadImg(product.imagePath)
+
     userSelling = [product for product in user.posts if product.listed == True]
     groupedUserSelling = []
-    for product in userSelling:
-        loadImg(product.imagePath)
+
     for i in range(0, len(userSelling), 6):
         groupedUserSelling.append(userSelling[i:i+6])
     singleSelling = False
@@ -45,8 +47,7 @@ def profile_page(username):
 
     userOwned = [product for product in user.posts if product.listed == False]
     groupedUserOwned = []
-    for product in userOwned:
-        loadImg(product.imagePath)
+
     for i in range(0, len(userOwned), 6):
         groupedUserOwned.append(userOwned[i:i+6])
     singleOwned = False
