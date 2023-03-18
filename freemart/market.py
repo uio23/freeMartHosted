@@ -68,8 +68,10 @@ def market_page():
     items = Product.query.filter_by(listed=True).all()
     groupedItems = []
 
-    for i in range(0, len(items), 6):
-        groupedItems.append(items[i:i+6])
+    for item in items:
         loadImg(item.imagePath)
 
+    for i in range(0, len(items), 6):
+        groupedItems.append(items[i:i+6])
+        
     return render_template("market/market.html", user=current_user, items=groupedItems)
