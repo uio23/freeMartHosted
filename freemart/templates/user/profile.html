@@ -8,8 +8,6 @@
 {% endblock %}
 
 {% block body %}
-  <div class="container-fluid">
-
     <p class="profile-sub-headers">Selling: {{ userSellingLen }} item{% if not singleSelling %}s{%endif %}</p>
 
     {% for itemGroup in userSelling %}
@@ -54,8 +52,6 @@
         {% endfor %}
       </div>
     {% endfor %}
-
-</div>
 
 
 

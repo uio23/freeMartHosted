@@ -7,7 +7,6 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid overflow-hidden">
     {% for itemGroup in items %}
       <div class="row gy-5 m-auto">
       {% for item in itemGroup %}
@@ -32,7 +31,6 @@
       {% endfor %}
     </div>
     {% endfor %}
-</div>
 
 <div class="modal fade" id="purchaseConfirmation">
   <div class="modal-dialog modal-dialog-centered">

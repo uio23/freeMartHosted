@@ -8,8 +8,6 @@
 {% endblock %}
 
 {% block body %}
-
-<div class="container-fluid">
   {% if allow %}
   <form action="{{ url_for('income.quiz_page') }}" method="POST" novalidate>
     <div class="quiz-form-content">
@@ -54,7 +52,7 @@
   <h1 style="text-align:center; margin-top: 3vh;" >You've already done a quiz in the past 24h</h1>
 
   {% endif %}
-</div>
+
 
 <style >
   .form-check .form-check-input {

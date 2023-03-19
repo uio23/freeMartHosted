@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block body %}
-<div class="container-fluid">
   <form action="{{ url_for('auth.login_page') }}" method="POST" novalidate>
     {{ displayField(form.username, "Username", autocomplete="off", autofocus=true) }}
     {{ displayField(form.password, "Password") }}
@@ -17,5 +16,4 @@
       <p>Not a member? <a href="{{ url_for('auth.sign_up_page') }}">Sign up</a></p>
     </div>
   </form>
-</div>
 {% endblock %}
