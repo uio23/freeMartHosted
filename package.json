@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "bcss": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css",
+    "bcss-w": "node-sass freemart/static/stylesScripts/bootstrapSASS.scss freemart/static/stylesScripts/bootstrapStyles.css -w",
     "pcss": "purgecss --config ./purgecss.config.js --output freemart/static/stylesScripts",
     "server": "gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 main:app"
   },

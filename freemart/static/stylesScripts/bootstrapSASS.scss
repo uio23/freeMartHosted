@@ -13,11 +13,25 @@ $border-color: rgba(13, 24, 22, 0.3);
 $input-focus-border-color: #606D5D;
 $input-focus-box-shadow: none;
 
+$nav-link-font-size: 1.5rem;
+
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
 .container-fluid {
   margin-bottom: 5rem;
+}
+
+.nav-link {
+  &:hover {
+    &.logout-link {
+    color: #{$danger};
+    }
+    &.login-link {
+      color: #{$primary};
+    }
+  }
+
 }
 
 .card {

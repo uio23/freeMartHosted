@@ -2,7 +2,7 @@
 
 {% block header %}
 <div id="profile-header">
-  <h1><span>{{ user.username }}'s</span> Profile</h1>
+  <h1><span id="colored-username">{{ user.username }}'s</span> Profile</h1>
   <p>({{ user.balance|round(2) }} FMC)</p>
 </div>
 {% endblock %}
@@ -121,18 +121,18 @@
     $(document).ready(function () {
         var colors = ["#205295","#E94560","#3C6255", "#D89216"];
         var rand = colors[Math.floor(Math.random() * colors.length)];
-        $('span').css('color', rand);
-    })
+        $('#colored-username').css('color', rand);
+    });
 
     $(document).on('show.bs.modal', '#resellConfirmation', function (event){
         var invoker = $(event.relatedTarget);
         productDetails = invoker.parent().children().toArray();
         productName = productDetails[0].textContent;
         productPrice = productDetails[2].value;
-        productPrice = Number(productPrice).toFixed(2)
+        productPrice = Number(productPrice).toFixed(2);
         $(".previousPrice").html(`<i>${productName}</i> costed you ${productPrice} FMC`);
         $('#resell').attr("value", productName);
-    })
+    });
 
     $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
         let invoker = $(event.relatedTarget);
@@ -141,6 +141,6 @@
         productPrice = productDetails[2].textContent;
         $('.itemInfo').html(`Buy <i>${productName}</i> for ${productPrice}?`);
         $('#buy').attr("value", productName);
-    })
+    });
 </script>
 {% endblock %}

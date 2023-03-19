@@ -305,10 +305,6 @@ button,
 ::-webkit-inner-spin-button {
   height: auto; }
 
-[type="search"] {
-  outline-offset: -2px;
-  -webkit-appearance: textfield; }
-
 /* rtl:raw:
 [type="tel"],
 [type="url"],
@@ -699,6 +695,7 @@ button,
 .nav {
   --bs-nav-link-padding-x: 1rem;
   --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-font-size: calc(1.275rem + 0.3vw);
   --bs-nav-link-font-weight: ;
   --bs-nav-link-color: var(--bs-link-color);
   --bs-nav-link-hover-color: var(--bs-link-hover-color);
@@ -708,6 +705,9 @@ button,
   padding-left: 0;
   margin-bottom: 0;
   list-style: none; }
+  @media (min-width: 1200px) {
+    .nav {
+      --bs-nav-link-font-size: 1.5rem; } }
 
 .nav-link {
   display: block;
@@ -775,6 +775,7 @@ button,
 .navbar-nav {
   --bs-nav-link-padding-x: 0;
   --bs-nav-link-padding-y: 0.5rem;
+  --bs-nav-link-font-size: calc(1.275rem + 0.3vw);
   --bs-nav-link-font-weight: ;
   --bs-nav-link-color: var(--bs-navbar-color);
   --bs-nav-link-hover-color: var(--bs-navbar-hover-color);
@@ -784,6 +785,9 @@ button,
   padding-left: 0;
   margin-bottom: 0;
   list-style: none; }
+  @media (min-width: 1200px) {
+    .navbar-nav {
+      --bs-nav-link-font-size: 1.5rem; } }
   .navbar-nav .show > .nav-link {
     color: var(--bs-navbar-active-color); }
 
@@ -1143,6 +1147,9 @@ button,
   100% {
     mask-position: -200% 0%; } }
 
+.align-top {
+  vertical-align: top !important; }
+
 .overflow-auto {
   overflow: auto !important; }
 
@@ -1170,21 +1177,40 @@ button,
 .justify-content-between {
   justify-content: space-between !important; }
 
+.m-0 {
+  margin: 0 !important; }
+
 .m-auto {
   margin: auto !important; }
 
-.mx-auto {
-  margin-right: auto !important;
-  margin-left: auto !important; }
-
 .mb-4 {
   margin-bottom: 1.5rem !important; }
+
+.ms-2 {
+  margin-left: 0.5rem !important; }
 
 .ms-auto {
   margin-left: auto !important; }
 
 .p-3 {
   padding: 1rem !important; }
+
+.px-1 {
+  padding-right: 0.25rem !important;
+  padding-left: 0.25rem !important; }
+
+.px-2 {
+  padding-right: 0.5rem !important;
+  padding-left: 0.5rem !important; }
+
+.pt-3 {
+  padding-top: 1rem !important; }
+
+.pe-1 {
+  padding-right: 0.25rem !important; }
+
+.ps-2 {
+  padding-left: 0.5rem !important; }
 
 .text-center {
   text-align: center !important; }
@@ -1204,6 +1230,12 @@ button,
 
 .container-fluid {
   margin-bottom: 5rem; }
+
+.nav-link:hover.logout-link {
+  color: #A64253; }
+
+.nav-link:hover.login-link {
+  color: #A020F0; }
 
 .card {
   transition-timing-function: ease-out;
