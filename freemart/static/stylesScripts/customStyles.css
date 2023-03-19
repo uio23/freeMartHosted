@@ -46,7 +46,7 @@ form {
   padding: 10px;
   padding-top: 25px;
   border-radius: 15px;
-  background-color: #DDDDDD;
+  background-color: #FDEEED;
 }
 
 .clickMeLink {
@@ -92,6 +92,21 @@ form {
 #profile-header h1 {
   font-size: 4rem;
   font-weight: bold;
+  background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+#quiz-header {
+  text-align: center;
+  margin-top: 3.2rem;
+}
+
+#quiz-header h2 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
   background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
   color: transparent;
   background-clip: text;
