@@ -1,0 +1,77 @@
+.messages-container {
+  margin: 0 auto;
+  background-color: #606d5d;
+  border-radius: 15px;
+  width: 95%;
+  padding: 1rem;
+}
+
+.messages {
+  max-height: 50vh;
+  overflow: scroll;
+}
+
+.messages::-webkit-scrollbar {
+  display: none;
+}
+
+.message {
+  width: fit-content;
+  padding: 5px 10px;
+  background-color: #d0d6cf;
+  border-radius: 20px;
+}
+
+.username {
+  color: #6874e8;
+}
+
+
+.message-input:focus-within .message-input-username,
+.message-input:focus-within .message-input-btn {
+  border-color: #606D5D;
+}
+
+.message-input:focus-within .message-input-btn {
+  color: #606D5D;
+}
+
+.message-input:focus-within .message-input-btn:hover, .message-input-btn:hover {
+  color: #d0d6cf;
+}
+
+.message-input-feild {
+  border-right: none;
+}
+
+.message-input > .message-input-username{
+  border-right: none;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.message-input {
+  width: 73%;
+  margin: 2rem auto 0;
+}
+
+.message-input > button {
+  border-color: rgba(13, 24, 22, 0.3);
+}
+
+@media only screen and (min-width: 992px) {
+  .messages-container {
+    width: 85%;
+  }
+  .message-input {
+    width: 66%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .messages-container {
+    width: 75%;
+  }
+  .message-input {
+    width: 60%;
+  }
+}

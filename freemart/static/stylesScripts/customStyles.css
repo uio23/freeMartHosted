@@ -98,18 +98,21 @@ form {
   -webkit-background-clip: text;
 }
 
-#quiz-header {
+
+.generic-header {
   text-align: center;
-  margin-top: 3.2rem;
+  margin: 2rem 0 0.5rem;
 }
 
-#quiz-header h2 {
+.generic-header h2 {
+  margin: 0;
   font-size: 4rem;
   font-weight: bold;
-  margin-bottom: 1.5rem;
   background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
   color: transparent;
   background-clip: text;
+
+  // Enjoy Safair and Chrome, all for you:)
   -webkit-background-clip: text;
 }
 
@@ -117,12 +120,4 @@ form {
   font-size: 1.5rem;
   font-stretch: semi-expanded;
   margin-bottom: 0;
-}
-
-
-
-@media only screen and (min-width: 992px) {
-  #displayModeIcon {
-    align-items: center;
-  }
 }

@@ -1,33 +1,31 @@
 {% extends "temp.html" %}
 
-{% set exempt = true %}
-
 {% block styles %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/chatroomStyles.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/chatroomStyles-b.css') }}">
 {% endblock %}
 
 {% block header %}
-<h2>Chatroom</h2>
+<div class="generic-header">
+  <h2>Chatroom</h2>
+</div>
 {% endblock %}
 
 {% block body %}
-<div class="container">
 
-  <div id="messagesContainer">
-    <div id="messages">
-      {% for message in messages %}
-        <p><span>@{{ message.username }} </span>{{ message.msg }}</p>
-      {% endfor %}
-    </div>
+<div class="messages-container">
+  <div class="messages">
+    {% for message in messages %}
+      <p class="message"><span class="username">@{{ message.username }}</span> {{ message.msg }}</p>
+    {% endfor %}
   </div>
-
-  <div class="input-group chatInput">
-    <span class="input-group-text" id="inputGroup-sizing-sm">~ {{ user.username }}</span>
-    <input id="messageContent" type="text" class="form-control shadow-none" maxlength="10000" placeholder="Message" aria-describedby="sendBtn">
-    <button type="button" id="sendBtn" class="btn btn-outline-secondary">Send</button>
-  </div>
-
 </div>
+
+<div class="input-group message-input">
+  <span class="input-group-text message-input-username" >~ {{ user.username }}</span>
+  <input type="text" class="form-control message-input-feild" maxlength="10000" placeholder="Your message">
+  <button type="button" class="btn btn-outline-success message-input-btn">Send</button>
+</div>
+
 
 <!-- UI and UX JS */ -->
 <script>
