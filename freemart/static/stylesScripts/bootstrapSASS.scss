@@ -5,6 +5,7 @@ $enable-shadows: true;
 //#A020F0
 $primary: #A020F0;
 $danger: #A64253;
+$info: #6874e8;
 $success: #606D5D;
 $body-bg: #ddecef;
 $body-color: #0d1816;
@@ -39,11 +40,23 @@ $nav-link-font-size: 1.5rem;
     transition-timing-function: ease-in;
     transition: 0.5s;
     transform: translateY(-5px);
-    box-shadow: $box-shadow;
+    box-shadow: $box-shadow-lg;
   }
   transition-timing-function: ease-out;
   transition: 1s;
-  box-shadow: $box-shadow-sm;
+  box-shadow: $box-shadow;
+}
+
+.add-post {
+  &:hover {
+    transition-timing-function: ease-in;
+    transition: 0.25s;
+    transform: scale(1.05);
+    box-shadow: $box-shadow-lg;
+  }
+  transition-timing-function: ease-out;
+  transition: 0.5s;
+  box-shadow: $box-shadow;
 }
 
 

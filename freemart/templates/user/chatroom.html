@@ -21,9 +21,8 @@
 </div>
 
 <div class="input-group message-input">
-  <span class="input-group-text message-input-username" >~ {{ user.username }}</span>
   <input type="text" class="form-control message-input-feild" maxlength="10000" placeholder="Your message">
-  <button type="button" class="btn btn-outline-success message-input-btn">Send</button>
+  <button type="button" class="btn btn-outline-success message-input-btn"><i class="fa-solid fa-paper-plane fa-lg send-icon"></i></button>
 </div>
 
 
@@ -31,27 +30,15 @@
 <script>
   const userUsername = `{{user.username|e}}`;
 
-
-  $('input').on('click', function(){
-    $('button').addClass('specialInput');
-
-    $('button').on("mouseover", function(){
-      $('input').addClass('specialButton');
-    })
-
-    $('button').on("mouseleave", function(){
-      $('input').removeClass('specialButton');
-    })
-  })
-
-  $('input').on( "focusout", function(){
-    $('button').removeClass('specialInput')
-  })
+  $(".message-input-btn").hover(
+    function(){$(".send-icon").addClass("fa-beat")},
+    function(){$(".send-icon").removeClass("fa-beat")}
+  )
 
   // Submit message with "Enter" key
-  $('input').keypress(function(event){
+  $('.message-input-feild').keypress(function(event){
     if (event.keyCode === 13) {
-      $("#sendBtn").click();
+      $(".message-input-btn").click();
     }
   })
 </script>

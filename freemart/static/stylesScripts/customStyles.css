@@ -4,6 +4,14 @@ form {
 }
 
 
+.add-post {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  border-radius: 20px;
+}
+
 .footer {
   background-color:  #e4f0f2;
   margin-bottom: 0;
@@ -12,6 +20,16 @@ form {
   bottom: 0;
 }
 
+.add-post-btn {
+  background-color: #6874e8;
+  color: #fff;
+}
+
+.add-post-btn:hover{
+  color: #fff;
+  background-color: #4b59e4;
+  border-color: #4b59e4;
+}
 .alert-box {
   width: 30%;
   position: absolute;
@@ -58,19 +76,6 @@ form {
 }
 
 
-
-/*
-#header {
-  margin-top: 22vh;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-#exempt {
-  margin-top: 8vh;
-  text-align: center;
-}
-*/
 
 #market-header h2 {
   text-align: center;

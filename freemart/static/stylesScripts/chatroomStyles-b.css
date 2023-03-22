@@ -9,6 +9,9 @@
 .messages {
   max-height: 50vh;
   overflow: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .messages::-webkit-scrollbar {
@@ -27,7 +30,6 @@
 }
 
 
-.message-input:focus-within .message-input-username,
 .message-input:focus-within .message-input-btn {
   border-color: #606D5D;
 }
@@ -44,19 +46,15 @@
   border-right: none;
 }
 
-.message-input > .message-input-username{
-  border-right: none;
-  transition: border-color 0.15s ease-in-out;
-}
-
 .message-input {
   width: 73%;
-  margin: 2rem auto 0;
+  margin: 1.5rem auto 0;
 }
 
-.message-input > button {
+.message-input-btn {
   border-color: rgba(13, 24, 22, 0.3);
 }
+
 
 @media only screen and (min-width: 992px) {
   .messages-container {

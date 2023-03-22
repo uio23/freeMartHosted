@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
 
-    $('#messages').scrollTop($('#messages')[0].scrollHeight);
+    $('.messages').scrollTop($('.messages')[0].scrollHeight);
 
 
     var socket = io.connect("https://" + document.domain + ':' + location.port);
@@ -11,15 +11,14 @@ $(document).ready(function(){
     });
 
     socket.on('message', function(data){
-        $("#messages").append($('<p>').text(data.msg).prepend($('<span/>').text(`@${data.username} `)));
-        $('#messages').scrollTop($('#messages')[0].scrollHeight);
+        $(".messages").append($('<p class="message">').text(data.msg).prepend($('<span class="username"/>').text(`@${data.username} `)));
+        $('.messages').scrollTop($('.messages')[0].scrollHeight);
     });
 
 
-    $("#sendBtn").on("click", function(){
-        socket.send({'msg':$(messageContent).val(), 'username': userUsername, 'auth': false});
-        $('#messageContent').val('');
-    })
-
+    $(".message-input-btn").on("click", function(){
+        socket.send({'msg':$('.message-input-feild').val(), 'username': userUsername, 'auth': false});
+        $('.message-input-feild').val('');
+    });
 
 });
