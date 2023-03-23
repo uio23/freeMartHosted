@@ -70,22 +70,12 @@
       {% endif %}
     {% endwith %}
 
-
-    {#
-    <div {% if not exempt %} id="header" {% else %} id="exempt" {% endif %}>
-      {% block header %}
-      {% endblock %}
-    </div>
-    #}
-
     {% block header %}
     {% endblock %}
 
     <div id="content" class="container-fluid">
       {% if showPostBtn %}
-        <div class="add-post">
-          <a class='btn btn-lg btn-info add-post-btn' href="{{ url_for('market.post_page') }}">Post <i class="fa-solid fa-plus add-post-ico"></i></a>
-        </div>
+        <a class='btn btn-lg btn-success add-post-btn' href="{{ url_for('market.post_page') }}">Post <i class="fa-solid fa-plus add-post-ico"></i></a>
       {% endif %}
       {% block body %}
       {% endblock %}

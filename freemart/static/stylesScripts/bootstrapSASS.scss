@@ -6,13 +6,17 @@ $enable-shadows: true;
 $primary: #A020F0;
 $danger: #A64253;
 $info: #6874e8;
-$success: #606D5D;
+
+$success: #8FB339;
+$dark-green: #606D5D;
+$light-green: #d0d6cf;
+
 $body-bg: #ddecef;
 $body-color: #0d1816;
 $card-bg: #FDEEED;
 $border-color: rgba(13, 24, 22, 0.3);
 
-$input-focus-border-color: #606D5D;
+$input-focus-border-color: $success;
 $input-focus-box-shadow: none;
 $nav-link-font-size: 1.5rem;
 
@@ -47,16 +51,44 @@ $nav-link-font-size: 1.5rem;
   box-shadow: $box-shadow;
 }
 
-.add-post {
+.message-input {
+  &:focus-within .message-input-btn {
+  color: $success;
+  border-color: $success;
+  }
+
+  &:focus-within .message-input-btn:hover {
+    color: $light-green;
+  }
+
+  width: 73%;
+  margin: 1.5rem auto 0;
+}
+
+.btn-outline-success {
+  --#{$prefix}btn-hover-color: #{$light-green};
+}
+
+.btn-success {
+  &:hover {
+    --#{$prefix}btn-hover-color: #fff;
+  }
+  &:active {
+    --#{$prefix}btn-active-color: #fff;
+  }
+  --#{$prefix}btn-color: #fff;
+}
+
+.add-post-btn {
   &:hover {
     transition-timing-function: ease-in;
     transition: 0.25s;
-    transform: scale(1.05);
+    transform: scale(1.07) translateY(-5px);
     box-shadow: $box-shadow-lg;
   }
+  box-shadow:  $box-shadow;
   transition-timing-function: ease-out;
   transition: 0.5s;
-  box-shadow: $box-shadow;
 }
 
 

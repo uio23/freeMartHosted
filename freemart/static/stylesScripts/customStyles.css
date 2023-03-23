@@ -1,61 +1,10 @@
 form {
   margin: 0 auto;
-  width: 40%;
+  width: 95%;
 }
 
-
-.add-post {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 2;
-  border-radius: 20px;
-}
-
-.footer {
-  background-color:  #e4f0f2;
-  margin-bottom: 0;
-  position: relative;
-  width: 100%;
-  bottom: 0;
-}
-
-.add-post-btn {
-  background-color: #6874e8;
-  color: #fff;
-}
-
-.add-post-btn:hover{
-  color: #fff;
-  background-color: #4b59e4;
-  border-color: #4b59e4;
-}
-.alert-box {
-  width: 30%;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  top: 22vh;
-  text-align: center;
-}
-
-.muted-link {
-  color: inherit;
-  text-decoration: none;
-}
-
-.muted-link:hover {
-  text-decoration: underline;
-}
-
-.profile-sub-headers {
-  text-align: center;
-  font-weight: 500;
-  font-size: 2rem;
-  margin-top: 5rem;
-  margin-bottom: 0.5rem;
+.auth-form {
+  margin-top: 4rem;
 }
 
 .quiz-form-content {
@@ -67,6 +16,55 @@ form {
   background-color: #FDEEED;
 }
 
+
+.add-post-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+}
+
+
+.footer {
+  background-color:  #e4f0f2;
+  margin-bottom: 0;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+}
+
+
+.alert-box {
+  width: 30%;
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  top: 22vh;
+  text-align: center;
+}
+
+
+.muted-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.muted-link:hover {
+  text-decoration: underline;
+}
+
+
+.profile-sub-headers {
+  text-align: center;
+  font-weight: 500;
+  font-size: 2rem;
+  margin-top: 5rem;
+  margin-bottom: 0.5rem;
+}
+
+
 .clickMeLink {
   margin-top: 10vh;
   padding: 20px;
@@ -76,18 +74,21 @@ form {
 }
 
 
-
-#market-header h2 {
+#market-header {
   text-align: center;
   margin-top: 3rem;
+  margin-bottom: 5rem;
+}
+
+#market-header h2 {
   font-size: 6rem;
   font-weight: bold;
   background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-  margin-bottom: 5rem;
 }
+
 
 #profile-header {
   text-align: center;
@@ -97,10 +98,16 @@ form {
 #profile-header h1 {
   font-size: 4rem;
   font-weight: bold;
-  background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
+  background-image: linear-gradient(to left, #CE8DF6 20%, #A020F0);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+}
+
+#profile-header p {
+  font-size: 1.5rem;
+  font-stretch: semi-expanded;
+  margin-bottom: 0;
 }
 
 
@@ -113,16 +120,30 @@ form {
   margin: 0;
   font-size: 4rem;
   font-weight: bold;
-  background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
   color: transparent;
+  background-image: linear-gradient(to left, #CE8DF6 25%, #A020F0);
   background-clip: text;
 
-  // Enjoy Safair and Chrome, all for you:)
+  /* Enjoy Safair and Chrome, all for you:) */
   -webkit-background-clip: text;
 }
 
-#profile-header p {
-  font-size: 1.5rem;
-  font-stretch: semi-expanded;
-  margin-bottom: 0;
+
+@media only screen and (min-width: 768px) {
+  form {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  form {
+    width: 60%;
+  }
+}
+
+
+@media only screen and (min-width: 1200px) {
+  form {
+    width: 40%;
+  }
 }

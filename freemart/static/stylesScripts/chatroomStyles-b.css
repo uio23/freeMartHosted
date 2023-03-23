@@ -29,26 +29,8 @@
   color: #6874e8;
 }
 
-
-.message-input:focus-within .message-input-btn {
-  border-color: #606D5D;
-}
-
-.message-input:focus-within .message-input-btn {
-  color: #606D5D;
-}
-
-.message-input:focus-within .message-input-btn:hover, .message-input-btn:hover {
-  color: #d0d6cf;
-}
-
 .message-input-feild {
   border-right: none;
-}
-
-.message-input {
-  width: 73%;
-  margin: 1.5rem auto 0;
 }
 
 .message-input-btn {
