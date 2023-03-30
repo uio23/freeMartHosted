@@ -20,6 +20,9 @@ $input-focus-border-color: $success;
 $input-focus-box-shadow: none;
 $nav-link-font-size: 1.5rem;
 
+$btn-padding-x-xl: 1.312rem;
+$btn-padding-y-xl: 0.656rem;
+
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
@@ -38,7 +41,28 @@ $nav-link-font-size: 1.5rem;
   }
 
 }
-
+/*
+.add-post-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  &:after {
+    content: "Add Post";
+    opacity: 0;
+    display: none;
+    transition: all 3s ease-in 0s;
+  }
+  &:hover {
+    text-indent: 100px;
+    &:after {
+      display: inline;
+      opacity: 1;
+      text-indent: 0px;
+    }
+  }
+}
+*/
 .card {
   &:hover {
     transition-timing-function: ease-in;
@@ -70,23 +94,29 @@ $nav-link-font-size: 1.5rem;
 }
 
 .btn-success {
-  &:hover {
-    --#{$prefix}btn-hover-color: #fff;
-  }
-  &:active {
-    --#{$prefix}btn-active-color: #fff;
-  }
+  --#{$prefix}btn-hover-color: #fff;
+  --#{$prefix}btn-hover-bg: #{shade-color($success, 2.5%)};
+  --#{$prefix}btn-hover-border-color: #{shade-color($success, 1.75%)};
+  --#{$prefix}btn-active-color: #fff;
+  --#{$prefix}btn-active-bg: #{shade-color($success, 3.7%)};
+  --#{$prefix}btn-active-border-color: #{shade-color($success, 1.75%)};
   --#{$prefix}btn-color: #fff;
+  --#{$prefix}btn-border-radius: #{$border-radius-lg};
+  --#{$prefix}btn-padding-x: #{$btn-padding-x-xl};
+  --#{$prefix}btn-padding-y: #{$btn-padding-y-xl};
+  @include rfs(1.437rem, --#{$prefix}btn-font-size);
 }
+
+
 
 .add-post-btn {
   &:hover {
     transition-timing-function: ease-in;
     transition: 0.25s;
-    transform: scale(1.07) translateY(-5px);
-    box-shadow: $box-shadow-lg;
+    transform: scale(1.05) translateY(-2px);
+    box-shadow:  $box-shadow-lg;
   }
-  box-shadow:  $box-shadow;
+  box-shadow: $box-shadow;
   transition-timing-function: ease-out;
   transition: 0.5s;
 }

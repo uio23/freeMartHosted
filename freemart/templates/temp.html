@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg pt-3 px-2">
       <div class="container-fluid m-0">
         <a style="font-size: 2.8rem;" class="navbar-brand">
-          <img id="secretToggler" src="{{ url_for('static', filename='favicon-dark.png') }}" width="50" height="50" class="d-inline-block align-top ms-2" alt="FreeMart Logo">
+          <img id="secretToggler" src="{{ url_for('static', filename='favicon.png') }}" width="50" height="50" class="d-inline-block align-top ms-2" alt="FreeMart Logo">
           Free Mart
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown">
@@ -75,7 +75,7 @@
 
     <div id="content" class="container-fluid">
       {% if showPostBtn %}
-        <a class='btn btn-lg btn-success add-post-btn' href="{{ url_for('market.post_page') }}">Post <i class="fa-solid fa-plus add-post-ico"></i></a>
+        <a class='btn btn-xl btn-success add-post-btn' href="{{ url_for('market.post_page') }}"><i class="fa-solid fa-plus add-post-ico"></i><span class="add-post-text">Post</span></a>
       {% endif %}
       {% block body %}
       {% endblock %}
@@ -96,14 +96,11 @@
       if (getCookie("theme") == "dark") {
         switchToDarkMode();
       } else {
-        switchToLightMode()
+        switchToLightMode();
       }
 
       function switchToDarkMode() {
         $('html').attr('data-bs-theme', 'dark');
-
-        /* Change controls */
-        $("#secretToggler").attr('src', '{{ url_for("static", filename="favicon.png") }}')
 
         /* Pass on the darkMode setting */
         document.cookie = "theme=dark expires=Fri, 31 Dec 9999 23:59:59 GMT /*Not to expire*/"
@@ -113,28 +110,19 @@
       function switchToLightMode() {
         $('html').removeAttr('data-bs-theme');
 
-        /* Change controls */
-        $("#secretToggler").attr('src', '{{ url_for("static", filename="favicon-dark.png") }}')
-
         /* Remove darkMode requirement for next page */
         document.cookie = "theme=light expires=Fri, 31 Dec 9999 23:59:59 GMT /*Not to expire*/"
       }
 
 
       $("#secretToggler").on('click', function(event){
-        if ($(event.target).attr('src') == '{{ url_for("static", filename="favicon-dark.png") }}') {
-          switchToDarkMode();
-        } else if ($(event.target).attr('src') == '{{ url_for("static", filename="favicon.png") }}') {
+        if ($('html').attr('data-bs-theme') == 'dark') {
           switchToLightMode();
         } else {
-          console.log('Ben');
+          switchToDarkMode();
         }
       });
 
-      $(".add-post").hover(
-        function(){$(".add-post-ico").addClass("fa-shake")},
-        function(){$(".add-post-ico").removeClass("fa-shake")}
-      )
     </script>
   </body>
 </html>

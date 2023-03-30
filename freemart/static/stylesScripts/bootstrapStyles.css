@@ -9096,6 +9096,28 @@ textarea.form-control-lg {
 .nav-link:hover.login-link {
   color: #A020F0; }
 
+/*
+.add-post-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  &:after {
+    content: "Add Post";
+    opacity: 0;
+    display: none;
+    transition: all 3s ease-in 0s;
+  }
+  &:hover {
+    text-indent: 100px;
+    &:after {
+      display: inline;
+      opacity: 1;
+      text-indent: 0px;
+    }
+  }
+}
+*/
 .card {
   transition-timing-function: ease-out;
   transition: 1s;
@@ -9119,11 +9141,20 @@ textarea.form-control-lg {
   --bs-btn-hover-color: #d0d6cf; }
 
 .btn-success {
-  --bs-btn-color: #fff; }
-  .btn-success:hover {
-    --bs-btn-hover-color: #fff; }
-  .btn-success:active {
-    --bs-btn-active-color: #fff; }
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #8baf38;
+  --bs-btn-hover-border-color: #8cb038;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #8aac37;
+  --bs-btn-active-border-color: #8cb038;
+  --bs-btn-color: #fff;
+  --bs-btn-border-radius: 0.5rem;
+  --bs-btn-padding-x: 1.312rem;
+  --bs-btn-padding-y: 0.656rem;
+  --bs-btn-font-size: calc(1.2687rem + 0.2244vw); }
+  @media (min-width: 1200px) {
+    .btn-success {
+      --bs-btn-font-size: 1.437rem; } }
 
 .add-post-btn {
   box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15);
@@ -9132,7 +9163,7 @@ textarea.form-control-lg {
   .add-post-btn:hover {
     transition-timing-function: ease-in;
     transition: 0.25s;
-    transform: scale(1.07) translateY(-5px);
+    transform: scale(1.05) translateY(-2px);
     box-shadow: 0 1rem 3rem rgba(var(--bs-body-color-rgb), 0.175); }
 
 @media (max-width: 767.98px) {
