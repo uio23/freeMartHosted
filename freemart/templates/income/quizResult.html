@@ -4,14 +4,14 @@
 {% set exempt = True %}
 
 {% block header %}
-<div id="quiz-header">
+<div class="generic-header">
   <h2>Daily Quiz</h2>
 </div>
 {% endblock %}
 
 {% block body %}
   <form >
-    <div class="quiz-form-content">
+    <div class="quiz-form quiz-form-content">
       <div class="form-check">
         {{ form.qOne.label}}
         <ul id="qOne">

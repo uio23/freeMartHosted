@@ -16,11 +16,18 @@ form {
   background-color: #FDEEED;
 }
 
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-bottom: 3.5rem;
+}
 
 .footer {
-  background-color:  #e4f0f2;
   margin-bottom: 0;
-  position: relative;
+  position: absolute;
   width: 100%;
   bottom: 0;
 }

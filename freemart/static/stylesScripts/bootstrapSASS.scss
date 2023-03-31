@@ -26,6 +26,7 @@ $btn-padding-y-xl: 0.656rem;
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+
 .container-fluid {
   margin-bottom: 5rem;
 }
@@ -33,64 +34,50 @@ $btn-padding-y-xl: 0.656rem;
 .nav-link {
   &:hover {
     &.logout-link {
-    color: #{$danger};
+    color: $danger;
     }
     &.login-link {
-      color: #{$primary};
+      color: $primary;
     }
   }
+}
 
+.footer {
+  /* 20% tint on dark mode bg-color */
+  background-color: #{tint-color($body-bg, 20%)};
 }
-/*
-.add-post-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 2;
-  &:after {
-    content: "Add Post";
-    opacity: 0;
-    display: none;
-    transition: all 3s ease-in 0s;
-  }
-  &:hover {
-    text-indent: 100px;
-    &:after {
-      display: inline;
-      opacity: 1;
-      text-indent: 0px;
-    }
-  }
-}
-*/
+
 .card {
   &:hover {
-    transition-timing-function: ease-in;
-    transition: 0.5s;
+    transition: all 0.5s ease-in;
     transform: translateY(-5px);
     box-shadow: $box-shadow-lg;
   }
-  transition-timing-function: ease-out;
-  transition: 1s;
+  transition: all 1s ease-out;
   box-shadow: $box-shadow;
 }
 
 .message-input {
-  &:focus-within .message-input-btn {
-  color: $success;
-  border-color: $success;
-  }
-
-  &:focus-within .message-input-btn:hover {
-    color: $light-green;
-  }
-
   width: 73%;
   margin: 1.5rem auto 0;
+
+  &:focus-within .message-input-btn {
+    &:hover {
+      color: var(--bs-body-bg);
+      background-color: $success;
+    }
+    border-color: $success;
+  }
+
+  .message-input-btn {
+    color: $success;
+    border-color: var(--bs-border-color);
+    background-color: var(--bs-form-control-bg);
+  }
 }
 
 .btn-outline-success {
-  --#{$prefix}btn-hover-color: #{$light-green};
+  --#{$prefix}btn-hover-color: $light-green;
 }
 
 .btn-success {
@@ -141,17 +128,20 @@ $btn-padding-y-xl: 0.656rem;
 
 @include color-mode(dark) {
   .message-input-btn {
-    &:hover {
-      box-shadow: var(--bs-btn-box-shadow);
-      border: var(--bs-border-width) solid $success;
-    }
     box-shadow: none;
     border: var(--bs-border-width) solid var(--bs-border-color);
   }
 
-  --#{$prefix}body-color: $body-color;
+  .card, .messages-container, .quiz-form{
+    color: $body-color;
+  }
 
+  .footer {
+    /* 2% tint on dark mode --bg-body-bg */
+    background-color: #25292e;
+  }
 }
+
 
 @include media-breakpoint-down(md) {
   .row {
