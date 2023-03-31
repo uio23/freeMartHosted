@@ -9157,14 +9157,37 @@ textarea.form-control-lg {
       --bs-btn-font-size: 1.437rem; } }
 
 .add-post-btn {
-  box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15);
-  transition-timing-function: ease-out;
-  transition: 0.5s; }
+  transition: transform 0.2s, max-width 0.3s;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 64.09px;
+  box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15); }
   .add-post-btn:hover {
-    transition-timing-function: ease-in;
-    transition: 0.25s;
+    max-width: 300px;
     transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 1rem 3rem rgba(var(--bs-body-color-rgb), 0.175); }
+    box-shadow: 0 1rem 3rem rgba(var(--bs-body-color-rgb), 0.175);
+    transition: all 0.5s ease-in; }
+    .add-post-btn:hover .add-post-text {
+      opacity: 1;
+      transition: all 0.2s ease-in; }
+  .add-post-btn .add-post-text {
+    transition: all 0.35s ease-out;
+    opacity: 0;
+    margin-left: 0.313rem; }
+
+[data-bs-theme="dark"] {
+  --bs-body-color: $body-color; }
+  [data-bs-theme="dark"] .message-input-btn {
+    box-shadow: none;
+    border: var(--bs-border-width) solid var(--bs-border-color); }
+    [data-bs-theme="dark"] .message-input-btn:hover {
+      box-shadow: var(--bs-btn-box-shadow);
+      border: var(--bs-border-width) solid #8FB339; }
 
 @media (max-width: 767.98px) {
   .row {

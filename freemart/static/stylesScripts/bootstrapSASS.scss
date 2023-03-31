@@ -111,16 +111,47 @@ $btn-padding-y-xl: 0.656rem;
 
 .add-post-btn {
   &:hover {
-    transition-timing-function: ease-in;
-    transition: 0.25s;
+    max-width: 300px;
     transform: scale(1.05) translateY(-2px);
     box-shadow:  $box-shadow-lg;
+    transition: all 0.5s ease-in;
+
+    .add-post-text {
+      opacity: 1;
+      transition: all 0.2s ease-in;
+    }
   }
+  transition: transform 0.2s, max-width 0.3s;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  max-width: 64.09px;
   box-shadow: $box-shadow;
-  transition-timing-function: ease-out;
-  transition: 0.5s;
+
+  .add-post-text {
+    transition: all 0.35s ease-out;
+    opacity: 0;
+    margin-left: 0.313rem;
+  }
 }
 
+@include color-mode(dark) {
+  .message-input-btn {
+    &:hover {
+      box-shadow: var(--bs-btn-box-shadow);
+      border: var(--bs-border-width) solid $success;
+    }
+    box-shadow: none;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+  }
+
+  --#{$prefix}body-color: $body-color;
+
+}
 
 @include media-breakpoint-down(md) {
   .row {

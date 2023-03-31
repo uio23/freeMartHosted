@@ -16,38 +16,6 @@ form {
   background-color: #FDEEED;
 }
 
-.add-post-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 2;
-}
-
-.add-post-btn:hover > .add-post-text {
-  opacity: 1;
-}
-.add-post-icon {
-  display: flex;
-  align-items: center;
-}
-
-.add-post-btn:hover {
-  max-width: 300px;
-}
-.add-post-text {
-  transition: opacity ease-out 0.4s;
-  opacity: 0;
-  text-indent: 5px;
-}
-
-.add-post-btn {
-  display: inline-flex;
-  align-items: center;
-  overflow:hidden;
-  width: auto;
-  max-width: 64.09px;
-}
-
 
 .footer {
   background-color:  #e4f0f2;
