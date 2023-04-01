@@ -11,7 +11,7 @@ from .models import Product
 
 from .forms import ListingForm, validate_resell
 
-from .imageFunc import saveImg, loadImg
+from .imageFunc import saveImg, loadImgs
 
 
 market = Blueprint('market', __name__, url_prefix="/market")
@@ -68,10 +68,10 @@ def market_page():
     items = Product.query.filter_by(listed=True).all()
     groupedItems = []
 
-    for item in items:
-        loadImg(item.imagePath)
+    loadImgs(items)
+
 
     for i in range(0, len(items), 6):
         groupedItems.append(items[i:i+6])
-        
+
     return render_template("market/market.html", user=current_user, items=groupedItems)

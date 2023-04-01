@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 
 from . import db
 
-from .imageFunc import loadImg
+from .imageFunc import loadImgs
 
 from .models import Product, User, Message
 
@@ -33,8 +33,7 @@ def profile_page(username):
 
     user = User.query.filter_by(username=username).first()
 
-    for product in user.posts:
-        loadImg(product.imagePath)
+    loadImgs(user.posts)
 
     userSelling = [product for product in user.posts if product.listed == True]
     groupedUserSelling = []

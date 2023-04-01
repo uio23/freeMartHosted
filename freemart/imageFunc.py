@@ -10,6 +10,18 @@ from PIL import Image
 
 from io import BytesIO
 
+import threading
+from queue import Queue
+
+jobs = Queue()
+
+def loadImgs(items):
+    for item in items:
+        jobs.put(item.imagePath)
+    for i in range(10):
+        worker = threading.Thread(target=loadImg, args=(jobs,))
+        worker.start()
+    jobs.join()
 
 def saveImg(productImage, imageFilename):
     g = Github(os.environ.get("GITT"))
@@ -25,12 +37,15 @@ def saveImg(productImage, imageFilename):
     return False
 
 
-def loadImg(imageFilename):
-    url = f'https://raw.githubusercontent.com/uio23/freemart_img/main/{imageFilename}'
-    resp = requests.get(url)
-    i = Image.open(BytesIO(resp.content))
-    i.save(os.path.join(os.path.join(
-        os.path.dirname(
-            os.path.abspath(__file__)
-            ), 'static'
-        ), imageFilename))
+def loadImg(q):
+    while not q.empty():
+        imageFilename = q.get()
+        url = f'https://raw.githubusercontent.com/uio23/freemart_img/main/{imageFilename}'
+        resp = requests.get(url)
+        i = Image.open(BytesIO(resp.content))
+        i.save(os.path.join(os.path.join(
+            os.path.dirname(
+                os.path.abspath(__file__)
+                ), 'static'
+                ), imageFilename))
+        q.task_done()
