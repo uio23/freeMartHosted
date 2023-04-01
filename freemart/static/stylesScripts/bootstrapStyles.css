@@ -1305,6 +1305,10 @@ button,
   /* 2% tint on dark mode --bg-body-bg */
   background-color: #25292e; }
 
+[data-bs-theme="dark"] .modal {
+  /* 2% tint on dark mode --bg-body-bg */
+  --bs-modal-bg: #25292e; }
+
 .modal {
   --bs-modal-bg: #e4f0f2; }
 
