@@ -6,7 +6,7 @@ $enable-shadows: true;
 $primary: #A020F0;
 $danger: #A64253;
 $info: #6874e8;
-
+$test: red;
 $success: #8FB339;
 $dark-green: #606D5D;
 $light-green: #d0d6cf;
@@ -16,7 +16,7 @@ $body-color: #0d1816;
 $card-bg: #FDEEED;
 $border-color: rgba(13, 24, 22, 0.3);
 
-$input-focus-border-color: $success;
+$input-focus-border-color: $dark-green;
 $input-focus-box-shadow: none;
 $nav-link-font-size: 1.5rem;
 
@@ -30,7 +30,16 @@ $btn-padding-y-xl: 0.656rem;
 .container-fluid {
   margin-bottom: 5rem;
 }
-
+.btn-outline-info {
+  display: inline-flex;
+  align-items: center;
+  &:active{
+    --bs-btn-active-color: white;
+  }
+  &:hover {
+    --bs-btn-hover-color: white;
+  }
+}
 .nav-link {
   &:hover {
     &.logout-link {
@@ -43,7 +52,6 @@ $btn-padding-y-xl: 0.656rem;
 }
 
 .footer {
-  /* 20% tint on dark mode bg-color */
   background-color: #{tint-color($body-bg, 20%)};
 }
 
@@ -60,16 +68,20 @@ $btn-padding-y-xl: 0.656rem;
 .message-input {
   width: 73%;
   margin: 1.5rem auto 0;
-
-  &:focus-within .message-input-btn {
-    &:hover {
-      color: var(--bs-body-bg);
-      background-color: $success;
+  .message-input-feild {
+    &:focus {
+      border-color: $success;
     }
+  }
+  &:focus-within .message-input-btn {
     border-color: $success;
   }
-
   .message-input-btn {
+    &:active{
+      --bs-btn-active-color: var(--bs-btn-color);
+      --bs-btn-active-bg: var(--bs-btn-bg);
+      --bs-btn-active-border-color: var(--bs-border-color);
+    }
     color: $success;
     border-color: var(--bs-border-color);
     background-color: var(--bs-form-control-bg);
@@ -82,21 +94,21 @@ $btn-padding-y-xl: 0.656rem;
 
 .btn-success {
   --#{$prefix}btn-hover-color: #fff;
-  --#{$prefix}btn-hover-bg: #{shade-color($success, 2.5%)};
-  --#{$prefix}btn-hover-border-color: #{shade-color($success, 1.75%)};
+
   --#{$prefix}btn-active-color: #fff;
+
+  --#{$prefix}btn-color: #fff;
+}
+
+.add-post-btn {
   --#{$prefix}btn-active-bg: #{shade-color($success, 3.7%)};
   --#{$prefix}btn-active-border-color: #{shade-color($success, 1.75%)};
-  --#{$prefix}btn-color: #fff;
+  --#{$prefix}btn-hover-bg: #{shade-color($success, 2.5%)};
+  --#{$prefix}btn-hover-border-color: #{shade-color($success, 1.75%)};
   --#{$prefix}btn-border-radius: #{$border-radius-lg};
   --#{$prefix}btn-padding-x: #{$btn-padding-x-xl};
   --#{$prefix}btn-padding-y: #{$btn-padding-y-xl};
   @include rfs(1.437rem, --#{$prefix}btn-font-size);
-}
-
-
-
-.add-post-btn {
   &:hover {
     max-width: 300px;
     transform: scale(1.05) translateY(-2px);
@@ -142,6 +154,9 @@ $btn-padding-y-xl: 0.656rem;
   }
 }
 
+.modal {
+  --bs-modal-bg: #{tint-color($body-bg, 20%)};
+}
 
 @include media-breakpoint-down(md) {
   .row {

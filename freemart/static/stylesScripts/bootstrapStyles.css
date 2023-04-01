@@ -384,7 +384,7 @@ button,
   .form-control:focus {
     color: var(--bs-body-color);
     background-color: var(--bs-form-control-bg);
-    border-color: #8FB339;
+    border-color: #606D5D;
     outline: 0;
     box-shadow: inset 0 1px 2px rgba(var(--bs-body-color-rgb), 0.075), none; }
   .form-control::-webkit-date-and-time-value {
@@ -445,7 +445,7 @@ button,
   .form-check-input:active {
     filter: brightness(90%); }
   .form-check-input:focus {
-    border-color: #8FB339;
+    border-color: #606D5D;
     outline: 0;
     box-shadow: 0 0 0 0.25rem rgba(160, 32, 240, 0.25); }
   .form-check-input:checked {
@@ -629,6 +629,22 @@ button,
   --bs-btn-disabled-color: #8FB339;
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: #8FB339;
+  --bs-gradient: none; }
+
+.btn-outline-info {
+  --bs-btn-color: #6874e8;
+  --bs-btn-border-color: #6874e8;
+  --bs-btn-hover-color: #000;
+  --bs-btn-hover-bg: #6874e8;
+  --bs-btn-hover-border-color: #6874e8;
+  --bs-btn-focus-shadow-rgb: 104, 116, 232;
+  --bs-btn-active-color: #000;
+  --bs-btn-active-bg: #6874e8;
+  --bs-btn-active-border-color: #6874e8;
+  --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  --bs-btn-disabled-color: #6874e8;
+  --bs-btn-disabled-bg: transparent;
+  --bs-btn-disabled-border-color: #6874e8;
   --bs-gradient: none; }
 
 .btn-outline-danger {
@@ -1194,6 +1210,14 @@ button,
 .container-fluid {
   margin-bottom: 5rem; }
 
+.btn-outline-info {
+  display: inline-flex;
+  align-items: center; }
+  .btn-outline-info:active {
+    --bs-btn-active-color: white; }
+  .btn-outline-info:hover {
+    --bs-btn-hover-color: white; }
+
 .nav-link:hover.logout-link {
   color: #A64253; }
 
@@ -1201,7 +1225,6 @@ button,
   color: #A020F0; }
 
 .footer {
-  /* 20% tint on dark mode bg-color */
   background-color: #e4f0f2; }
 
 .card {
@@ -1215,36 +1238,36 @@ button,
 .message-input {
   width: 73%;
   margin: 1.5rem auto 0; }
+  .message-input .message-input-feild:focus {
+    border-color: #8FB339; }
   .message-input:focus-within .message-input-btn {
     border-color: #8FB339; }
-    .message-input:focus-within .message-input-btn:hover {
-      color: var(--bs-body-bg);
-      background-color: #8FB339; }
   .message-input .message-input-btn {
     color: #8FB339;
     border-color: var(--bs-border-color);
     background-color: var(--bs-form-control-bg); }
+    .message-input .message-input-btn:active {
+      --bs-btn-active-color: var(--bs-btn-color);
+      --bs-btn-active-bg: var(--bs-btn-bg);
+      --bs-btn-active-border-color: var(--bs-border-color); }
 
 .btn-outline-success {
   --bs-btn-hover-color: $light-green; }
 
 .btn-success {
   --bs-btn-hover-color: #fff;
-  --bs-btn-hover-bg: #8baf38;
-  --bs-btn-hover-border-color: #8cb038;
   --bs-btn-active-color: #fff;
+  --bs-btn-color: #fff; }
+
+.add-post-btn {
   --bs-btn-active-bg: #8aac37;
   --bs-btn-active-border-color: #8cb038;
-  --bs-btn-color: #fff;
+  --bs-btn-hover-bg: #8baf38;
+  --bs-btn-hover-border-color: #8cb038;
   --bs-btn-border-radius: 0.5rem;
   --bs-btn-padding-x: 1.312rem;
   --bs-btn-padding-y: 0.656rem;
-  --bs-btn-font-size: calc(1.2687rem + 0.2244vw); }
-  @media (min-width: 1200px) {
-    .btn-success {
-      --bs-btn-font-size: 1.437rem; } }
-
-.add-post-btn {
+  --bs-btn-font-size: calc(1.2687rem + 0.2244vw);
   transition: transform 0.2s, max-width 0.3s;
   position: fixed;
   bottom: 2rem;
@@ -1255,6 +1278,9 @@ button,
   overflow: hidden;
   max-width: 64.09px;
   box-shadow: 0 0.5rem 1rem rgba(var(--bs-body-color-rgb), 0.15); }
+  @media (min-width: 1200px) {
+    .add-post-btn {
+      --bs-btn-font-size: 1.437rem; } }
   .add-post-btn:hover {
     max-width: 300px;
     transform: scale(1.05) translateY(-2px);
@@ -1278,6 +1304,9 @@ button,
 [data-bs-theme="dark"] .footer {
   /* 2% tint on dark mode --bg-body-bg */
   background-color: #25292e; }
+
+.modal {
+  --bs-modal-bg: #e4f0f2; }
 
 @media (max-width: 767.98px) {
   .row {

@@ -22,7 +22,8 @@
               <h5 class="card-title">{{ item.name }}</h5>
               <p class="card-text">{{ item.description }}</p>
               {% if user.username == current_user.username %}
-                <button name="productName" disabled class="btn btn-primary">{{ item.price|round(2) }} FMC</button>
+                <button name="editItemPrice" value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#editItemPrice" class="btn btn-outline-info edit-price-btn overflow-auto"><span style="margin-right: 0.313rem">{{ item.price|round(2) }} FMC</span><i class="fa-regular fa-pen"></i></button>
+                <button name="unlistItem" value="{{ item.name }}" class="btn btn-outline-danger overflow-auto">Remove</button>
               {% else %}
                 <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
               {% endif %}
@@ -54,8 +55,34 @@
         {% endfor %}
       </div>
     {% endfor %}
+    <div class="modal fade" id="editItemPrice">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
+          <div class="modal-body">
+            <div class="input-group">
+
+              <input name="newPrice" id="newPrice" type="text" class="form-control shadow-none" placeholder="New price" autocomplete="off">
+
+            </div>
+          </div>
+          <div class="modal-footer border-0">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" name="productName" id="resell" class="btn btn-success">Confirm</button>
 
 
+
+          </div>
+      </form>
+        </div>
+      </div>
+    </div>
+<!--
 
 <div class="modal fade" id="resellConfirmation">
   <div class="modal-dialog modal-dialog-centered">
@@ -74,7 +101,7 @@
         <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
           <div class="input-group">
             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            <input name="newPrice" id="newPrice" type="text" class="form-control shadow-none" placeholder="New price" autocomplete="off">
+            <input name="newPricsde" id="newPrice" type="text" class="form-control shadow-none" placeholder="New price" autocomplete="off">
             <button type="submit" name="productName" id="resell" class="btn btn-success">Confirm</button>
           </div>
         </form>
@@ -83,6 +110,8 @@
     </div>
   </div>
 </div>
+
+
 
 <div class="modal fade" id="purchaseConfirmation">
   <div class="modal-dialog modal-dialog-centered">
@@ -107,21 +136,14 @@
     </div>
   </div>
 </div>
-
-
-<style>
-    #newPrice:focus {
-        border: 1px solid #ced4da;
-    }
-</style>
-
+-->
 <script>
     $(document).ready(function () {
         var colors = ["#205295","#E94560","#3C6255", "#D89216"];
         var rand = colors[Math.floor(Math.random() * colors.length)];
         $('#colored-username').css('color', rand);
     });
-
+    /*
     $(document).on('show.bs.modal', '#resellConfirmation', function (event){
         var invoker = $(event.relatedTarget);
         productDetails = invoker.parent().children().toArray();
@@ -131,7 +153,6 @@
         $(".previousPrice").html(`<i>${productName}</i> costed you ${productPrice} FMC`);
         $('#resell').attr("value", productName);
     });
-
     $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
         let invoker = $(event.relatedTarget);
         productDetails = invoker.parent().children().toArray();
@@ -140,5 +161,18 @@
         $('.itemInfo').html(`Buy <i>${productName}</i> for ${productPrice}?`);
         $('#buy').attr("value", productName);
     });
+    */
+    $(document).on('show.bs.modal', '#editItemPrice', function (event) {
+      var productDetails = $(event.relatedTarget).parent().children().toArray();
+      console.log(productDetails);
+      productName = productDetails[0].textContent;
+      productPrice = productDetails[2].value;
+      productPrice = Number(productPrice).toFixed(2);
+      $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
+      $('#newPrice').attr('placeholder', `${productPrice} FMC`);
+    });
+
+
+
 </script>
 {% endblock %}
