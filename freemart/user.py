@@ -7,6 +7,9 @@ from .imageFunc import loadImgs
 
 from .models import Product, User, Message
 
+from .forms import PriceForm
+
+
 
 user = Blueprint('user', __name__, url_prefix="/user")
 
@@ -15,22 +18,39 @@ user = Blueprint('user', __name__, url_prefix="/user")
 @user.route("/<username>", methods=["GET", "POST"])
 @login_required
 def profile_page(username):
-    if request.method == "POST":
-        productName = request.form.get('productName')
-        product = Product.query.filter_by(name=productName).first()
-        seller = User.query.filter_by(username=product.username).first()
+    priceForm = PriceForm()
+    if priceForm.validate_on_submit():
+        productName = request.form.get("productName")
+        modalType = request.form.get("modalType")
+        if modalType == "editProductPrice":
 
-        if current_user.balance < product.price:
-            flash("Purchase failed: Insufficient funds", category="error")
-        else:
-            current_user.balance -= product.price
-            seller.balance += product.price
+            newProductPrice = round(float(priceForm.newProductPrice.data), 2)
 
-            product.listed = False
-            product.username = current_user.username
-
+            product = Product.query.filter_by(name=productName).first()
+            product.price = newProductPrice
             db.session.commit()
 
+        elif modalType == "removeProduct":
+            pass
+        elif modalType == "resellProduct":
+            pass
+        elif modalType == "purchaseProduct":
+            productName = request.form.get('productName')
+            product = Product.query.filter_by(name=productName).first()
+            seller = User.query.filter_by(username=product.username).first()
+
+            if current_user.balance < product.price:
+                flash("Purchase failed: Insufficient funds", category="error")
+            else:
+                current_user.balance -= product.price
+                seller.balance += product.price
+
+                product.listed = False
+                product.username = current_user.username
+
+                db.session.commit()
+    else:
+        pass
     user = User.query.filter_by(username=username).first()
 
     loadImgs(user.posts)
@@ -54,7 +74,7 @@ def profile_page(username):
         singleOwned = True
 
 
-    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), current_user=current_user)
+    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), form=priceForm, current_user=current_user)
 
 
 @user.route('/chatroom')

@@ -42,6 +42,11 @@ class LoginForm(FlaskForm):
     submit_button = SubmitField('Login')
 
 
+class PriceForm(FlaskForm):
+    newProductPrice = DecimalField("product_price_label", places=2, validators=[validators.InputRequired(message="Product price must be a number"), validators.NumberRange(min=0.00, message="Price cannot be negative")])
+    submit_button = SubmitField('Confirm')
+
+
 class ListingForm(FlaskForm):
     productName = StringField("product_name_label", validators=[validators.InputRequired(message="Product name required")])
     productDescription = TextAreaField("product_description_label", validators= [validators.Length(min=0, max=250, message="Prodcut description too long (250char max)")])

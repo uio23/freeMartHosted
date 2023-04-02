@@ -6,9 +6,11 @@
       <title>Free Mart</title>
       <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
       <script src="https://kit.fontawesome.com/7dfc14ad36.js" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/bootstrapStyles.css') }}">
       <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='stylesScripts/customStyles.css') }}">
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename='stylesScripts/bootstrap.bundle.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='stylesScripts/darkMode.js') }}" ></script>
       {% block styles %}
       {% endblock %}
   </head>
@@ -16,7 +18,7 @@
     <nav class="navbar navbar-expand-lg pt-3 px-2">
       <div class="container-fluid m-0">
         <a style="font-size: 2.8rem;" class="navbar-brand">
-          <img id="secretToggler" src="{{ url_for('static', filename='favicon.png') }}" width="50" height="50" class="d-inline-block align-top ms-2" alt="FreeMart Logo">
+          <img onclick="switchDarkMode()"id="secretToggler" src="{{ url_for('static', filename='favicon.png') }}" width="50" height="50" class="d-inline-block align-top ms-2" alt="FreeMart Logo">
           Free Mart
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarDropdown">
@@ -81,49 +83,5 @@
       {% endblock %}
     </div>
     <p class="footer text-center text-muted p-3">© FreeMart 2023 | <a class="muted-link" href="mailto:coolgrass@omg.lol">Contact Developer</a></p>
-
-
-    <script src="{{ url_for('static', filename='stylesScripts/bootstrap.bundle.min.js') }}" ></script>
-
-    <script>
-      function getCookie(cname) {
-        console.log(document.cookie);
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var mode = decodedCookie.split(' ')[0]
-        var modeValue = mode.split('=')[1]
-        return modeValue;
-      }
-
-      if (getCookie("theme") == "dark") {
-        switchToDarkMode();
-      } else {
-        switchToLightMode();
-      }
-
-      function switchToDarkMode() {
-        $('html').attr('data-bs-theme', 'dark');
-
-        /* Pass on the darkMode setting */
-        document.cookie = "theme=dark; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;"
-      }
-
-
-      function switchToLightMode() {
-        $('html').removeAttr('data-bs-theme');
-
-        /* Remove darkMode requirement for next page */
-        document.cookie =  "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
-      }
-
-
-      $("#secretToggler").on('click', function(event){
-        if ($('html').attr('data-bs-theme') == 'dark') {
-          switchToLightMode();
-        } else {
-          switchToDarkMode();
-        }
-      });
-
-    </script>
   </body>
 </html>
