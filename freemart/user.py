@@ -30,7 +30,6 @@ def profile_page(username):
             flash("Price must be a number", category="error")
         elif round(float(newProductPrice), 2) < 0:
             flash("Cannot set negative price", category="error")
-
         elif modalType == "editProductPrice":
             newProductPrice = round(float(newProductPrice), 2)
             product = Product.query.filter_by(name=productName).first()

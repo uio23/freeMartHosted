@@ -24,7 +24,7 @@
               <h5 class="card-title">{{ item.name }}</h5>
               <p class="card-text">{{ item.description }}</p>
               {% if user.username == current_user.username %}
-                <button name="editItemPrice" value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#editItemPrice" class="btn btn-outline-info edit-price-btn overflow-auto"><span style="margin-right: 0.313rem">{{ item.price|round(2) }} FMC</span><i class="fa-regular fa-pen"></i></button>
+                <button name="editItemPrice" value="{{ item.price }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#editItemPrice" class="btn btn-outline-info edit-price-btn overflow-auto"><span style="margin-right: 0.313rem">{{ item.price|round(2) }} FMC</span><i class="fa-regular fa-pen"></i></button>
                 <button name="unlistItem" value="{{ item.name }}" class="btn btn-outline-danger overflow-auto">Remove</button>
               {% else %}
                 <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
@@ -68,12 +68,14 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
-          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert">
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert" class="newProductPriceForm">
             <input type="hidden" name="modalType" value="editProductPrice">
             <input type="hidden" name="productName" value="">
 
             <div class="modal-body">
-              <input class="form-control shadow-none" name="newProductPrice" id="newProductPrice" type="text">
+                <input class="form-control shadow-none newProductPrice" name="newProductPrice" type="text">
+                <div class="invalid-feedback d-block">
+                </div>
             </div>
 
             <div class="modal-footer border-0">
@@ -144,17 +146,40 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+      $(".newProductPriceForm").on("submit", function(event) {
+
+        var price = this.newProductPrice.value
+
+        if (!($.isNumeric(price))) {
+          $('.invalid-feedback').text("Price must be a number");
+          return false;
+        }
+        else if (parseFloat(price)<0) {
+          $('.invalid-feedback').text("Price cannot be negative");
+          return false;
+        } else {
+          $('.invalid-feedback').text("");
+          return true;
+        }
+
+      });
+
         var colors = ["#205295","#E94560","#3C6255", "#D89216"];
         var rand = colors[Math.floor(Math.random() * colors.length)];
         $('#colored-username').css('color', rand);
 
+        $(document).on('hidden.bs.modal', '#editItemPrice', function () {
+          $('.invalid-feedback').text("");
+          $('.newProductPrice').val("");
+        });
         $(document).on('show.bs.modal', '#editItemPrice', function (event) {
           var productDetails = $(event.relatedTarget).parent().children().toArray();
           productName = productDetails[0].textContent;
           productPrice = productDetails[2].value;
           productPrice = Number(productPrice).toFixed(2);
           $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
-          $('#newProductPrice').attr('placeholder', `${productPrice} FMC`);
+          $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
           $('input[name="productName"]').val(productName);
         });
     });

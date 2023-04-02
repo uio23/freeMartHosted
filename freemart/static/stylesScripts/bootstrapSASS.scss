@@ -26,6 +26,28 @@ $btn-padding-y-xl: 0.656rem;
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+#no-script {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  z-index: 10;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  opacity: 0.9;
+  user-select: none;
+}
+
+#no-script h1 {
+  position: fixed;
+  color: white;
+  font-size: 2rem;
+  width: 80%;
+  height: 38px;
+  transform: translate(13%, 44vh);
+  transition: transform 1s ease-in;
+}
 
 .container-fluid {
   margin-bottom: 5rem;
