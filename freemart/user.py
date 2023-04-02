@@ -7,38 +7,48 @@ from .imageFunc import loadImgs
 
 from .models import Product, User, Message
 
-from .forms import PriceForm
-
-
 
 user = Blueprint('user', __name__, url_prefix="/user")
 
+def not_float(variable):
+    try:
+        float(variable)
+        return False
+    except:
+        return True
 
 @user.route("/profile/<username>", methods=["GET", "POST"])
 @user.route("/<username>", methods=["GET", "POST"])
 @login_required
 def profile_page(username):
-    priceForm = PriceForm()
-    if priceForm.validate_on_submit():
-        productName = request.form.get("productName")
+    if request.method == "POST":
         modalType = request.form.get("modalType")
-        if modalType == "editProductPrice":
+        productName = request.form.get("productName")
+        newProductPrice = request.form.get("newProductPrice")
 
-            newProductPrice = round(float(priceForm.newProductPrice.data), 2)
+        if not_float(newProductPrice):
+            flash("Price must be a number", category="error")
+        elif round(float(newProductPrice), 2) < 0:
+            flash("Cannot set negative price", category="error")
 
+        elif modalType == "editProductPrice":
+            newProductPrice = round(float(newProductPrice), 2)
             product = Product.query.filter_by(name=productName).first()
             product.price = newProductPrice
             db.session.commit()
-
         elif modalType == "removeProduct":
-            pass
+            product = Product.query.filter_by(name=productName).first()
+            product.listed = False
+            db.session.commit()
         elif modalType == "resellProduct":
-            pass
+            newProductPrice = round((newProductPrice), 2)
+            product = Product.query.filter_by(name=productName).first()
+            product.listed = True
+            product.price = newProductPrice
+            db.session.commit()
         elif modalType == "purchaseProduct":
-            productName = request.form.get('productName')
             product = Product.query.filter_by(name=productName).first()
             seller = User.query.filter_by(username=product.username).first()
-
             if current_user.balance < product.price:
                 flash("Purchase failed: Insufficient funds", category="error")
             else:
@@ -49,8 +59,8 @@ def profile_page(username):
                 product.username = current_user.username
 
                 db.session.commit()
-    else:
-        pass
+
+
     user = User.query.filter_by(username=username).first()
 
     loadImgs(user.posts)
@@ -74,7 +84,7 @@ def profile_page(username):
         singleOwned = True
 
 
-    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), form=priceForm, current_user=current_user)
+    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), current_user=current_user)
 
 
 @user.route('/chatroom')

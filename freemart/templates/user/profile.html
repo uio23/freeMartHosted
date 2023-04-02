@@ -73,13 +73,12 @@
             <input type="hidden" name="productName" value="">
 
             <div class="modal-body">
-              {{ displayField(form.newProductPrice, '', autocomplete="off", autofocus=true, class="form-control shadow-none", id="newPrice", type="text") }}
+              <input class="form-control shadow-none" name="newProductPrice" id="newProductPrice" type="text">
             </div>
 
             <div class="modal-footer border-0">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-              {{ form.submit_button(class="btn btn-success", type="submit") }}
-              {{ form.csrf_token }}
+              <button class="btn btn-success" type="submit">Confirm</button>
             </div>
 
           </form>
@@ -155,31 +154,9 @@
           productPrice = productDetails[2].value;
           productPrice = Number(productPrice).toFixed(2);
           $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
-          $('#newPrice').attr('placeholder', `${productPrice} FMC`);
+          $('#newProductPrice').attr('placeholder', `${productPrice} FMC`);
           $('input[name="productName"]').val(productName);
         });
     });
-
-    /*
-    $(document).on('show.bs.modal', '#resellConfirmation', function (event){
-        var invoker = $(event.relatedTarget);
-        productDetails = invoker.parent().children().toArray();
-        productName = productDetails[0].textContent;
-        productPrice = productDetails[2].value;
-        productPrice = Number(productPrice).toFixed(2);
-        $(".previousPrice").html(`<i>${productName}</i> costed you ${productPrice} FMC`);
-        $('#resell').attr("value", productName);
-    });
-    $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
-        let invoker = $(event.relatedTarget);
-        productDetails = invoker.parent().children().toArray();
-        productName = productDetails[0].textContent;
-        productPrice = productDetails[2].textContent;
-        $('.itemInfo').html(`Buy <i>${productName}</i> for ${productPrice}?`);
-        $('#buy').attr("value", productName);
-    });
-    */
-
-
 </script>
 {% endblock %}
