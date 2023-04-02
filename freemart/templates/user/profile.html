@@ -6,6 +6,7 @@
 <div id="profile-header">
   <h1><span id="colored-username">{{ user.username }}'s</span> Profile</h1>
   <p>({{ user.balance|round(2) }} FMC)</p>
+  <p class="text-muted">({{ user.fmt_balance|round(2) }} FMT)</p>
 </div>
 {% endblock %}
 

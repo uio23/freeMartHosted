@@ -104,6 +104,8 @@ body {
 }
 
 #profile-header p {
+  display: inline;
+  margin: 2%;
   font-size: 1.5rem;
   font-stretch: semi-expanded;
   margin-bottom: 0;

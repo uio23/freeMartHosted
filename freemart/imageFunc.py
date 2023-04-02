@@ -18,7 +18,7 @@ jobs = Queue()
 def loadImgs(items):
     for item in items:
         jobs.put(item.imagePath)
-    for i in range(10):
+    for i in range(25):
         worker = threading.Thread(target=loadImg, args=(jobs,))
         worker.start()
     jobs.join()

@@ -87,6 +87,7 @@
 
     <script>
       function getCookie(cname) {
+        console.log(document.cookie);
         var decodedCookie = decodeURIComponent(document.cookie);
         var mode = decodedCookie.split(' ')[0]
         var modeValue = mode.split('=')[1]
@@ -103,7 +104,7 @@
         $('html').attr('data-bs-theme', 'dark');
 
         /* Pass on the darkMode setting */
-        document.cookie = "theme=dark expires=Fri, 31 Dec 9999 23:59:59 GMT /*Not to expire*/"
+        document.cookie = "theme=dark; expires=Fri, 31 Dec 9999 23:59:59 GMT; path=/;"
       }
 
 
@@ -111,7 +112,7 @@
         $('html').removeAttr('data-bs-theme');
 
         /* Remove darkMode requirement for next page */
-        document.cookie = "theme=light expires=Fri, 31 Dec 9999 23:59:59 GMT /*Not to expire*/"
+        document.cookie =  "theme=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
       }
 
 
