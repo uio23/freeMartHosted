@@ -160,6 +160,7 @@
           return false;
         } else {
           $('.invalid-feedback').text("");
+
           return true;
         }
 
@@ -170,9 +171,26 @@
         $('#colored-username').css('color', rand);
 
         $(document).on('hidden.bs.modal', '#editItemPrice', function () {
+          $('.btn-close').css('margin-bottom', '0');
+          $(".modal-title").css('margin-right', '0');
           $('.invalid-feedback').text("");
           $('.newProductPrice').val("");
         });
+
+        /* Ok, like I over-engineered this completely */
+        $(document).on('shown.bs.modal', '#editItemPrice', function(event) {
+          if ($(".modal-content").width() > 498) {
+            $('.btn-close').css('margin-bottom', '3rem');
+            $(".modal-title").css('margin-right', '1.6rem');
+            $(".modal-title").html(function() {
+              var title = $(this).html();
+              var titleArray = title.split("'s");
+              var newTitle = titleArray[0] + "'s<br> " + titleArray[1];
+              return newTitle;
+            });
+          }
+        });
+
         $(document).on('show.bs.modal', '#editItemPrice', function (event) {
           var productDetails = $(event.relatedTarget).parent().children().toArray();
           productName = productDetails[0].textContent;

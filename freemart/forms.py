@@ -1,5 +1,7 @@
 from flask_wtf import FlaskForm
 
+from sqlalchemy import func
+
 from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, RadioField, validators, ValidationError
 
 from passlib.hash import pbkdf2_sha256
@@ -12,7 +14,6 @@ import urllib.parse
 
 from .models import Product, User
 
-
 class RegisterForm(FlaskForm):
     username = StringField('username_label', validators=[validators.InputRequired(message="Username required"), validators.Length(min=4, max=12, message="Username must be between 4 and 12 charecters")])
     password = PasswordField('password_label', validators=[validators.InputRequired(message="Password required"), validators.Length(min=4, max=24, message="Password must be between 4 and 24 charecters")])
@@ -21,15 +22,15 @@ class RegisterForm(FlaskForm):
 
     def validate_username(self, username):
         username = username.data
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter(func.lower(User.username)==func.lower(username)).first()
 
         if user:
-            raise ValidationError("Username already exists")
+            raise ValidationError("Username already exists (case insensitive)")
 
 
 def invalid_credentials(form, feild):
     username = form.username.data
-    user = User.query.filter_by(username=username).first()
+    user = User.query.filter(func.lower(User.username)==func.lower(username)).first()
 
     if not user:
         raise ValidationError("Incorrect username of password")
@@ -43,7 +44,7 @@ class LoginForm(FlaskForm):
 
 
 class ListingForm(FlaskForm):
-    productName = StringField("product_name_label", validators=[validators.InputRequired(message="Product name required")])
+    productName = StringField("product_name_label", validators=[validators.InputRequired(message="Product name required"), validators.Length(min=0, max=50, message="Prodcut name too long (50char max)")])
     productDescription = TextAreaField("product_description_label", validators= [validators.Length(min=0, max=250, message="Prodcut description too long (250char max)")])
     productPrice = DecimalField("product_price_label", places=2, validators=[validators.InputRequired(message="Product price must be a number"), validators.NumberRange(min=0.00, message="Price cannot be negative")])
     productImage = FileField("product_image_label", validators=[validators.InputRequired(message="Product image required")])
@@ -51,12 +52,13 @@ class ListingForm(FlaskForm):
 
     def validate_productName(self, productName):
         productName = productName.data
-        product = Product.query.filter_by(name=productName).first()
+        productName = productName.replace(' ','')
+        product = Product.query.filter(func.lower(Product.name)==func.lower(productName)).first()
 
-        if not productName.replace(' ','').isalpha():
+        if not productName.isalpha():
             raise ValidationError("Name must only contain letters")
         elif product:
-            raise ValidationError("A product with this name already exists")
+            raise ValidationError("A product with this name already exists (case insensitive)")
 
     def validate_productImage(self, productImage):
         productImage = productImage.data

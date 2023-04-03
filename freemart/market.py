@@ -24,6 +24,7 @@ def post_page():
 
     if listing_form.validate_on_submit():
         productName = listing_form.productName.data
+        productName = productName.strip()
         productDescription = listing_form.productDescription.data
         productPrice = round(float(listing_form.productPrice.data), 2)
         productImage = listing_form.productImage.data

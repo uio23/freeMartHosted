@@ -5,6 +5,8 @@ from passlib.hash import pbkdf2_sha256
 
 from . import db
 
+from sqlalchemy import func
+
 from .models import User
 
 from .forms import LoginForm, RegisterForm
@@ -23,7 +25,7 @@ def login_page():
 
     if login_form.validate_on_submit():
         username = login_form.username.data
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter(func.lower(User.username)==func.lower(username)).first()
 
         flash(f"Welcome back, {user.username}!", category="success")
         login_user(user, remember=True)
@@ -50,6 +52,7 @@ def sign_up_page():
 
     if register_form.validate_on_submit():
         username = register_form.username.data
+        username = username.strip()
         password = register_form.password.data
 
         user = User(username=username, password=pbkdf2_sha256.hash(password))

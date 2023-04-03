@@ -7,6 +7,18 @@ form {
   margin-top: 4rem;
 }
 
+.invalid-feedback {
+  position: absolute;
+  margin-left: 0.3rem;
+}
+
+.modal-dialog {
+  min-width: fit-content;
+}
+.modal-footer {
+  margin-top: 0.5rem;
+}
+
 .quiz-form-content {
   text-align: left;
   margin-top: 3vh;
@@ -40,7 +52,8 @@ body {
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 22vh;
+  top: 15vh;
+  opacity: 0.7;
   text-align: center;
 }
 
