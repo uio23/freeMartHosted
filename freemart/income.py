@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 
 from datetime import datetime
@@ -45,7 +45,7 @@ def quiz_page():
 
             user.balance += (numOfCorrect*10)
             db.session.commit()
-            
+
             return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:

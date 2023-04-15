@@ -2,15 +2,19 @@
 {% extends "temp.html" %}
 
 {% block header %}
-<h2>List an Item</h2>
+<div class="generic-header">
+  <h2>List an Item</h2>
+</div>
 {% endblock %}
 
 {% block body %}
 <form enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
+  <div class="quiz-form-content">
     {{ displayField(form.productName, "Product name", autocomplete="off") }}
     {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
     {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
     {{ displayField(form.productImage, accept="image/png, image/jpeg") }}
+  </div>
     {{ form.submit_button( class="btn btn-primary mb-4") }}
     {{ form.csrf_token }}
 </form>

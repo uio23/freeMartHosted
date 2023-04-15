@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
 
+import re
+
+import random
+
 from . import db
 
 from .imageFunc import loadImgs
@@ -22,49 +26,58 @@ def not_float(variable):
 @login_required
 def profile_page(username):
     if request.method == "POST":
-        modalType = request.form.get("modalType")
         productName = request.form.get("productName")
-        newProductPrice = request.form.get("newProductPrice")
+        product = Product.query.filter_by(name=productName).first()
 
-        if not_float(newProductPrice):
-            flash("Price must be a number", category="error")
-        elif round(float(newProductPrice), 2) < 0:
-            flash("Cannot set negative price", category="error")
-        elif modalType == "editProductPrice":
-            newProductPrice = round(float(newProductPrice), 2)
-            product = Product.query.filter_by(name=productName).first()
-            product.price = newProductPrice
-            db.session.commit()
-        elif modalType == "removeProduct":
-            product = Product.query.filter_by(name=productName).first()
-            product.listed = False
-            db.session.commit()
-        elif modalType == "resellProduct":
-            newProductPrice = round((newProductPrice), 2)
-            product = Product.query.filter_by(name=productName).first()
-            product.listed = True
-            product.price = newProductPrice
-            db.session.commit()
-        elif modalType == "purchaseProduct":
-            product = Product.query.filter_by(name=productName).first()
-            seller = User.query.filter_by(username=product.username).first()
-            if current_user.balance < product.price:
-                flash("Purchase failed: Insufficient funds", category="error")
-            else:
-                current_user.balance -= product.price
-                seller.balance += product.price
+        if product.username == current_user.username:
+            modalType = request.form.get("modalType")
+            newProductPrice = request.form.get("newProductPrice")
 
-                product.listed = False
-                product.username = current_user.username
+            try:
+                # Ignore those try-hards who write out ...FMC in their input, smh
+                insensitive_fmc = re.compile(re.escape('fmc'), re.IGNORECASE)
+                newProductPrice = insensitive_fmc.sub('', newProductPrice)
+                newProductPrice = round(float(newProductPrice), 2) < 0
+            except TypeError:
+                pass
 
-                db.session.commit()
 
+                if modalType == "editProductPrice":
+                    if not_float(newProductPrice):
+                        flash("Price must be a number", category="error")
+                    elif newProductPrice < 0:
+                        flash("Cannot set negative price", category="error")
+                    else:
+                        product.price = newProductPrice
+                        db.session.commit()
+                elif modalType == "removeProduct":
+                    product.listed = False
+                    db.session.commit()
+                elif modalType == "resellProduct":
+                    product.listed = True
+                    product.price = newProductPrice
+                    db.session.commit()
+                elif modalType == "purchaseProduct":
+                    seller = User.query.filter_by(username=product.username).first()
+                    if current_user.balance < product.price:
+                        flash("Not enough FMC", category="error")
+                    else:
+                        current_user.balance -= product.price
+                        seller.balance += product.price
+
+                        product.listed = False
+                        product.username = current_user.username
+
+                        db.session.commit()
+        else:
+            flash("You do not own the product!", category="error")
 
     user = User.query.filter_by(username=username).first()
 
     loadImgs(user.posts)
 
     userSelling = [product for product in user.posts if product.listed == True]
+    random.shuffle(userSelling)
     groupedUserSelling = []
 
     for i in range(0, len(userSelling), 6):
@@ -74,6 +87,7 @@ def profile_page(username):
         singleSelling = True
 
     userOwned = [product for product in user.posts if product.listed == False]
+    random.shuffle(userOwned)
     groupedUserOwned = []
 
     for i in range(0, len(userOwned), 6):

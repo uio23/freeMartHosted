@@ -27,7 +27,6 @@ def login_page():
         username = login_form.username.data
         user = User.query.filter(func.lower(User.username)==func.lower(username)).first()
 
-        flash(f"Welcome back, {user.username}!", category="success")
         login_user(user, remember=True)
 
         return redirect(url_for("user.profile_page", username=current_user.username))

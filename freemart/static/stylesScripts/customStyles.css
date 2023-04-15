@@ -7,17 +7,18 @@ form {
   margin-top: 4rem;
 }
 
-.invalid-feedback {
+.modal-validation {
   position: absolute;
-  margin-left: 0.3rem;
+  margin-left: 0.2rem;
 }
-
 .modal-dialog {
   min-width: fit-content;
 }
+
 .modal-footer {
   margin-top: 0.5rem;
 }
+
 
 .quiz-form-content {
   text-align: left;
@@ -52,7 +53,7 @@ body {
   margin-right: auto;
   left: 0;
   right: 0;
-  top: 15vh;
+  top: 13.5vh;
   opacity: 0.7;
   text-align: center;
 }
@@ -123,7 +124,6 @@ body {
   font-stretch: semi-expanded;
   margin-bottom: 0;
 }
-
 
 .generic-header {
   text-align: center;

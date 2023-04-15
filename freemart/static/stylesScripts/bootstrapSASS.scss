@@ -6,7 +6,6 @@ $enable-shadows: true;
 $primary: #A020F0;
 $danger: #A64253;
 $info: #6874e8;
-$test: red;
 $success: #8FB339;
 $dark-green: #606D5D;
 $light-green: #d0d6cf;
@@ -25,6 +24,7 @@ $btn-padding-y-xl: 0.656rem;
 
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
+
 
 #no-script {
   position: absolute;
@@ -170,18 +170,29 @@ $btn-padding-y-xl: 0.656rem;
     color: $body-color;
   }
 
+
   .footer {
-    /* 2% tint on dark mode --bg-body-bg */
+    /* 2% tint on dark --bs-body-bg */
     background-color: #25292e;
   }
   .modal {
-    /* 2% tint on dark mode --bg-body-bg */
-    --bs-modal-bg: #25292e;
+    /* 2% tint on dark --bs-body-bg */
+    --#{$prefix}modal-bg: #25292e;
+    --#{$prefix}form-control-bg: #25292e;
+
+    .form-control {
+      &:focus {
+        border-color: #{shade-color($dark-green, 2%)};
+      }
+
+    }
   }
+
 }
 
 .modal {
-  --bs-modal-bg: #{tint-color($body-bg, 20%)};
+  --#{$prefix}modal-bg: #{tint-color($body-bg, 20%)};
+  --#{$prefix}form-control-bg: #{tint-color($body-bg, 20%)};
 }
 
 @include media-breakpoint-down(md) {

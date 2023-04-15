@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 
 from werkzeug.utils import secure_filename
 
+import random
+
 import os
 
 from . import db
@@ -33,7 +35,7 @@ def post_page():
         if saveImg(productImage, imageFilename):
             pass
         else:
-            flash("Failed to upload image")
+            flash("Failed to upload image", category="error")
             return render_template("market/post.html", user=current_user, form=listing_form)
 
         item = Product(name=productName, description=productDescription, price=productPrice, imagePath=imageFilename, username=current_user.username)
@@ -67,6 +69,7 @@ def market_page():
 
 
     items = Product.query.filter_by(listed=True).all()
+    random.shuffle(items)
     groupedItems = []
 
     loadImgs(items)

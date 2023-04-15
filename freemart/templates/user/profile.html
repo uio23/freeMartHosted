@@ -25,7 +25,7 @@
               <p class="card-text">{{ item.description }}</p>
               {% if user.username == current_user.username %}
                 <button name="editItemPrice" value="{{ item.price }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#editItemPrice" class="btn btn-outline-info edit-price-btn overflow-auto"><span style="margin-right: 0.313rem">{{ item.price|round(2) }} FMC</span><i class="fa-regular fa-pen"></i></button>
-                <button name="unlistItem" value="{{ item.name }}" class="btn btn-outline-danger overflow-auto">Remove</button>
+                <button name="removeItem" value="{{ item.name }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#removeItem" class="btn btn-outline-danger overflow-auto">Remove</button>
               {% else %}
                 <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
               {% endif %}
@@ -79,6 +79,30 @@
             </div>
 
             <div class="modal-footer border-0">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" type="submit">Confirm</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="removeItem">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header border-0">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert">
+            <input type="hidden" name="modalType" value="removeProduct">
+            <input type="hidden" name="productName" value="">
+
+            <div class="modal-footer border-0 d-flex justify-content-center">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
               <button class="btn btn-success" type="submit">Confirm</button>
             </div>
@@ -150,17 +174,19 @@
       $(".newProductPriceForm").on("submit", function(event) {
 
         var price = this.newProductPrice.value
+        price = price.replace(/FMC/gi, '')
 
+        console.log(price)
         if (!($.isNumeric(price))) {
           $('.invalid-feedback').text("Price must be a number");
+          $('.invalid-feedback').addClass("modal-validation");
           return false;
         }
         else if (parseFloat(price)<0) {
           $('.invalid-feedback').text("Price cannot be negative");
+          $('.invalid-feedback').addClass("modal-validation");
           return false;
         } else {
-          $('.invalid-feedback').text("");
-
           return true;
         }
 
@@ -171,23 +197,20 @@
         $('#colored-username').css('color', rand);
 
         $(document).on('hidden.bs.modal', '#editItemPrice', function () {
-          $('.btn-close').css('margin-bottom', '0');
           $(".modal-title").css('margin-right', '0');
           $('.invalid-feedback').text("");
+          $('.invalid-feedback').removeClass("modal-validation");
           $('.newProductPrice').val("");
         });
 
-        /* Ok, like I over-engineered this completely */
         $(document).on('shown.bs.modal', '#editItemPrice', function(event) {
-          if ($(".modal-content").width() > 498) {
-            $('.btn-close').css('margin-bottom', '3rem');
-            $(".modal-title").css('margin-right', '1.6rem');
-            $(".modal-title").html(function() {
-              var title = $(this).html();
-              var titleArray = title.split("'s");
-              var newTitle = titleArray[0] + "'s<br> " + titleArray[1];
-              return newTitle;
-            });
+          if ($(this).find('.modal-content').width() > 498) {
+            $(".modal-title").css('margin-right', '2rem');
+          }
+        });
+        $(document).on('shown.bs.modal', '#removeItem', function(event) {
+          if ($(this).find('.modal-content').width() > 498) {
+            $(".modal-title").css('margin-right', '2rem');
           }
         });
 
@@ -198,6 +221,12 @@
           productPrice = Number(productPrice).toFixed(2);
           $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
           $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
+          $('input[name="productName"]').val(productName);
+        });
+        $(document).on('show.bs.modal', '#removeItem', function (event) {
+          var productDetails = $(event.relatedTarget).parent().children().toArray();
+          productName = productDetails[0].textContent;
+          $(".modal-title").html(`Remove <i>${productName}</i>`);
           $('input[name="productName"]').val(productName);
         });
     });
