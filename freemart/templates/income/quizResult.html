@@ -85,13 +85,14 @@
 </style>
 
 <script type="text/javascript">
+  quizBonus = {{ quizBonus|safe }}
   $("input[type='radio']").each(function(){
     $(this).addClass("form-check-input")
   })
 
   $(".d-block").each(function(){
     if ($(this).hasClass("valid-feedback")) {
-      $(this).html("Correct, +10 coins!")
+      $(this).html(`Correct, + ${quizBonus} FMC!`)
     } else {
       $(this).html("Wrong")
     }

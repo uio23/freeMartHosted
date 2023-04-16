@@ -25,7 +25,12 @@ $btn-padding-y-xl: 0.656rem;
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
-
+.invalid-feedback {
+  margin-left: 0.2rem;
+}
+.bonus-number {
+  color: $success;
+}
 #no-script {
   position: absolute;
   top: 0;

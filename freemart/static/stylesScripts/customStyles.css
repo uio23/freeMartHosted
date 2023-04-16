@@ -7,10 +7,14 @@ form {
   margin-top: 4rem;
 }
 
+.spacer {
+  height: 4px;
+}
+
 .modal-validation {
   position: absolute;
-  margin-left: 0.2rem;
 }
+
 .modal-dialog {
   min-width: fit-content;
 }
@@ -119,11 +123,23 @@ body {
 
 #profile-header p {
   display: inline;
-  margin: 2%;
-  font-size: 1.5rem;
-  font-stretch: semi-expanded;
   margin-bottom: 0;
+  font-size: 1.8rem;
+  font-stretch: semi-expanded;
 }
+
+#profile-header .fmt-balance {
+  margin: 2%;
+  margin-left: 4%;
+}
+
+#profile-header .bonus-info {
+  position: relative;
+  top: -5px;
+  font-size: 0.8rem;
+}
+
+
 
 .generic-header {
   text-align: center;

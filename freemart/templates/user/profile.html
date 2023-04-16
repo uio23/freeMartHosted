@@ -6,12 +6,42 @@
 {% block header %}
 <div id="profile-header">
   <h1><span id="colored-username">{{ user.username }}'s</span> Profile</h1>
-  <p>({{ user.balance|round(2) }} FMC)</p>
-  <p class="text-muted">({{ user.fmt_balance|round(2) }} FMT)</p>
+  <div class="d-inline-flex flex-column">
+    <p>{{ user.balance|round(2) }} FMC</p>
+    {% if saleBonus > 0 %}
+    <span class="bonus-info"><span class="bonus-number">+ {{ saleBonus }}</span> <span class="text-muted">per sale</span></span>
+    {% endif %}
+  </div>
+  <div class="d-inline">
+    <p class="text-muted fmt-balance">{{ user.fmt_balance|round(2) }} FMT</p>
+  </div>
 </div>
 {% endblock %}
 
 {% block body %}
+    <p class="profile-sub-headers">Owned: {{ userOwnedLen }} item{% if not singleOwned %}s{%endif %}</p>
+
+    {% for itemGroup in userOwned %}
+      <div class="row gy-5 m-auto">
+        {% for item in itemGroup %}
+          <div class="col-lg-4 col-md-6">
+            <div data-bs-theme="light" class="card border-0 h-100">
+              <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.name }}</h5>
+                <p class="card-text">{{ item.description }}</p>
+                {% if user.username == current_user.username %}
+                  <button value="{{ item.price }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#resellItem" class="btn btn-outline-info overflow-auto"><span style="margin-right: 0.313rem">Resell</span><i class="fa-regular fa-tag"></i></button>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+
+
+
     <p class="profile-sub-headers">Selling: {{ userSellingLen }} item{% if not singleSelling %}s{%endif %}</p>
 
     {% for itemGroup in userSelling %}
@@ -37,28 +67,6 @@
     {% endfor %}
 
 
-    <p class="profile-sub-headers">Owned: {{ userOwnedLen }} item{% if not singleOwned %}s{%endif %}</p>
-
-    {% for itemGroup in userOwned %}
-      <div class="row gy-5 m-auto">
-        {% for item in itemGroup %}
-          <div class="col-lg-4 col-md-6">
-            <div data-bs-theme="light" class="card border-0 h-100">
-              <img src="{{ url_for('static', filename=item.imagePath) }}" class="card-img-top">
-              <div class="card-body">
-                <h5 class="card-title">{{ item.name }}</h5>
-                <p class="card-text">{{ item.description }}</p>
-                {% if user.username == current_user.username %}
-                  <button value="{{ item.price }}" data-bs-toggle="modal" data-bs-target="#resellConfirmation" class="btn btn-primary">Re-sell</button>
-                {% endif %}
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endfor %}
-
-
     <div class="modal fade" id="editItemPrice">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -73,9 +81,9 @@
             <input type="hidden" name="productName" value="">
 
             <div class="modal-body">
-                <input class="form-control shadow-none newProductPrice" name="newProductPrice" type="text">
-                <div class="invalid-feedback d-block">
-                </div>
+                <input class="form-control newProductPrice" autofocus name="newProductPrice" type="text">
+                <div class="invalid-feedback d-block"></div>
+                <div class="spacer"></div>
             </div>
 
             <div class="modal-footer border-0">
@@ -112,123 +120,110 @@
         </div>
       </div>
     </div>
-<!--
 
-<div class="modal fade" id="resellConfirmation">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal fade" id="resellItem">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Re-sell</h4>
-      </div>
-
-      <div class="modal-body">
-        <div class="previousPrice" style="margin-bottom: 3%;"></div>
-        <div>How much do you want to re-sell it for?</div>
-      </div>
-
-      <div class="modal-footer justify-content-between">
-        <form action="{{ url_for('market.market_page') }}" method="POST" novalidate style="all:revert">
-          <div class="input-group">
-            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-            <input name="newPricsde" id="newPrice" type="text" class="form-control shadow-none" placeholder="New price" autocomplete="off">
-            <button type="submit" name="productName" id="resell" class="btn btn-success">Confirm</button>
+          <div class="modal-header border-0">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
-        </form>
-      </div>
 
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert" class="newProductPriceForm">
+            <input type="hidden" name="modalType" autofocus value="resellProduct">
+            <input type="hidden" name="productName" value="">
+
+            <div class="modal-body">
+                <input class="form-control shadow-none newProductPrice" name="newProductPrice" type="text">
+                <div class="invalid-feedback d-block"></div>
+                <div class="spacer"></div>
+            </div>
+
+            <div class="modal-footer border-0">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success" type="submit">Confirm</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-
-
-<div class="modal fade" id="purchaseConfirmation">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h4 class="modal-title">Confirm Purchase</h4>
-      </div>
-
-      <div class="modal-body">
-        <div style="margin-bottom: 3%;">You have {{ current_user.balance|round(2) }} FMC</div>
-        <div class="itemInfo"></div>
-      </div>
-
-      <div class="modal-footer justify-content-between">
-        <form method="post" action="{{ url_for('user.profile_page', username=current_user.username) }}" style="all:revert;">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-          <button id="buy" type="submit" class="btn btn-success" name="productName">Confirm</button>
-        </form>
-      </div>
-
-    </div>
-  </div>
-</div>
--->
 
 <script type="text/javascript">
     $(document).ready(function () {
+      // Set random color to user's username every time profile page visited
+      var colors = ["#205295","#E94560","#3C6255", "#D89216"];
+      var rand = colors[Math.floor(Math.random() * colors.length)];
+      $('#colored-username').css('color', rand);
 
+      // Remove modal spacers
+      $('.spacer').hide();
+
+      // Customize modals for specific product
+      $(document).on('show.bs.modal', '#editItemPrice', function (event) {
+        var productDetails = $(event.relatedTarget).parent().children().toArray();
+        productName = productDetails[0].textContent;
+        productPrice = productDetails[2].value;
+        productPrice = Number(productPrice).toFixed(2);
+        $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
+        $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
+        $('input[name="productName"]').val(productName);
+      });
+      $(document).on('show.bs.modal', '#removeItem', function (event) {
+        var productDetails = $(event.relatedTarget).parent().children().toArray();
+        productName = productDetails[0].textContent;
+        $(".modal-title").html(`Remove <i>${productName}</i>`);
+        $('input[name="productName"]').val(productName);
+      });
+      $(document).on('show.bs.modal', '#resellItem', function (event) {
+        var productDetails = $(event.relatedTarget).parent().children().toArray();
+        productName = productDetails[0].textContent;
+        productPrice = productDetails[2].value;
+        productPrice = Number(productPrice).toFixed(2);
+        $(".modal-title").html(`New price for <i>${productName}</i>`);
+        $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
+        $('input[name="productName"]').val(productName);
+      });
+
+      // Resize any modal to fit title, for long product names
+      $(document).on('shown.bs.modal', '#editItemPrice, #removeItem', function(event) {
+        if ($(this).find('.modal-content').width() > 498) {
+          $(".modal-title").css('margin-right', '2rem');
+        }
+      });
+
+      // Validate form before submit
       $(".newProductPriceForm").on("submit", function(event) {
-
         var price = this.newProductPrice.value
         price = price.replace(/FMC/gi, '')
 
-        console.log(price)
         if (!($.isNumeric(price))) {
+          $('.spacer').show();
           $('.invalid-feedback').text("Price must be a number");
           $('.invalid-feedback').addClass("modal-validation");
           return false;
         }
         else if (parseFloat(price)<0) {
+          $('.spacer').show();
           $('.invalid-feedback').text("Price cannot be negative");
           $('.invalid-feedback').addClass("modal-validation");
           return false;
-        } else {
+        }
+        else {
           return true;
         }
-
       });
 
-        var colors = ["#205295","#E94560","#3C6255", "#D89216"];
-        var rand = colors[Math.floor(Math.random() * colors.length)];
-        $('#colored-username').css('color', rand);
-
-        $(document).on('hidden.bs.modal', '#editItemPrice', function () {
-          $(".modal-title").css('margin-right', '0');
-          $('.invalid-feedback').text("");
-          $('.invalid-feedback').removeClass("modal-validation");
-          $('.newProductPrice').val("");
-        });
-
-        $(document).on('shown.bs.modal', '#editItemPrice', function(event) {
-          if ($(this).find('.modal-content').width() > 498) {
-            $(".modal-title").css('margin-right', '2rem');
-          }
-        });
-        $(document).on('shown.bs.modal', '#removeItem', function(event) {
-          if ($(this).find('.modal-content').width() > 498) {
-            $(".modal-title").css('margin-right', '2rem');
-          }
-        });
-
-        $(document).on('show.bs.modal', '#editItemPrice', function (event) {
-          var productDetails = $(event.relatedTarget).parent().children().toArray();
-          productName = productDetails[0].textContent;
-          productPrice = productDetails[2].value;
-          productPrice = Number(productPrice).toFixed(2);
-          $(".modal-title").html(`Change <i>${productName}'s</i> Price`);
-          $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
-          $('input[name="productName"]').val(productName);
-        });
-        $(document).on('show.bs.modal', '#removeItem', function (event) {
-          var productDetails = $(event.relatedTarget).parent().children().toArray();
-          productName = productDetails[0].textContent;
-          $(".modal-title").html(`Remove <i>${productName}</i>`);
-          $('input[name="productName"]').val(productName);
-        });
+      // Reset modal after display
+      $(document).on('hidden.bs.modal', '#editItemPrice', function () {
+        $(".modal-title").css('margin-right', '0');
+        $('.spacer').hide();
+        $('.invalid-feedback').text("");
+        $('.invalid-feedback').removeClass("modal-validation");
+        $('.newProductPrice').val("");
+      });
     });
 </script>
 {% endblock %}

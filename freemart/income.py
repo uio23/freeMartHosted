@@ -3,18 +3,22 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 from datetime import datetime
 
+from decimal import Decimal
+
 from . import db
 
 from .models import User
 
 from .forms import QuizForm
 
+from .bonusFunc import calcQuizBonus
+
 income = Blueprint('income', __name__, url_prefix="/income")
 
 @login_required
 @income.route("/quiz", methods=["GET", "POST"])
 def quiz_page():
-    user = User.query.filter_by(username=current_user.username).first()
+    user = current_user
 
     currentTime = datetime.utcnow()
     lastTime = datetime.strptime(user.lastquiz, '%Y-%m-%d %H:%M:%S.%f')
@@ -42,11 +46,11 @@ def quiz_page():
                     outcome.append("valid")
                 else:
                     outcome.append("invalid")
-
-            user.balance += (numOfCorrect*10)
+            quizBonus = calcQuizBonus(user)
+            user.balance += Decimal(numOfCorrect*quizBonus)
             db.session.commit()
 
-            return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, form=questionForm)
+            return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, quizBonus=quizBonus, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)

@@ -11,6 +11,8 @@ from .imageFunc import loadImgs
 
 from .models import Product, User, Message
 
+from .bonusFunc import calcSaleBonus
+
 
 user = Blueprint('user', __name__, url_prefix="/user")
 
@@ -25,54 +27,62 @@ def not_float(variable):
 @user.route("/<username>", methods=["GET", "POST"])
 @login_required
 def profile_page(username):
+    user = User.query.filter_by(username=username).first()
+    saleBonus = calcSaleBonus(user)
+    purchase = False
     if request.method == "POST":
         productName = request.form.get("productName")
         product = Product.query.filter_by(name=productName).first()
 
         if product.username == current_user.username:
-            modalType = request.form.get("modalType")
+            modalTbype = request.form.get("modalType")
             newProductPrice = request.form.get("newProductPrice")
 
+            # Ignore those try-hards who write out ...FMC in their input, smh
+            insensitive_fmc = re.compile(re.escape('fmc'), re.IGNORECASE)
+            newProductPrice = insensitive_fmc.sub('', newProductPrice)
+
             try:
-                # Ignore those try-hards who write out ...FMC in their input, smh
-                insensitive_fmc = re.compile(re.escape('fmc'), re.IGNORECASE)
-                newProductPrice = insensitive_fmc.sub('', newProductPrice)
-                newProductPrice = round(float(newProductPrice), 2) < 0
+                newProductPrice = round(float(newProductPrice), 2)
             except TypeError:
                 pass
 
 
-                if modalType == "editProductPrice":
-                    if not_float(newProductPrice):
-                        flash("Price must be a number", category="error")
-                    elif newProductPrice < 0:
-                        flash("Cannot set negative price", category="error")
-                    else:
-                        product.price = newProductPrice
-                        db.session.commit()
-                elif modalType == "removeProduct":
-                    product.listed = False
-                    db.session.commit()
-                elif modalType == "resellProduct":
-                    product.listed = True
+            if modalType == "editProductPrice":
+                if not_float(newProductPrice):
+                    flash("Price must be a number", category="error")
+                elif newProductPrice < 0:
+                    flash("Cannot set negative price", category="error")
+                else:
                     product.price = newProductPrice
                     db.session.commit()
-                elif modalType == "purchaseProduct":
-                    seller = User.query.filter_by(username=product.username).first()
-                    if current_user.balance < product.price:
-                        flash("Not enough FMC", category="error")
-                    else:
-                        current_user.balance -= product.price
-                        seller.balance += product.price
+            elif modalType == "removeProduct":
+                product.listed = False
+                db.session.commit()
+            elif modalType == "resellProduct":
+                product.listed = True
+                product.price = newProductPrice
+                db.session.commit()
+            elif modalType == "purchaseProduct":
+                seller = User.query.filter_by(username=product.username).first()
+                sellerBonus = calcSaleBonus(seller)
+                if current_user.balance < product.price:
+                    flash("Not enough FMC", category="error")
+                else:
 
-                        product.listed = False
-                        product.username = current_user.username
 
-                        db.session.commit()
+                    current_user.balance -= product.price
+                    seller.balance += (product.price + sellerBonus)
+
+                    product.listed = False
+                    product.username = current_user.username
+
+                    purchase = True
+                    purchasedItem = product
+
+                    db.session.commit()
         else:
             flash("You do not own the product!", category="error")
-
-    user = User.query.filter_by(username=username).first()
 
     loadImgs(user.posts)
 
@@ -88,6 +98,9 @@ def profile_page(username):
 
     userOwned = [product for product in user.posts if product.listed == False]
     random.shuffle(userOwned)
+    if purchase:
+        userOwned.insert(0, userOwned.pop(userOwned.index(purchasedItem)))
+
     groupedUserOwned = []
 
     for i in range(0, len(userOwned), 6):
@@ -97,7 +110,7 @@ def profile_page(username):
         singleOwned = True
 
 
-    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), current_user=current_user)
+    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), saleBonus=saleBonus, current_user=current_user)
 
 
 @user.route('/chatroom')
