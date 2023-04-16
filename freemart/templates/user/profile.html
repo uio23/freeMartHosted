@@ -9,7 +9,7 @@
   <div class="d-inline-flex flex-column">
     <p>{{ user.balance|round(2) }} FMC</p>
     {% if saleBonus > 0 %}
-    <span class="bonus-info"><span class="bonus-number">+ {{ saleBonus }}</span> <span class="text-muted">per sale</span></span>
+    <span class="bonus-info"><span class="bonus-number">+ {{ saleBonus }}</span> <span class="text-muted">per sale <span style="font-size: 0.4rem">over {{ saleBonus/4 }}</span></span></span>
     {% endif %}
   </div>
   <div class="d-inline">
@@ -76,7 +76,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
-          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert" class="newProductPriceForm">
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate autocomplete="off" style="all:revert" class="newProductPriceForm">
             <input type="hidden" name="modalType" value="editProductPrice">
             <input type="hidden" name="productName" value="">
 
@@ -130,7 +130,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
           </div>
 
-          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert" class="newProductPriceForm">
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate autocomplete="off" style="all:revert" class="newProductPriceForm">
             <input type="hidden" name="modalType" autofocus value="resellProduct">
             <input type="hidden" name="productName" value="">
 
@@ -217,7 +217,7 @@
       });
 
       // Reset modal after display
-      $(document).on('hidden.bs.modal', '#editItemPrice', function () {
+      $(document).on('hidden.bs.modal', '#editItemPrice, #resellItem', function () {
         $(".modal-title").css('margin-right', '0');
         $('.spacer').hide();
         $('.invalid-feedback').text("");

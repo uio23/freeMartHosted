@@ -20,7 +20,7 @@
             <p class="card-text">{{ item.description }}</p>
             {% if item.username == user.username %}
               <button name="itemName" disabled value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
-              <button name="unlistItem" value="{{ item.name }}" class="btn btn-outline-danger overflow-auto">Un-list</button>
+              <button name="removeItem" value="{{ item.name }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#removeItem" class="btn btn-outline-danger overflow-auto">Remove</button>
             {% else %}
               <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
             {% endif %}
@@ -49,6 +49,7 @@
 
       <div class="modal-footer justify-content-between">
         <form method="post" action="{{ url_for('user.profile_page', username=current_user.username) }}" style="all:revert;">
+          <input type="hidden" name="modalType" value="purchaseProduct">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
           <button id="buy" type="submit" class="btn btn-success" name="productName">Confirm</button>
         </form>
@@ -58,14 +59,53 @@
   </div>
 </div>
 
+<div class="modal fade" id="removeItem">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header border-0">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert">
+        <input type="hidden" name="modalType" value="removeProduct">
+        <input type="hidden" name="productName" value="">
+
+        <div class="modal-footer border-0 d-flex justify-content-center">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-success" type="submit">Confirm</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
 <script>
+  $(document).ready(function () {
+    // Customize modals for specific product
     $(document).on('show.bs.modal', '#purchaseConfirmation', function (event) {
-        let invoker = $(event.relatedTarget);
-        productDetails = invoker.parent().children().toArray();
+        var productDetails = $(event.relatedTarget).parent().children().toArray();
         productName = productDetails[0].textContent;
         productPrice = productDetails[2].textContent;
         $('.itemInfo').html(`Buy <i>${productName}</i> for ${productPrice}?`);
         $('#buy').attr("value", productName);
-    })
+    });
+    $(document).on('show.bs.modal', '#removeItem', function (event) {
+      var productDetails = $(event.relatedTarget).parent().children().toArray();
+      productName = productDetails[0].textContent;
+      $(".modal-title").html(`Remove <i>${productName}</i>`);
+      $('input[name="productName"]').val(productName);
+    });
+
+    // Resize any modal to fit title, for long product names
+    $(document).on('shown.bs.modal', '#purchaseConfirmation, #removeItem', function(event) {
+      if ($(this).find('.modal-content').width() > 498) {
+        $(".modal-title").css('margin-right', '2rem');
+      }
+    });
+  });
 </script>
 {% endblock %}

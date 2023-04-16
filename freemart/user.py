@@ -5,6 +5,8 @@ import re
 
 import random
 
+from decimal import Decimal
+
 from . import db
 
 from .imageFunc import loadImgs
@@ -33,20 +35,44 @@ def profile_page(username):
     if request.method == "POST":
         productName = request.form.get("productName")
         product = Product.query.filter_by(name=productName).first()
+        modalType = request.form.get("modalType")
 
-        if product.username == current_user.username:
-            modalTbype = request.form.get("modalType")
+        if modalType == "purchaseProduct":
+            seller = User.query.filter_by(username=product.username).first()
+            if (current_user.balance < product.price):
+                flash("Not enough FMC", category="error")
+            elif (product.username == current_user.username):
+                flash("You cannot buy from yourself", category="error")
+            else:
+
+
+                current_user.balance -= product.price
+
+                sellerBonus = calcSaleBonus(seller)
+                if product.price > (sellerBonus/4):
+                    seller.balance += Decimal(sellerBonus)
+                    seller.sale_count += 1
+                seller.balance += product.price
+
+                product.listed = False
+                product.username = current_user.username
+
+                purchase = True
+                purchasedItem = product
+
+                db.session.commit()
+        elif product.username == current_user.username:
             newProductPrice = request.form.get("newProductPrice")
 
-            # Ignore those try-hards who write out ...FMC in their input, smh
-            insensitive_fmc = re.compile(re.escape('fmc'), re.IGNORECASE)
-            newProductPrice = insensitive_fmc.sub('', newProductPrice)
+            if newProductPrice:
+                # Ignore those try-hards who write out ...FMC in their input, smh
+                insensitive_fmc = re.compile(re.escape('fmc'), re.IGNORECASE)
+                newProductPrice = insensitive_fmc.sub('', newProductPrice)
 
-            try:
-                newProductPrice = round(float(newProductPrice), 2)
-            except TypeError:
-                pass
-
+                try:
+                    newProductPrice = round(float(newProductPrice), 2)
+                except TypeError:
+                    pass
 
             if modalType == "editProductPrice":
                 if not_float(newProductPrice):
@@ -63,26 +89,9 @@ def profile_page(username):
                 product.listed = True
                 product.price = newProductPrice
                 db.session.commit()
-            elif modalType == "purchaseProduct":
-                seller = User.query.filter_by(username=product.username).first()
-                sellerBonus = calcSaleBonus(seller)
-                if current_user.balance < product.price:
-                    flash("Not enough FMC", category="error")
-                else:
-
-
-                    current_user.balance -= product.price
-                    seller.balance += (product.price + sellerBonus)
-
-                    product.listed = False
-                    product.username = current_user.username
-
-                    purchase = True
-                    purchasedItem = product
-
-                    db.session.commit()
         else:
             flash("You do not own the product!", category="error")
+
 
     loadImgs(user.posts)
 
