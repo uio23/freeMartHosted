@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 
 from sqlalchemy import func
 
-from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, RadioField, validators, ValidationError
+from wtforms import  StringField, PasswordField, SubmitField, FileField, TextAreaField, DecimalField, RadioField, validators, ValidationError, EmailField
 
 from passlib.hash import pbkdf2_sha256
 
@@ -16,8 +16,8 @@ from .models import Product, User
 
 class RegisterForm(FlaskForm):
     username = StringField('username_label', validators=[validators.InputRequired(message="Username required"), validators.Length(min=4, max=12, message="Username must be between 4 and 12 charecters")])
+    email = EmailField('email_label', validators=[validators.InputRequired(message="Email required"), validators.Email('Enter valid emial')])
     password = PasswordField('password_label', validators=[validators.InputRequired(message="Password required"), validators.Length(min=4, max=24, message="Password must be between 4 and 24 charecters")])
-    confirm_pswd = PasswordField('confirm_pswd_label', validators=[validators.EqualTo('password', message="Passwords do not match")])
     submit_button = SubmitField('Sign up')
 
     def validate_username(self, username):
@@ -26,6 +26,13 @@ class RegisterForm(FlaskForm):
 
         if user:
             raise ValidationError("Username already exists (case insensitive)")
+
+    def validate_email(self, email):
+        email = email.data
+        user = User.query.filter_by(email=email).first()
+
+        if user:
+            raise ValidationError("Account with this email already exists")
 
 
 def invalid_credentials(form, feild):

@@ -1,5 +1,20 @@
 import numpy as np
 
+from itsdangerous import URLSafeTimedSerializer
+
+from flask_mail import Message
+
+from functools import wraps
+
+from flask import flash, url_for, redirect
+
+from flask_login import current_user
+
+import os
+
+from . import mail
+
+
 def isFloat(variable: str) -> bool:
     '''
     Check if a string holds float value
@@ -37,3 +52,32 @@ def removeOutliers(numList: list) -> list[int]:
         if price >= q_set[0] and price <= q_set[1]:
             cleanedList.append(price)
     return cleanedList
+
+
+def generateToken(email: str) -> str:
+    serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
+    token = serializer.dumps(email, salt=os.environ.get('MONKEY_PASS'))
+    return token
+
+
+def validateToken(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
+    # try:
+    email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
+    return email
+    # except Exception
+        # return False
+
+def sendEmail(to, subject, template):
+    msg = Message(subject, recipients=[to], html=template, sender=os.environ.get("MAIL_DEFAULT_SENDER"))
+    mail.send(msg)
+
+
+def confirmed_required(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if not current_user.confirmed:
+            return redirect(url_for('auth.unconfirmed_page'))
+        return func(*args, **kwargs)
+
+    return decorated_function

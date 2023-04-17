@@ -2,11 +2,13 @@ from flask import Flask, render_template, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO, send
 from flask_login import LoginManager, AnonymousUserMixin, current_user
+from flask_mail import Mail
 
 import os
 
 
 db = SQLAlchemy()
+mail = Mail()
 
 login_manager = LoginManager()
 
@@ -15,7 +17,7 @@ def create_app():
     app = Flask(__name__)
     app.secret_key = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
-    
+
 
     from .auth import auth
     from .market import market
@@ -27,6 +29,14 @@ def create_app():
     app.register_blueprint(auth)
     app.register_blueprint(income)
 
+    app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_USERNAME")
+    app.config['MAIL_SERVER']='smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = os.environ.get("MAIL_USERNAME")
+    app.config['MAIL_PASSWORD'] = os.environ.get("MAIL_PASSWORD")
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+    mail.init_app(app)
 
     from .models import User, Product, Message
 

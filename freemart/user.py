@@ -15,7 +15,7 @@ from .models import Product, User, Message
 
 from .bonusFunc import calcSaleBonus
 
-from .helperFunc import isFloat
+from .helperFunc import isFloat, confirmed_required
 
 
 user = Blueprint('user', __name__, url_prefix="/user")
@@ -24,6 +24,7 @@ user = Blueprint('user', __name__, url_prefix="/user")
 @user.route("/profile/<username>", methods=["GET", "POST"])
 @user.route("/<username>", methods=["GET", "POST"])
 @login_required
+@confirmed_required
 def profile_page(username):
     user = User.query.filter_by(username=username).first()
     saleBonus = calcSaleBonus(user)
