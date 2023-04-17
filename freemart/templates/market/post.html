@@ -10,7 +10,7 @@
 {% block body %}
 <form enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
   <div class="quiz-form-content">
-    {{ displayField(form.productName, "Product name", autocomplete="off") }}
+    {{ displayField(form.productName, "Product name", autocomplete="off", autofocus="true") }}
     {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
     {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
     {{ displayField(form.productImage, accept="image/png, image/jpeg") }}
@@ -19,16 +19,10 @@
     {{ form.csrf_token }}
 </form>
 
-<style>
-    /* Removing arrow icons from number input */
-    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    /* For our special dear Firefox */
-    input[type=number] {
-        -moz-appearance: textfield;
-    }
-</style>
+<script type="text/javascript">
+  $(document).ready(function () {
+    minForBonus = {{ minForBonus|safe }};
+    priceFeedback(minForBonus);
+  });
+</script>
 {% endblock %}

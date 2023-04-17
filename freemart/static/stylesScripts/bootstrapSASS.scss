@@ -31,6 +31,9 @@ $btn-padding-y-xl: 0.656rem;
 .bonus-number {
   color: $success;
 }
+.bonus-feedback {
+  color: $info;
+}
 #no-script {
   position: absolute;
   top: 0;
@@ -192,7 +195,6 @@ $btn-padding-y-xl: 0.656rem;
 
     }
   }
-
 }
 
 .modal {

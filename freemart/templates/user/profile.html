@@ -9,7 +9,7 @@
   <div class="d-inline-flex flex-column">
     <p>{{ user.balance|round(2) }} FMC</p>
     {% if saleBonus > 0 %}
-    <span class="bonus-info"><span class="bonus-number">+ {{ saleBonus }}</span> <span class="text-muted">per sale <span style="font-size: 0.4rem">over {{ saleBonus/4 }}</span></span></span>
+    <span class="bonus-info"><span class="bonus-number">+ {{ saleBonus }}</span> <span class="text-muted">per sale</span></span>
     {% endif %}
   </div>
   <div class="d-inline">
@@ -135,7 +135,7 @@
             <input type="hidden" name="productName" value="">
 
             <div class="modal-body">
-                <input class="form-control shadow-none newProductPrice" name="newProductPrice" type="text">
+                <input class="form-control shadow-none newProductPrice" autofocus name="newProductPrice" type="text">
                 <div class="invalid-feedback d-block"></div>
                 <div class="spacer"></div>
             </div>
@@ -187,11 +187,12 @@
         $('input[name="productName"]').val(productName);
       });
 
-      // Resize any modal to fit title, for long product names
-      $(document).on('shown.bs.modal', '#editItemPrice, #removeItem', function(event) {
+      // Resize any modal to fit title. Re-set autofocus
+      $(document).on('shown.bs.modal', '#editItemPrice, #resellItem, #removeItem', function(event) {
         if ($(this).find('.modal-content').width() > 498) {
           $(".modal-title").css('margin-right', '2rem');
         }
+        $(this).find('[autofocus]').focus();
       });
 
       // Validate form before submit

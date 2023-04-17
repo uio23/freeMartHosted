@@ -11,9 +11,9 @@ from .models import User
 
 from .forms import QuizForm
 
-from .bonusFunc import calcQuizBonus
 
 income = Blueprint('income', __name__, url_prefix="/income")
+
 
 @login_required
 @income.route("/quiz", methods=["GET", "POST"])
@@ -47,10 +47,10 @@ def quiz_page():
                 else:
                     outcome.append("invalid")
             quizBonus = calcQuizBonus(user)
-            user.balance += Decimal(numOfCorrect*quizBonus)
+            user.balance += numOfCorrect*10
             db.session.commit()
 
-            return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, quizBonus=quizBonus, form=questionForm)
+            return render_template("income/quizResult.html", user=current_user, outcome=outcome, checked=checked, numOfCorrect=numOfCorrect, form=questionForm)
         return render_template("income/quiz.html", user=current_user, allow=True, form=questionForm)
     else:
         return render_template("income/quiz.html", user=current_user, allow=False)

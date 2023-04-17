@@ -17,7 +17,7 @@ from .models import Product, User
 class RegisterForm(FlaskForm):
     username = StringField('username_label', validators=[validators.InputRequired(message="Username required"), validators.Length(min=4, max=12, message="Username must be between 4 and 12 charecters")])
     password = PasswordField('password_label', validators=[validators.InputRequired(message="Password required"), validators.Length(min=4, max=24, message="Password must be between 4 and 24 charecters")])
-    confirm_pswd = PasswordField('confirm_pswd_label', validators=[validators.InputRequired(message="Confirm your password"), validators.EqualTo('password', message="Passwords do not match")])
+    confirm_pswd = PasswordField('confirm_pswd_label', validators=[validators.EqualTo('password', message="Passwords do not match")])
     submit_button = SubmitField('Sign up')
 
     def validate_username(self, username):

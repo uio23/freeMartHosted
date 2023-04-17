@@ -2,11 +2,14 @@
 {% extends "temp.html" %}
 
 {% block header %}
-<h3>Create an account</h3>
+<div class="generic-header">
+  <h2>Freedom Awaits</h2>
+  <p style="font-size: 1.5rem;">Start your trading journey now!</p>
+</div>
 {% endblock %}
 
 {% block body %}
-  <form action="{{ url_for('auth.sign_up_page') }}", method="POST" novalidate>
+  <form class="auth-form" action="{{ url_for('auth.sign_up_page') }}", method="POST" novalidate>
     {{ displayField(form.username, "Username", autocomplete="off", autofocus=true) }}
     {{ displayField(form.password, "Password", autocomplete="off") }}
     {{ displayField(form.confirm_pswd, "Confirm password")}}

@@ -15,6 +15,8 @@ from .forms import ListingForm, validate_resell
 
 from .imageFunc import saveImg, loadImgs
 
+from .bonusFunc import calcSaleBonus
+
 
 market = Blueprint('market', __name__, url_prefix="/market")
 
@@ -23,18 +25,18 @@ market = Blueprint('market', __name__, url_prefix="/market")
 @login_required
 def post_page():
     listing_form = ListingForm()
+    minForBonus = 0
+    if current_user.sale_count <= 7:
+        minForBonus = int(calcSaleBonus(current_user)/4)
 
     if listing_form.validate_on_submit():
-        productName = listing_form.productName.data
-        productName = productName.strip()
+        productName = listing_form.productName.data.strip()
         productDescription = listing_form.productDescription.data
-        productPrice = round(float(listing_form.productPrice.data), 2)
+        productPrice = truncate(float(listing_form.productPrice.data), 2)
         productImage = listing_form.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
 
-        if saveImg(productImage, imageFilename):
-            pass
-        else:
+        if not saveImg(productImage, imageFilename):
             flash("Failed to upload image", category="error")
             return render_template("market/post.html", user=current_user, form=listing_form)
 
@@ -44,7 +46,7 @@ def post_page():
 
         return redirect(url_for('market.market_page'))
 
-    return render_template("market/post.html", user=current_user, form=listing_form)
+    return render_template("market/post.html", user=current_user, minForBonus=minForBonus, form=listing_form)
 
 
 @market.route("/market", methods=["GET", "POST"])

@@ -15,15 +15,11 @@ from .models import Product, User, Message
 
 from .bonusFunc import calcSaleBonus
 
+from .helperFunc import isFloat
+
 
 user = Blueprint('user', __name__, url_prefix="/user")
 
-def not_float(variable):
-    try:
-        float(variable)
-        return False
-    except:
-        return True
 
 @user.route("/profile/<username>", methods=["GET", "POST"])
 @user.route("/<username>", methods=["GET", "POST"])
@@ -31,33 +27,32 @@ def not_float(variable):
 def profile_page(username):
     user = User.query.filter_by(username=username).first()
     saleBonus = calcSaleBonus(user)
-    purchase = False
+    purchasedItem = None
+
     if request.method == "POST":
         productName = request.form.get("productName")
         product = Product.query.filter_by(name=productName).first()
         modalType = request.form.get("modalType")
 
         if modalType == "purchaseProduct":
-            seller = User.query.filter_by(username=product.username).first()
+
             if (current_user.balance < product.price):
                 flash("Not enough FMC", category="error")
             elif (product.username == current_user.username):
                 flash("You cannot buy from yourself", category="error")
             else:
-
+                seller = User.query.filter_by(username=product.username).first()
+                sellerBonus = calcSaleBonus(seller)
 
                 current_user.balance -= product.price
-
-                sellerBonus = calcSaleBonus(seller)
-                if product.price > (sellerBonus/4):
-                    seller.balance += Decimal(sellerBonus)
-                    seller.sale_count += 1
                 seller.balance += product.price
+
+                if product.price > int(sellerBonus/4):
+                    seller.balance += sellerBonus
+                    seller.sale_count += 1
 
                 product.listed = False
                 product.username = current_user.username
-
-                purchase = True
                 purchasedItem = product
 
                 db.session.commit()
@@ -75,7 +70,7 @@ def profile_page(username):
                     pass
 
             if modalType == "editProductPrice":
-                if not_float(newProductPrice):
+                if not isFloat(newProductPrice):
                     flash("Price must be a number", category="error")
                 elif newProductPrice < 0:
                     flash("Cannot set negative price", category="error")
@@ -107,7 +102,7 @@ def profile_page(username):
 
     userOwned = [product for product in user.posts if product.listed == False]
     random.shuffle(userOwned)
-    if purchase:
+    if purchasedItem:
         userOwned.insert(0, userOwned.pop(userOwned.index(purchasedItem)))
 
     groupedUserOwned = []

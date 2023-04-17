@@ -15,6 +15,16 @@ form {
   position: absolute;
 }
 
+/* Removing arrow icons from number input */
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* ...and for our special dear Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
 .modal-dialog {
   min-width: fit-content;
 }
