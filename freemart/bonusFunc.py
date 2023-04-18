@@ -1,5 +1,7 @@
+# Importing 3rd party components
 import statistics as stats
 
+# Importing freemart components
 from .models import Product, User
 
 from .helperFunc import removeOutliers
@@ -7,7 +9,7 @@ from .helperFunc import removeOutliers
 
 def calcSaleBonus(user: User) -> int:
     saleBonus = 0
-    
+
     if user.sale_count <= 7:
         items = Product.query.filter(Product.listed==True, Product.username != user.username).all()
 

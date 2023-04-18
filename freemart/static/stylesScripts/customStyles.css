@@ -72,6 +72,10 @@ body {
   text-align: center;
 }
 
+.alert-below {
+  top: 80vh;
+}
+
 
 .muted-link {
   color: inherit;
@@ -93,12 +97,14 @@ body {
 
 
 .clickMeLink {
+  font-size: 2rem;
+  padding: 22px;
   margin-top: 10vh;
-  padding: 20px;
   border: 3px solid blue;
   border-radius: 10px;
   display: inline-block;
 }
+
 
 
 #market-header {
@@ -166,6 +172,11 @@ body {
 
   /* Enjoy Safair and Chrome, all for you:) */
   -webkit-background-clip: text;
+}
+
+.generic-header p {
+  margin-bottom: 0;
+  font-size: 1.5rem;
 }
 
 

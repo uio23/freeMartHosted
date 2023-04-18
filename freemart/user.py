@@ -1,12 +1,14 @@
+# Importing 3rd party components
 from flask import Blueprint, render_template, flash, request
 from flask_login import login_required, current_user
+
+from decimal import Decimal
 
 import re
 
 import random
 
-from decimal import Decimal
-
+# Importing freemart component
 from . import db
 
 from .imageFunc import loadImgs
@@ -18,14 +20,22 @@ from .bonusFunc import calcSaleBonus
 from .helperFunc import isFloat, confirmed_required
 
 
+# User branch blueprint definition
 user = Blueprint('user', __name__, url_prefix="/user")
 
+
+# ----- Routes definition ----- #
 
 @user.route("/profile/<username>", methods=["GET", "POST"])
 @user.route("/<username>", methods=["GET", "POST"])
 @login_required
 @confirmed_required
 def profile_page(username):
+    '''
+        THIS, this, is *the* route
+
+    '''
+
     user = User.query.filter_by(username=username).first()
     saleBonus = calcSaleBonus(user)
     purchasedItem = None
@@ -39,7 +49,7 @@ def profile_page(username):
 
             if (current_user.balance < product.price):
                 flash("Not enough FMC", category="error")
-            elif (product.username == current_user.username):
+            elif (current_user.username == product.username):
                 flash("You cannot buy from yourself", category="error")
             else:
                 seller = User.query.filter_by(username=product.username).first()
@@ -82,45 +92,51 @@ def profile_page(username):
                 product.listed = False
                 db.session.commit()
             elif modalType == "resellProduct":
-                product.listed = True
-                product.price = newProductPrice
-                db.session.commit()
+                if not isFloat(newProductPrice):
+                    flash("Price must be a number", category="error")
+                elif newProductPrice < 0:
+                    flash("Cannot set negative price", category="error")
+                else:
+                    product.listed = True
+                    product.price = newProductPrice
+                    db.session.commit()
         else:
             flash("You do not own the product!", category="error")
 
 
     loadImgs(user.posts)
 
+    # SELLING
     userSelling = [product for product in user.posts if product.listed == True]
     random.shuffle(userSelling)
     groupedUserSelling = []
 
     for i in range(0, len(userSelling), 6):
         groupedUserSelling.append(userSelling[i:i+6])
-    singleSelling = False
-    if len(userSelling) == 1:
-        singleSelling = True
 
+    # OWNEW
     userOwned = [product for product in user.posts if product.listed == False]
     random.shuffle(userOwned)
+
     if purchasedItem:
         userOwned.insert(0, userOwned.pop(userOwned.index(purchasedItem)))
-
     groupedUserOwned = []
 
     for i in range(0, len(userOwned), 6):
         groupedUserOwned.append(userOwned[i:i+6])
-    singleOwned = False
-    if len(userOwned) == 1:
-        singleOwned = True
 
 
-    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, singleOwned=singleOwned, singleSelling=singleSelling, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), saleBonus=saleBonus, current_user=current_user)
+    return render_template("user/profile.html", user=user, userSelling=groupedUserSelling, userOwned=groupedUserOwned, userOwnedLen=len(userOwned), userSellingLen=len(userSelling), saleBonus=saleBonus, current_user=current_user)
 
 
 @user.route('/chatroom')
 @login_required
+@confirmed_required
 def chatroom_page():
+    '''
+        Render chatroom with messages.
+    '''
+
     messages = Message.query.all()
 
     return render_template('user/chatroom.html', user=current_user, messages=messages)

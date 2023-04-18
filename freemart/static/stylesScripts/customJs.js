@@ -1,9 +1,9 @@
-// Close any pop-ups in 1.8 second
+// Close any pop-ups in 2 second
 window.setTimeout(
   function() {
   $('.alert').alert('close');
   },
-  1800
+  2000
 )
 
 // Inform user if their product price is enough for bonus eligibility

@@ -1,13 +1,16 @@
 {% extends "temp.html" %}
 
-{% set exempt = True %}
+{% block header %}
+<div class="generic-header" style="margin-top: 1.25rem;">
+  <h2 style="font-size: 5rem;">Welcome to Free Mart!</h2>
+  <p style="font-size: 2rem;">Free trading unleashed</p>
+</div>
+{% endblock %}
 
 {% block body %}
 <div class="text-center">
-    <h1>Welcome to Free Mart!</h1>
-    <p>Buy & Sell stuff to your heart's content</p>
     <h3 class="clickMeLink" style="border: 3px solid red;">New? Register <a href="{{ url_for('auth.sign_up_page') }}">here</a></h3>
     <br>
-    <h3 class="clickMeLink" style="margin-top: 6vh;">Or <a href="{{ url_for('auth.login_page') }}">login</a></h3>
+    <h3 class="clickMeLink" style="margin-top: 20px;">Or <a href="{{ url_for('auth.login_page') }}">login</a></h3>
 </div>
 {% endblock %}

@@ -1,6 +1,5 @@
+# Importing 3rd party components
 from flask_login import current_user
-
-import os
 
 import requests
 
@@ -11,11 +10,21 @@ from PIL import Image
 from io import BytesIO
 
 import threading
+
 from queue import Queue
 
+import os
+
+
+# Defining jobs object
 jobs = Queue()
 
+
 def loadImgs(items):
+    '''
+        Load imgs in batches with threading
+    '''
+
     for item in items:
         jobs.put(item.imagePath)
     for i in range(25):
@@ -23,7 +32,12 @@ def loadImgs(items):
         worker.start()
     jobs.join()
 
-def saveImg(productImage, imageFilename):
+
+def saveImg(productImage, imageFilename) -> bool:
+    '''
+        Attempt save img to repo, inform of outcome
+    '''
+
     g = Github(os.environ.get("GITT"))
     img = Image.open(productImage)
     img = img.resize((500, 500))
@@ -38,6 +52,10 @@ def saveImg(productImage, imageFilename):
 
 
 def loadImg(q):
+    '''
+        Load img batch
+    '''
+
     while not q.empty():
         imageFilename = q.get()
         url = f'https://raw.githubusercontent.com/uio23/freemart_img/main/{imageFilename}'

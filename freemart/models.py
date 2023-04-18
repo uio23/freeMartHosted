@@ -1,10 +1,15 @@
+# Importing 3rd party components
 from flask_login import UserMixin
+
 from sqlalchemy.sql import func
 
 from datetime import datetime, timedelta
 
+# Importing freemart components
 from . import db
 
+
+# ----- PSQL tables definition ----- #
 
 class Product(db.Model):
 

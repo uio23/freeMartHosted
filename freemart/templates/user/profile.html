@@ -19,7 +19,7 @@
 {% endblock %}
 
 {% block body %}
-    <p class="profile-sub-headers">Owned: {{ userOwnedLen }} item{% if not singleOwned %}s{%endif %}</p>
+    <p class="profile-sub-headers">Owned: {{ userOwnedLen }} item{% if userOwnedLen > 1 %}s{%endif %}</p>
 
     {% for itemGroup in userOwned %}
       <div class="row gy-5 m-auto">
@@ -42,7 +42,7 @@
 
 
 
-    <p class="profile-sub-headers">Selling: {{ userSellingLen }} item{% if not singleSelling %}s{%endif %}</p>
+    <p class="profile-sub-headers">Selling: {{ userSellingLen }} item{% if userSellingLen > 1 %}s{%endif %}</p>
 
     {% for itemGroup in userSelling %}
       <div class="row gy-5 m-auto">

@@ -1,23 +1,25 @@
+# Importing 3rd party components
+from flask import url_for, redirect, render_template
+from flask_login import current_user
+from flask_mail import Message
+
 import numpy as np
 
 from itsdangerous import URLSafeTimedSerializer
 
-from flask_mail import Message
-
 from functools import wraps
-
-from flask import flash, url_for, redirect
-
-from flask_login import current_user
 
 import os
 
+# Importing freemart components
 from . import mail
+
+from .models import User
 
 
 def isFloat(variable: str) -> bool:
     '''
-    Check if a string holds float value
+    Check if a variable holds float value
     '''
 
     try:
@@ -55,29 +57,51 @@ def removeOutliers(numList: list) -> list[int]:
 
 
 def generateToken(email: str) -> str:
+    '''
+        Encode given email into a secure token
+    '''
+
     serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
     token = serializer.dumps(email, salt=os.environ.get('MONKEY_PASS'))
     return token
 
 
-def validateToken(token, expiration=3600):
-    serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
-    # try:
-    email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
-    return email
-    # except Exception
-        # return False
+def validateToken(token: str, expiration=3600):
+    '''
+        Confirm if given token de-codes to current user's email
+    '''
 
-def sendEmail(to, subject, template):
-    msg = Message(subject, recipients=[to], html=template, sender=os.environ.get("MAIL_DEFAULT_SENDER"))
+    serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
+    try:
+        email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
+    except:
+        return False
+    user = User.query.filter_by(email=current_user.email).first()
+    if user.email == email:
+        return True
+    return False
+
+
+def sendConfirmationEmail(user: User) -> None:
+    '''
+        Send user email with token, to activate their account
+    '''
+
+    token = generateToken(user.email)
+    url = url_for("auth.confirm_hollow_page", token=token, _external=True)
+    contentHtml = render_template("auth/confirmationEmail.html", username=user.username, url=url)
+    msg = Message(sender=os.environ.get("MAIL_DEFAULT_SENDER"), recipients=[user.email], subject="Activate Your Free Mart Account", html=contentHtml)
     mail.send(msg)
 
 
 def confirmed_required(func):
+    '''
+        Redirect to unconfirmed page if user unconfirmed.
+    '''
+
     @wraps(func)
     def decorated_function(*args, **kwargs):
         if not current_user.confirmed:
             return redirect(url_for('auth.unconfirmed_page'))
         return func(*args, **kwargs)
-
     return decorated_function

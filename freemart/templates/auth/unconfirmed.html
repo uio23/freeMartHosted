@@ -2,10 +2,14 @@
 
 {% block header %}
 <div class="generic-header">
-  <h2>Please confirm your account</h2>
+  <h2>You're one click away!</h2>
+  <p>Check your email to activate this account</p>
 </div>
 {% endblock %}
 
 {% block body %}
-<a a="#" class="btn btn-lg btn-primary">Resend Email</a>
+<div class="text-center mt-5">
+  <p>An activation email was sent to <i>{{ current_user.email }}</i>. Please check your inbox & spam.</p>
+  <p>Didn't get an email? <a href="{{ url_for('auth.resend_confirm_hollow_page', username=current_user.username) }}">Resend Email</a></p>
+</div>
 {% endblock %}
