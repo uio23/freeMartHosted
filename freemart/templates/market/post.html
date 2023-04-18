@@ -2,25 +2,109 @@
 {% extends "temp.html" %}
 
 {% block header %}
-<div class="generic-header">
-  <h2>List an Item</h2>
-</div>
+
 {% endblock %}
 
 {% block body %}
-<form enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
-  <div class="quiz-form-content">
-    {{ displayField(form.productName, "Product name", autocomplete="off", autofocus="true") }}
-    {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
-    {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
-    {{ displayField(form.productImage, accept="image/png, image/jpeg") }}
+<div class="row">
+  <div class='col post-col'>
+    <div class="generic-header">
+      <h2>Post</h2>
+    </div>
+    <form class="post-form" enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
+        {{ displayField(form.productName, "Product name", autocomplete="off", autofocus="true") }}
+        {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
+        {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
+        {{ displayField(form.productImage, accept="image/png, image/jpeg, image/jpg") }}
+        {{ form.submit_button( class="btn btn-primary mb-4") }}
+        {{ form.csrf_token }}
+    </form>
   </div>
-    {{ form.submit_button( class="btn btn-primary mb-4") }}
-    {{ form.csrf_token }}
-</form>
+  <div class='col post-col'>
+      <div data-bs-theme="light" class="sample-card card border-0 h-10">
+          <img id="productImagePreview" src="{{ url_for('static', filename='imgPlaceholder.jpg') }}" class="card-img-top preview-img">
+        <div class="card-body">
+          <h5 id="productNamePreview" class="card-title text-muted">Item Name</h5>
+          <p id="productDescriptionPreview" class="card-text text-muted">Item description...</p>
+          <button id="productPricePreview" name="item-price" class="btn btn-primary overflow-auto">Price FMC</button>
+        </div>
+        <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
+          <p>- From <a class="muted-link" href="{{ url_for('user.profile_page', username=user.username) }}">{{ user.username }}</a></p>
+        </div>
+      </div>
+  </div>
+</div>
+
 
 <script type="text/javascript">
   $(document).ready(function () {
+    $(document).on('change', '#productImage', function () {
+      var imageFile = this.files[0];
+      var url = window.URL.createObjectURL(imageFile);
+      $('#productImagePreview').attr('src', url);
+    });
+    $('#productName').on('input', function () {
+      var content = $(this).val();
+      if (content != '') {
+        $('#productNamePreview').text(content);
+        $('#productNamePreview').removeClass('text-muted');
+      } else {
+        $('#productNamePreview').text('Item Name');
+        $('#productNamePreview').addClass('text-muted');
+      }
+    });
+    $('#productDescription').on('input', function () {
+      var content = $(this).val();
+      if (content != '') {
+        $('#productDescriptionPreview').text(content);
+        $('#productDescriptionPreview').removeClass('text-muted');
+      } else {
+        $('#productDescriptionPreview').text('Item description...');
+        $('#productDescriptionPreview').addClass('text-muted');
+      }
+    });
+    $('#productPrice').on('input', function () {
+      var content = $(this).val();
+      if (content != '') {
+        if (content.charAt(0) == '-') {
+          $('#productPricePreview').text(`Price FMC`)
+        } else {
+          content = content.slice(0, (content.indexOf('.'))+3);
+          $('#productPricePreview').text(`${content}.00 FMC`);
+        }
+      } else {
+        $('#productPricePreview').text(`Price FMC`)
+      }
+    });
+
+    var content = $('#productName').val();
+    if (content != '') {
+      $('#productNamePreview').text(content);
+      $('#productNamePreview').removeClass('text-muted');
+    } else {
+      $('#productNamePreview').text('Item Name');
+      $('#productNamePreview').addClass('text-muted');
+    }
+    var content = $('#productDescription').val();
+    if (content != '') {
+      $('#productDescriptionPreview').text(content);
+      $('#productDescriptionPreview').removeClass('text-muted');
+    } else {
+      $('#productDescriptionPreview').text('Item description...');
+      $('#productDescriptionPreview').addClass('text-muted');
+    }
+    var content = $('#productPrice').val();
+    if (content != '') {
+      if (content.charAt(0) == '-') {
+        $('#productPricePreview').text(`Price FMC`)
+      } else {
+        content = content.slice(0, (content.indexOf('.'))+3);
+        $('#productPricePreview').text(`${content}.00 FMC`);
+      }
+    } else {
+      $('#productPricePreview').text(`Price FMC`)
+    }
+
     minForBonus = {{ minForBonus|safe }};
     priceFeedback(minForBonus);
   });

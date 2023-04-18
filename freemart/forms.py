@@ -60,7 +60,7 @@ class LoginForm(FlaskForm):
 
 class PostForm(FlaskForm):
     productName = StringField("product_name_label", validators=[validators.InputRequired(message="Product name required"), validators.Length(min=0, max=50, message="Prodcut name too long (50char max)")])
-    productDescription = TextAreaField("product_description_label", validators= [validators.Length(min=0, max=250, message="Prodcut description too long (250char max)")])
+    productDescription = TextAreaField("product_description_label", validators= [validators.Length(min=0, max=140, message="Prodcut description too long (140char max)")])
     productPrice = DecimalField("product_price_label", places=2, validators=[validators.InputRequired(message="Product price required"), validators.NumberRange(min=0.00, message="Price cannot be negative")])
     productImage = FileField("product_image_label", validators=[validators.InputRequired(message="Product image required")])
     submit_button = SubmitField('Post')
@@ -76,6 +76,7 @@ class PostForm(FlaskForm):
             raise ValidationError("A product with this name already exists (case insensitive)")
 
     def validate_productPrice(self, productPrice):
+        productPrice = productPrice.data
         if not isFloat(productPrice):
             raise ValidationError("Price must be a number")
 

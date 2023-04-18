@@ -10,7 +10,7 @@ window.setTimeout(
 function priceFeedback(minForBonus) {
   $('#productPrice').on('input', function() {
     input = $(this).val();
-    if ((input < minForBonus) && ($.isNumeric(input))) {
+    if ((input < minForBonus) && ($.isNumeric(input) && (input.charAt(0) != '-'))) {
       if (!($('.has-validation div').hasClass('bonus-feedback'))) {
         $(this).parent().append(`<div class="invalid-feedback bonus-feedback d-block">${minForBonus} FMC min for bonus</div>`);
       }

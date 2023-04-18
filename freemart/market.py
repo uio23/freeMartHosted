@@ -6,6 +6,8 @@ from werkzeug.utils import secure_filename
 
 import random
 
+import math
+
 import os
 
 # Importing freemart component
@@ -35,7 +37,7 @@ def post_page():
     '''
         Let user post a new item.
     '''
-    
+
     postForm = PostForm()
 
     # Minimum to recieve bonus calculated now for user aid
@@ -47,7 +49,7 @@ def post_page():
     if postForm.validate_on_submit():
         productName = postForm.productName.data.strip()
         productDescription = postForm.productDescription.data.strip()
-        productPrice = truncate(float(postForm.productPrice.data), 2)
+        productPrice =  math.floor(float(postForm.productPrice.data) * 10 ** 2) / 10 ** 2
         productImage = postForm.productImage.data
         imageFilename = secure_filename(f'{productName.replace(" ", "-")}.{productImage.filename.split(".")[-1]}')
 

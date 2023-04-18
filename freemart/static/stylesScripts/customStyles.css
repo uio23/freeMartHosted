@@ -33,7 +33,9 @@ input[type=number] {
   margin-top: 0.5rem;
 }
 
-
+.post-form {
+  display: inline;
+}
 .quiz-form-content {
   text-align: left;
   margin-top: 3vh;
@@ -73,7 +75,7 @@ body {
 }
 
 .alert-below {
-  top: 80vh;
+  top: 73vh;
 }
 
 
@@ -95,11 +97,28 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.sample-card {
+  margin-left: auto;
+  margin-right: auto;
+  max-width:391.52px;
+}
+.preview-img {
+  width: 100%;
+  height: 331.52px;
+  object-fit:fill;
+}
+.post-form {
+  width: 70%;
+}
+
+.post-col {
+  margin-top: 3rem;
+}
 
 .clickMeLink {
   font-size: 2rem;
   padding: 22px;
-  margin-top: 10vh;
+  margin-top: 8vh;
   border: 3px solid blue;
   border-radius: 10px;
   display: inline-block;
@@ -155,6 +174,16 @@ body {
   font-size: 0.8rem;
 }
 
+#main-header {
+  margin-top: 1rem;
+}
+
+#main-header h2 {
+  font-size: 6rem;
+}
+#main-header p {
+  font-size: 2rem;
+}
 
 
 .generic-header {
