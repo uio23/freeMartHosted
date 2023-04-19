@@ -33,9 +33,6 @@ input[type=number] {
   margin-top: 0.5rem;
 }
 
-.post-form {
-  display: inline;
-}
 .quiz-form-content {
   text-align: left;
   margin-top: 3vh;
@@ -88,6 +85,14 @@ body {
   text-decoration: underline;
 }
 
+.bc {
+  margin-top: 3rem;
+  display: none;
+}
+.ab {
+  margin-top: 2rem;
+  width: 100%;
+}
 
 .profile-sub-headers {
   text-align: center;
@@ -98,21 +103,13 @@ body {
 }
 
 .sample-card {
-  margin-left: auto;
-  margin-right: auto;
-  max-width:391.52px;
-}
-.preview-img {
-  width: 100%;
-  height: 331.52px;
-  object-fit:fill;
-}
-.post-form {
-  width: 70%;
+  width: 90vw;
 }
 
-.post-col {
-  margin-top: 3rem;
+.preview-img {
+  width: 100%;
+  height: 361.52px;
+  object-fit:fill;
 }
 
 .clickMeLink {
@@ -190,6 +187,12 @@ body {
   text-align: center;
   margin: 2rem 0 0.5rem;
 }
+#post-header {
+  margin: 0 0 2.5rem;
+}
+#post-header h2 {
+  font-size: 5rem;
+}
 
 .generic-header h2 {
   margin: 0;
@@ -213,11 +216,32 @@ body {
   form {
     width: 80%;
   }
+  .ab {
+    width: 80%;
+  }
+  .sample-card {
+    width: 42vw;
+  }
+  .post-form {
+    width: 100%;
+  }
 }
 
 @media only screen and (min-width: 992px) {
   form {
     width: 60%;
+  }
+  .ab {
+    width: 50%;
+  }
+  .sample-card {
+    width: 31vw;
+  }
+  .post-form {
+    width: 100%;
+  }
+  .bc {
+    display: block;
   }
 }
 
@@ -225,5 +249,11 @@ body {
 @media only screen and (min-width: 1200px) {
   form {
     width: 40%;
+  }
+  .ab {
+    width: 50%;
+  }
+  .post-form {
+    width: 100%;
   }
 }

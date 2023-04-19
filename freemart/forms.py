@@ -63,7 +63,7 @@ class PostForm(FlaskForm):
     productDescription = TextAreaField("product_description_label", validators= [validators.Length(min=0, max=140, message="Prodcut description too long (140char max)")])
     productPrice = DecimalField("product_price_label", places=2, validators=[validators.InputRequired(message="Product price required"), validators.NumberRange(min=0.00, message="Price cannot be negative")])
     productImage = FileField("product_image_label", validators=[validators.InputRequired(message="Product image required")])
-    submit_button = SubmitField('Post')
+    submit_button = SubmitField('Post!')
 
     def validate_productName(self, productName):
         productName = productName.data.replace(' ','')

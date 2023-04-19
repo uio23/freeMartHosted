@@ -6,27 +6,36 @@
 {% endblock %}
 
 {% block body %}
-<div class="row">
-  <div class='col post-col'>
-    <div class="generic-header">
-      <h2>Post</h2>
+<style media="screen">
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+</style>
+<div class="d-flex justify-content-md-around flex-md-row flex-column">
+  <div class='ab'>
+    <div class="generic-header" id="post-header">
+      <h2>New item</h2>
     </div>
     <form class="post-form" enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
-        {{ displayField(form.productName, "Product name", autocomplete="off", autofocus="true") }}
-        {{ displayField(form.productDescription, "Product description", autocomplete="off") }}
-        {{ displayField(form.productPrice, "Product price", autocomplete="off") }}
+        {{ displayField(form.productName, "Item name", autocomplete="off", autofocus="true") }}
+        {{ displayField(form.productDescription, "Item description", autocomplete="off") }}
+        {{ displayField(form.productPrice, "Item price", autocomplete="off") }}
         {{ displayField(form.productImage, accept="image/png, image/jpeg, image/jpg") }}
-        {{ form.submit_button( class="btn btn-primary mb-4") }}
+        {{ form.submit_button( class="btn btn-primary btn-lg mb-4 w-100") }}
         {{ form.csrf_token }}
     </form>
   </div>
-  <div class='col post-col'>
-      <div data-bs-theme="light" class="sample-card card border-0 h-10">
+  <div class='bc'>
+      <div data-bs-theme="light" class="sample-card card border-0 h-100">
           <img id="productImagePreview" src="{{ url_for('static', filename='imgPlaceholder.jpg') }}" class="card-img-top preview-img">
         <div class="card-body">
           <h5 id="productNamePreview" class="card-title text-muted">Item Name</h5>
           <p id="productDescriptionPreview" class="card-text text-muted">Item description...</p>
-          <button id="productPricePreview" name="item-price" class="btn btn-primary overflow-auto">Price FMC</button>
+          <button id="productPricePreview" disabled name="item-price" class="btn btn-primary overflow-auto">Price FMC</button>
         </div>
         <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
           <p>- From <a class="muted-link" href="{{ url_for('user.profile_page', username=user.username) }}">{{ user.username }}</a></p>
