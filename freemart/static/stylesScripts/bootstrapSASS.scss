@@ -24,8 +24,11 @@ $btn-padding-y-xl: 0.656rem;
 
 //Import Bootstrap styles
 @import "../../../node_modules/bootstrap/scss/bootstrap";
-
-.invalid-feedback {
+.form-label {
+  color: $dark-green;
+  font-weight: bold;
+}
+.invalid-feedback.d-block{
   margin-left: 0.2rem;
 }
 .bonus-number {
@@ -194,6 +197,10 @@ $btn-padding-y-xl: 0.656rem;
       }
 
     }
+  }
+
+  .form-label {
+    color: $light-green;
   }
 }
 

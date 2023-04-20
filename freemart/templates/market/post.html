@@ -21,11 +21,12 @@
       <h2>New item</h2>
     </div>
     <form class="post-form" enctype="multipart/form-data" action="{{ url_for('market.post_page') }}" method="POST" novalidate>
-        {{ displayField(form.productName, "Item name", autocomplete="off", autofocus="true") }}
-        {{ displayField(form.productDescription, "Item description", autocomplete="off") }}
-        {{ displayField(form.productPrice, "Item price", autocomplete="off") }}
-        {{ displayField(form.productImage, accept="image/png, image/jpeg, image/jpg") }}
-        {{ form.submit_button( class="btn btn-primary btn-lg mb-4 w-100") }}
+        {{ displayField(form.productName,  "Name", autocomplete="off", autofocus="true") }}
+        {{ displayField(form.productDescription, "Description", autocomplete="off") }}
+        {{ displayField(form.productPrice, "Price", autocomplete="off") }}
+        {{ displayField(form.productImage, "Image", accept="image/png, image/jpeg, image/jpg") }}
+        {{ form.submit_button(class="btn btn-primary btn-lg mb-4 w-100 submit-btn") }}
+
         {{ form.csrf_token }}
     </form>
   </div>
@@ -34,7 +35,7 @@
           <img id="productImagePreview" src="{{ url_for('static', filename='imgPlaceholder.jpg') }}" class="card-img-top preview-img">
         <div class="card-body">
           <h5 id="productNamePreview" class="card-title text-muted">Item Name</h5>
-          <p id="productDescriptionPreview" class="card-text text-muted">Item description...</p>
+          <p id="productDescriptionPreview" class="card-text text-muted">Item Description</p>
           <button id="productPricePreview" disabled name="item-price" class="btn btn-primary overflow-auto">Price FMC</button>
         </div>
         <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">
@@ -47,75 +48,180 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-    $(document).on('change', '#productImage', function () {
-      var imageFile = this.files[0];
-      var url = window.URL.createObjectURL(imageFile);
-      $('#productImagePreview').attr('src', url);
-    });
-    $('#productName').on('input', function () {
-      var content = $(this).val();
-      if (content != '') {
-        $('#productNamePreview').text(content);
-        $('#productNamePreview').removeClass('text-muted');
-      } else {
-        $('#productNamePreview').text('Item Name');
-        $('#productNamePreview').addClass('text-muted');
-      }
-    });
-    $('#productDescription').on('input', function () {
-      var content = $(this).val();
-      if (content != '') {
-        $('#productDescriptionPreview').text(content);
-        $('#productDescriptionPreview').removeClass('text-muted');
-      } else {
-        $('#productDescriptionPreview').text('Item description...');
-        $('#productDescriptionPreview').addClass('text-muted');
-      }
-    });
-    $('#productPrice').on('input', function () {
-      var content = $(this).val();
+
+    function syncPrice(content) {
+      var id = `#productPricePreview`;
       if (content != '') {
         if (content.charAt(0) == '-') {
-          $('#productPricePreview').text(`Price FMC`)
+          $(id).text(`Price FMC`)
         } else {
-          content = content.slice(0, (content.indexOf('.'))+3);
-          $('#productPricePreview').text(`${content}.00 FMC`);
+          if (content.includes('.')) {
+            content = content.slice(0, (content.indexOf('.'))+3);
+            $(id).text(`${content} FMC`);
+          } else {
+            $(id).text(`${content}.00 FMC`);
+          }
         }
       } else {
-        $('#productPricePreview').text(`Price FMC`)
+        $(id).text(`Price FMC`)
       }
-    });
+    }
 
-    var content = $('#productName').val();
-    if (content != '') {
-      $('#productNamePreview').text(content);
-      $('#productNamePreview').removeClass('text-muted');
-    } else {
-      $('#productNamePreview').text('Item Name');
-      $('#productNamePreview').addClass('text-muted');
-    }
-    var content = $('#productDescription').val();
-    if (content != '') {
-      $('#productDescriptionPreview').text(content);
-      $('#productDescriptionPreview').removeClass('text-muted');
-    } else {
-      $('#productDescriptionPreview').text('Item description...');
-      $('#productDescriptionPreview').addClass('text-muted');
-    }
-    var content = $('#productPrice').val();
-    if (content != '') {
-      if (content.charAt(0) == '-') {
-        $('#productPricePreview').text(`Price FMC`)
+    function syncCardPreview(content, name) {
+      var id = `#product${name}Preview`;
+      if (content != '') {
+        $(id).text(content);
+        $(id).removeClass('text-muted');
       } else {
-        content = content.slice(0, (content.indexOf('.'))+3);
-        $('#productPricePreview').text(`${content}.00 FMC`);
+        $(id).text(`Item ${name}`);
+        $(id).addClass('text-muted');
       }
-    } else {
-      $('#productPricePreview').text(`Price FMC`)
+    }
+
+    function validateName(content) {
+      var output = ''
+      if ((!(/^[a-zA-Z]+$/.test(content))) && content != '') {
+        output = '- Name must only contain letters'
+      }
+      else if (content.length > 50) {
+        output = '- Name too long (50char max)'
+      }
+      return output
+    }
+
+    function validateDescription(content) {
+      var output = ''
+      if (content.length > 140) {
+        output = '- Description too long (140char max)'
+      }
+      return output
+    }
+
+    function validateImage(element) {
+      var output = ''
+      var fileName = element.prop('files')[0].name.split('.');
+      var fileType = fileName[fileName.length - 1]
+      if ((fileType != 'png') && (fileType != 'jpg') && (fileType != 'jpeg')) {
+        output = '- Only jpg, jpeg or png supported'
+      }
+      return output
+    }
+
+    function validatePrice(content) {
+      var output = ''
+        if (parseFloat(content) < 0){
+          output = '- Price cannot be negative'
+        }
+      return output
     }
 
     minForBonus = {{ minForBonus|safe }};
     priceFeedback(minForBonus);
+
+    $(".post-form *").filter('#productName, #productDescription, #productPrice, #productImage').each(function() {
+      var element = $(this)
+      var name = this.id.split('product')[1];
+      var content = element.val();
+      var label = element.siblings('label').append('<div class="invalid-feedback d-inline"></div>')
+
+      if (name == 'Name') {
+        syncCardPreview(content, "Name");
+        $(element).on('input', function() {
+          var element = $(this)
+          var content = element.val();
+          var validationMessage = label.children()[1]
+          syncCardPreview(content, name);
+          $(validationMessage).text(validateName(content));
+        });
+      } else if (name == 'Description') {
+        syncCardPreview(content, "Description");
+        $(element).on('input', function() {
+          var element = $(this)
+          var content = element.val();
+          var validationMessage = label.children()[1]
+          syncCardPreview(content, "Description");
+          $(validationMessage).text(validateDescription(content));
+        });
+
+      } else if (name == 'Image') {
+        $(element).on('input', function() {
+          var element = $(this);
+          var validationMessage = label.children()[1];
+          var imageFile = this.files[0];
+          var url = window.URL.createObjectURL(imageFile);
+          $('#productImagePreview').attr('src', url);
+          $(validationMessage).text(validateImage(element))
+        });
+      }
+      else {
+        syncPrice(content);
+        $(element).on('input', function() {
+          var element = $(this);
+          var validationMessage = label.children()[1];
+          var content = element.val();
+          syncPrice(content);
+          $(validationMessage).text(validatePrice(content));
+        });
+
+      }
+
+
+  });
+    $(".post-form").on("submit", function(event) {
+      var valid_name = false;
+      var valid_price = false;
+      var valid_image = false;
+      var valid_descrition = false
+      $(".post-form *").filter('#productName, #productDescription, #productPrice, #productImage').each(function() {
+
+        var element = $(this)
+        var name = this.id.split('product')[1];
+        var content = element.val();
+        var validationMessage = element.siblings('label').children()[1]
+
+          switch (name) {
+            case 'Name':
+              if (content == '') {
+                $(validationMessage).text('- Name required')
+              } else if (validateName(content)) {
+                $(validationMessage).text(validateName(content))
+              } else {
+                valid_name = true;
+              }
+              break;
+            case 'Description':
+              if (validateDescription(content)) {
+                $(validationMessage).text(validateDescription(content))
+              } else {
+                valid_descrition = true;
+              }
+              break;
+            case 'Price':
+              if (content == '') {
+                $(validationMessage).text('- Price must be a number')
+              } else if (validatePrice(content)) {
+                $(validationMessage).text(validatePrice(content))
+              } else {
+                valid_price = true;
+              }
+              break;
+
+            case 'Image':
+              if (content == '') {
+                $(validationMessage).text('- Image required')
+              } else if (validateImage(element)) {
+                $(validationMessage).text(validateImage(element))
+              } else {
+                valid_image = true;
+              }
+              break;
+          }
+
+
+      })
+      var valid_form = valid_name && valid_descrition && valid_price && valid_image
+      return valid_form;
+    });
   });
 </script>
 {% endblock %}

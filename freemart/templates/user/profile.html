@@ -57,7 +57,7 @@
                 <button name="editItemPrice" value="{{ item.price }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#editItemPrice" class="btn btn-outline-info edit-price-btn overflow-auto"><span style="margin-right: 0.313rem">{{ item.price|round(2) }} FMC</span><i class="fa-regular fa-pen"></i></button>
                 <button name="removeItem" value="{{ item.name }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#removeItem" class="btn btn-outline-danger overflow-auto">Remove</button>
               {% else %}
-                <button name="itemName" data-bs-toggle="modal" data-bs-target="#purchaseConfirmation" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
+                <button name="itemName" data-bs-toggle="modal" data-bs-target="#confirmPurchase" data-backdrop="static" data-keyboard="false" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
               {% endif %}
             </div>
           </div>
@@ -89,6 +89,30 @@
             <div class="modal-footer border-0">
               <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
               <button class="btn btn-success" type="submit">Confirm</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="confirmPurchase">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+          <div class="modal-header border-0">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <form action="{{ url_for('user.profile_page', username=current_user.username) }}" method="POST" novalidate style="all:revert">
+            <input type="hidden" name="modalType" value="purchaseProduct">
+            <input type="hidden" name="productName" value="">
+
+            <div class="modal-footer border-0 d-flex justify-content-center">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+              <button class="btn btn-success buy" type="submit"></button>
             </div>
 
           </form>
@@ -171,6 +195,14 @@
         $('.newProductPrice').attr('placeholder', `${productPrice} FMC`);
         $('input[name="productName"]').val(productName);
       });
+      $(document).on('show.bs.modal', '#confirmPurchase', function (event) {
+          var productDetails = $(event.relatedTarget).parent().children().toArray();
+          productName = productDetails[0].textContent;
+          productPrice = productDetails[2].textContent;
+          $('.modal-title').html(`Buy <i>${productName}</i>?`);
+          $('.buy').text(`${productPrice}`);
+          $('input[name="productName"]').val(productName);
+      });
       $(document).on('show.bs.modal', '#removeItem', function (event) {
         var productDetails = $(event.relatedTarget).parent().children().toArray();
         productName = productDetails[0].textContent;
@@ -188,7 +220,7 @@
       });
 
       // Resize any modal to fit title. Re-set autofocus
-      $(document).on('shown.bs.modal', '#editItemPrice, #resellItem, #removeItem', function(event) {
+      $(document).on('shown.bs.modal', '#editItemPrice, #resellItem, #removeItem, #confirmPurchase', function(event) {
         if ($(this).find('.modal-content').width() > 498) {
           $(".modal-title").css('margin-right', '2rem');
         }

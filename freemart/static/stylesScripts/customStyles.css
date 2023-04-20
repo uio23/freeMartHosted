@@ -14,7 +14,9 @@ form {
 .modal-validation {
   position: absolute;
 }
-
+.fa-regular {
+  font-family: sans-serif, 'FontAwesome';
+}
 /* Removing arrow icons from number input */
 input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
     -webkit-appearance: none;

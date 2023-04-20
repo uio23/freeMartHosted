@@ -1,10 +1,12 @@
 # Importing 3rd party components
-from flask import Blueprint, render_template, flash, request
+from flask import Blueprint, render_template, flash, request, redirect, url_for
 from flask_login import login_required, current_user
 
 from decimal import Decimal
 
 import re
+
+import math
 
 import random
 
@@ -38,7 +40,7 @@ def profile_page(username):
 
     user = User.query.filter_by(username=username).first()
     saleBonus = calcSaleBonus(user)
-    purchasedItem = None
+    postedItem = None
 
     if request.method == "POST":
         productName = request.form.get("productName")
@@ -64,7 +66,7 @@ def profile_page(username):
 
                 product.listed = False
                 product.username = current_user.username
-                purchasedItem = product
+                postedItem = product
 
                 db.session.commit()
         elif product.username == current_user.username:
@@ -76,7 +78,7 @@ def profile_page(username):
                 newProductPrice = insensitive_fmc.sub('', newProductPrice)
 
                 try:
-                    newProductPrice = round(float(newProductPrice), 2)
+                    newProductPrice = math.floor(float(newProductPrice) * 10 ** 2) / 10 ** 2
                 except TypeError:
                     pass
 
@@ -91,6 +93,7 @@ def profile_page(username):
             elif modalType == "removeProduct":
                 product.listed = False
                 db.session.commit()
+                postedItem = product
             elif modalType == "resellProduct":
                 if not isFloat(newProductPrice):
                     flash("Price must be a number", category="error")
@@ -100,6 +103,7 @@ def profile_page(username):
                     product.listed = True
                     product.price = newProductPrice
                     db.session.commit()
+                    return redirect(url_for('market.market_page', product=product.name))
         else:
             flash("You do not own the product!", category="error")
 
@@ -118,8 +122,8 @@ def profile_page(username):
     userOwned = [product for product in user.posts if product.listed == False]
     random.shuffle(userOwned)
 
-    if purchasedItem:
-        userOwned.insert(0, userOwned.pop(userOwned.index(purchasedItem)))
+    if postedItem:
+        userOwned.insert(0, userOwned.pop(userOwned.index(postedItem)))
     groupedUserOwned = []
 
     for i in range(0, len(userOwned), 6):

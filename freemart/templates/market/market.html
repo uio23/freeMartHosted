@@ -20,9 +20,9 @@
             <p class="card-text">{{ item.description }}</p>
             {% if item.username == user.username %}
               <button name="itemName" disabled class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
-              <button name="removeItem" value="{{ item.name }}" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#removeItem" class="btn btn-outline-danger overflow-auto">Remove</button>
+              <button name="removeItem" value="{{ item.name }}" data-backdrop="static" data-keyboard="false" data-bs-toggle="modal" data-backdrop="static" data-keyboard="false" data-bs-target="#removeItem" class="btn btn-outline-danger overflow-auto">Remove</button>
             {% else %}
-              <button name="itemName" data-bs-toggle="modal" data-bs-target="#confirmPurchase" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
+              <button name="itemName" data-backdrop="static" data-keyboard="false" data-bs-toggle="modal" data-bs-target="#confirmPurchase" value="{{ item.name }}" class="btn btn-primary overflow-auto">{{ item.price|round(2) }} FMC</button>
             {% endif %}
           </div>
           <div class="card-footer border-0 text-black-50" style="padding-top: 8px;">

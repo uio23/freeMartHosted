@@ -10,7 +10,7 @@ from .helperFunc import removeOutliers
 def calcSaleBonus(user: User) -> int:
     saleBonus = 0
 
-    if user.sale_count <= 7:
+    if user.sale_count <6 :
         items = Product.query.filter(Product.listed==True, Product.username != user.username).all()
 
         # If there is nothing selling, calculate the avg price from all products

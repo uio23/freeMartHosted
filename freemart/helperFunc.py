@@ -74,9 +74,11 @@ def validateToken(token: str, expiration=3600):
     serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
     try:
         email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
+        print(email)
     except:
         return False
     user = User.query.filter_by(email=current_user.email).first()
+    print(user)
     if user.email == email:
         return True
     return False

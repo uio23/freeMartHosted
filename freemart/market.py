@@ -77,6 +77,12 @@ def market_page():
 
     items = Product.query.filter_by(listed=True).all()
     random.shuffle(items)
+
+    product = request.args.get('product', None);
+    if product:
+        itemNames = [item.name for item in items]
+        productLoc = itemNames.index(product)
+        items.insert(0, items.pop(productLoc))
     groupedItems = []
 
     loadImgs(items)

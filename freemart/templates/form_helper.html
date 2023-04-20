@@ -1,12 +1,16 @@
-{% macro displayField(feildName, placeholderValue) %}
-<div class="form-outline mb-4">
+{% macro displayField(feildName, name) %}
+<div class="form-group mb-3">
   <div class="has-validation">
-    {{ feildName(class="form-control", placeholder=placeholderValue, **kwargs) }}
+    <label for="{{ name }}" class="ms-1 mb-1">
+      <span class="form-label font-weight-bold">{{ name }}</span>
       {% for error in feildName.errors %}
-        <div class="invalid-feedback d-block">
-          {{ error }}
+        <div class="invalid-feedback d-inline">
+          - {{ error }}
         </div>
       {% endfor %}
+    </label>
+    {{ feildName(class="form-control", **kwargs) }}
+
   </div>
 </div>
 {% endmacro %}

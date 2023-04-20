@@ -36,6 +36,7 @@ def confirm_hollow_page(token):
     else:
         if validateToken(token):
             current_user.confirmed = True
+            print('yes')
             db.session.commit()
             flash(f"Welcome, {current_user.username}!", category="success")
         else:

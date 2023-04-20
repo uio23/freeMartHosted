@@ -9081,7 +9081,11 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important; } }
 
-.invalid-feedback {
+.form-label {
+  color: #606D5D;
+  font-weight: bold; }
+
+.invalid-feedback.d-block {
   margin-left: 0.2rem; }
 
 .bonus-number {
@@ -9221,6 +9225,9 @@ textarea.form-control-lg {
   --bs-form-control-bg: #25292e; }
   [data-bs-theme="dark"] .modal .form-control:focus {
     border-color: #5e6b5b; }
+
+[data-bs-theme="dark"] .form-label {
+  color: #d0d6cf; }
 
 .modal {
   --bs-modal-bg: #e4f0f2;
