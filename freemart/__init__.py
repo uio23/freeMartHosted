@@ -15,7 +15,7 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = os.urandom(24)
+    app.config['SECRET_KEY'] = os.environ.get('MONKEY')
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL').replace("postgres://", "postgresql://", 1)
     app.config['MAIL_DEFAULT_SENDER'] = os.environ.get("MAIL_USERNAME")
     app.config['MAIL_SERVER']='smtp.gmail.com'

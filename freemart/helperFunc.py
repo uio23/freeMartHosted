@@ -1,5 +1,5 @@
 # Importing 3rd party components
-from flask import url_for, redirect, render_template
+from flask import url_for, redirect, render_template, flash
 from flask_login import current_user
 from flask_mail import Message
 
@@ -12,7 +12,7 @@ from functools import wraps
 import os
 
 # Importing freemart components
-from . import mail
+from . import db, mail
 
 from .models import User
 
@@ -66,7 +66,26 @@ def generateToken(email: str) -> str:
     return token
 
 
-def validateToken(token: str, expiration=3600):
+def deleteAccount(token: str, expiration=3600):
+    '''
+        Delete account given email in token format.
+    '''
+
+    serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
+    try:
+        email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
+    except:
+        return "Invalid url"
+    user = User.query.filter_by(email=email).first()
+    if user.confirmed:
+        return "Account already active"
+    else:
+        db.session.delete(user)
+        db.session.commit()
+    return True
+
+
+def validateToken(token: str, expiration=3600) -> bool:
     '''
         Confirm if given token de-codes to current user's email
     '''
@@ -74,11 +93,9 @@ def validateToken(token: str, expiration=3600):
     serializer = URLSafeTimedSerializer(os.environ.get('MONKEY'))
     try:
         email = serializer.loads(token, salt=os.environ.get('MONKEY_PASS'), max_age=expiration)
-        print(email)
     except:
         return False
     user = User.query.filter_by(email=current_user.email).first()
-    print(user)
     if user.email == email:
         return True
     return False
@@ -91,7 +108,8 @@ def sendConfirmationEmail(user: User) -> None:
 
     token = generateToken(user.email)
     url = url_for("auth.confirm_hollow_page", token=token, _external=True)
-    contentHtml = render_template("auth/confirmationEmail.html", username=user.username, url=url)
+    deleteUrl = url_for("auth.delete_hollow_page", token=token, _external=True)
+    contentHtml = render_template("auth/confirmationEmail.html", username=user.username, url=url, deleteUrl=deleteUrl)
     msg = Message(sender=os.environ.get("MAIL_DEFAULT_SENDER"), recipients=[user.email], subject="Activate Your Free Mart Account", html=contentHtml)
     mail.send(msg)
 

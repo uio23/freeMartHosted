@@ -61,7 +61,7 @@ def post_page():
         db.session.add(item)
         db.session.commit()
 
-        return redirect(url_for('market.market_page'))
+        return redirect(url_for('market.market_page', product=item.name))
 
     return render_template("market/post.html", user=current_user, minForBonus=minForBonus, form=postForm)
 

@@ -65,17 +65,17 @@
       {% if messages %}
         {% for category, message in messages %}
           {% if category == "error" %}
-            <div class="alert alert-danger alert-dismissible fade show alert-box {% if not user.is_authenticated %} alert-below {% endif %}" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show alert-box {% if alertBelow %} alert-below {% endif %}" role="alert">
               {{ message }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           {% elif category== "warning" %}
-            <div class="alert alert-warning alert-dismissible fade show alert-box {% if not user.is_authenticated %} alert-below {% endif %}" role="alert">
+            <div class="alert alert-warning alert-dismissible fade show alert-box {% if alertBelow %} alert-below {% endif %}" role="alert">
               {{ message }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
           {% else %}
-            <div class="alert alert-success alert-dismissible fade show alert-box {% if not user.is_authenticated %} alert-below {% endif %}" role="alert">
+            <div class="alert alert-success alert-dismissible fade show alert-box {% if alertBelow %} alert-below {% endif %}" role="alert">
               {{ message }}
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

@@ -13,7 +13,7 @@ from .models import User
 
 from .forms import LoginForm, RegisterForm
 
-from .helperFunc import generateToken, validateToken, sendConfirmationEmail
+from .helperFunc import generateToken, validateToken, sendConfirmationEmail, deleteAccount
 
 
 # Auth branch blueprint definition
@@ -42,6 +42,16 @@ def confirm_hollow_page(token):
         else:
             flash("Invalid/Expired link", category="error")
     return redirect(url_for("user.profile_page", username=current_user.username))
+
+
+@auth.route("/delete/<token>")
+def delete_hollow_page(token):
+    outcome = deleteAccount(token)
+    if outcome == True:
+        flash('Account deleted', category='success')
+    else:
+        flash(outcome, category='error')
+    return redirect(url_for('auth.login_page'))
 
 
 @auth.route("/resend_confirm")

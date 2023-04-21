@@ -60,7 +60,7 @@ def profile_page(username):
                 current_user.balance -= product.price
                 seller.balance += product.price
 
-                if product.price > int(sellerBonus/4):
+                if product.price >= int(sellerBonus/4):
                     seller.balance += sellerBonus
                     seller.sale_count += 1
 

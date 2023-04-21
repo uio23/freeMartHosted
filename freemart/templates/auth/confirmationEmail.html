@@ -10,21 +10,19 @@
         color: #0d1816;
         margin: 6rem 5rem;
       }
+      .indented {
+        margin-left: 10px;
+      }
       .main {
         margin-top: 1.5rem;
         margin-bottom: 1.1rem;
       }
-      .sign-off {
-        margin-top: 1.2rem;
-      }
-      .imp {
+
+      .important {
         font-size: 2rem;
         margin-bottom: 0;
       }
-      .indented {
-        margin-left: 10px;
-      }
-      .sub-imp {
+      .sub-important {
         font-size: 1.5rem;
         margin-top: 0;
       }
@@ -45,16 +43,30 @@
         --bs-btn-disabled-border-color: #A020F0;
         font-size: 1.5rem;
       }
+      .sign-off {
+        margin-top: 1.2rem;
+      }
+      
+      .delete-text {
+        margin-top: 4rem;
+      }
+      .delete-text a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .delete-text a:hover {
+        text-decoration: underline;
+      }
     </style>
     <h1>Welcome, {{ username}}.</h1>
     <div class="indented">
       <div class="main">
-        <p class="imp">You're Free Mart journey is about to begin!</p>
-        <p class="sub-imp">Please click below to activate your account.</p>
+        <p class="important">You're Free Mart journey is about to begin!</p>
+        <p class="sub-important">Please click below to activate your account.</p>
       </div>
       <a class="btn btn-primary freemart-btn" href="{{ url }}">Activate!</a>
       <p class="sign-off">Cheers,<br>The Free Mart Team.</p>
     </div>
-
+    <p class="text-muted delete-text" >Didn't sign up? <a href="{{ deleteUrl }}">Delete this account</a></p>
   </body>
 </html>
