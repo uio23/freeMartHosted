@@ -80,7 +80,7 @@
 
     function validateName(content) {
       var output = ''
-      if ((!(/^[a-zA-Z]+$/.test(content))) && content != '') {
+      if ((!(/^[A-Za-z\s]*$/.test(content))) && content != '') {
         output = '- Name must only contain letters'
       }
       else if (content.length > 50) {
