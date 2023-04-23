@@ -5,7 +5,7 @@ import requests
 
 from github import Github
 
-from PIL import Image
+from PIL import Image, ImageOps
 
 from io import BytesIO
 
@@ -40,6 +40,7 @@ def saveImg(productImage, imageFilename) -> bool:
 
     g = Github(os.environ.get("GITT"))
     img = Image.open(productImage)
+    img = ImageOps.exif_transpose(img)
     img = img.resize((500, 500))
     img_byte_arr = BytesIO()
     img.save(img_byte_arr, format='PNG')
