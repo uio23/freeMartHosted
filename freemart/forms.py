@@ -66,9 +66,7 @@ class PostForm(FlaskForm):
     submit_button = SubmitField('Post!')
 
     def validate_productName(self, productName):
-        productName = productName.data.replace(' ','')
-
-        if not productName.isalpha():
+        if not productName.replace(' ','').isalpha():
             raise ValidationError("Name must only contain letters")
         product = Product.query.filter(func.lower(Product.name)==func.lower(productName)).first()
 
